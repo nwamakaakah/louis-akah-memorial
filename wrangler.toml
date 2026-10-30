@@ -1,0 +1,17 @@
+# Cloudflare Pages project settings for the memorial site.
+name = "louis-akah"
+pages_build_output_dir = "./public"
+compatibility_date = "2025-07-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "memorial-db"
+# Paste the database_id printed by `npx wrangler d1 create memorial-db`
+database_id = "c42735a8-d328-4b2b-b8b6-5bcdd423ed1d"
+
+[vars]
+# Where condolence messages are emailed (separate several addresses with commas)
+FAMILY_EMAIL = ""
+# Sender address once your domain is verified in Resend, e.g. "Memorial <messages@your-domain>"
+# Leave it out to use Resend's test sender, which can only email the Resend account owner.
+# MAIL_FROM = ""

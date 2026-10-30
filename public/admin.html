@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Memorial · Family moderation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--paper:#f4efe5; --ink:#221e23; --ink-2:#665e64; --rule:#d8cebf; --plum:#3d2642; --lilac:#c9b8d2;
+  --serif:'EB Garamond',Georgia,serif; --sans:'Instrument Sans','Helvetica Neue',Arial,sans-serif; color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--serif)}
+.wrap{max-width:920px; margin:0 auto; padding:40px max(20px, env(safe-area-inset-left,0px)) 80px}
+h1{font-weight:400; font-size:42px; margin:0 0 6px}
+.label{font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-2)}
+p{font-size:18px; line-height:1.55}
+.login{display:flex; gap:10px; flex-wrap:wrap; margin-top:20px}
+input{font:inherit; font-size:18px; padding:10px 12px; border:1px solid var(--rule); border-radius:8px; background:#fff; min-width:0; flex:1}
+button{font-family:var(--sans); font-size:13.5px; font-weight:500; border-radius:999px; padding:10px 16px; cursor:pointer; border:1px solid var(--plum); background:var(--plum); color:#fff}
+button.ghost{background:transparent; color:var(--plum)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--plum); outline-offset:2px}
+.tabs{display:flex; gap:8px; margin:28px 0 8px; flex-wrap:wrap; align-items:center}
+.tabs .sum{margin-left:auto; font-family:var(--sans); font-size:13px; color:var(--ink-2)}
+.tabs button[aria-pressed="false"]{background:transparent; color:var(--plum)}
+.row{display:grid; grid-template-columns:1fr auto; gap:16px; padding:16px 0; border-bottom:1px solid var(--rule); align-items:start}
+.row .msg{white-space:pre-line; font-size:18px; line-height:1.5; margin:0 0 6px}
+.row .who{font-family:var(--sans); font-size:13px; font-weight:600}
+.row .meta{font-size:15px; color:var(--ink-2); font-style:italic}
+.pill{display:inline-block; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:3px 8px; border-radius:999px; margin-left:8px; vertical-align:2px}
+.pill.visible{background:#e2ebdc; color:#33502a} .pill.hidden{background:#eee; color:#555} .pill.pending{background:#f6e7c1; color:#6b4b07}
+.acts{display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end}
+.status{font-style:italic; color:var(--ink-2); min-height:1.3em}
+.err{color:#8d2f2a}
+@media (max-width:560px){ .row{grid-template-columns:1fr} .acts{justify-content:flex-start} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="label">Family only</span>
+  <h1>Moderation</h1>
+  <p>Hide a condolence message or a name under the wreath if it should not be shown. Hidden entries can be restored at any time. Hiding a name does not remove the rose from the count.</p>
+
+  <form class="login" id="login">
+    <input id="key" type="password" autocomplete="current-password" placeholder="Admin key" aria-label="Admin key" required>
+    <button type="submit">Open</button>
+  </form>
+  <p class="status" id="status" role="status"></p>
+
+  <section id="panel" hidden>
+    <div class="tabs">
+      <button type="button" data-type="condolences" aria-pressed="true">Condolence messages</button>
+      <button type="button" data-type="roses" aria-pressed="false">Names under the wreath</button>
+      <span class="sum" id="sum"></span>
+    </div>
+    <div id="list"></div>
+  </section>
+</div>
+<script>
+(function(){
+  let key=''; try{ key=sessionStorage.getItem('memorial-admin')||''; }catch(e){}
+  let type='condolences';
+  const $=id=>document.getElementById(id);
+  const say=(t,err)=>{ $('status').textContent=t; $('status').classList.toggle('err',!!err); };
+  async function call(method, body){
+    const url='/api/admin'+(method==='GET'?'?type='+type:'');
+    const r=await fetch(url,{method, headers:{'content-type':'application/json','x-admin-key':key}, body: body?JSON.stringify(body):undefined});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){ const e=new Error(j.error||'error'); e.code=j.error; throw e; }
+    return j;
+  }
+  function render(items){
+    const list=$('list'); list.textContent='';
+    if(!items.length){ const p=document.createElement('p'); p.className='status'; p.textContent='Nothing here yet.'; list.appendChild(p); return; }
+    items.forEach(it=>{
+      const row=document.createElement('div'); row.className='row';
+      const left=document.createElement('div');
+      if(it.message){ const m=document.createElement('p'); m.className='msg'; m.textContent=it.message; left.appendChild(m); }
+      const who=document.createElement('div'); who.className='who'; who.textContent=it.name||'(no name)';
+      const pill=document.createElement('span'); pill.className='pill '+it.status; pill.textContent=it.status; who.appendChild(pill); left.appendChild(who);
+      const meta=document.createElement('div'); meta.className='meta'; meta.textContent=[it.place, new Date(it.created_at).toLocaleString('en-GB')].filter(Boolean).join(' · '); left.appendChild(meta);
+      const acts=document.createElement('div'); acts.className='acts';
+      const add=(label,status,ghost)=>{ const b=document.createElement('button'); b.type='button'; b.textContent=label; if(ghost) b.className='ghost';
+        b.addEventListener('click',async()=>{ b.disabled=true; try{ await call('POST',{type,id:it.id,status}); await load(); say('Saved.'); }catch(e){ say('Could not save that change. Please try again.',true); b.disabled=false; } }); acts.appendChild(b); };
+      if(it.status==='pending'){ add('Approve','visible'); add('Hide','hidden',true); }
+      else if(it.status==='visible') add('Hide','hidden',true);
+      else add('Show again','visible');
+      row.appendChild(left); row.appendChild(acts); list.appendChild(row);
+    });
+  }
+  async function load(){
+    try{
+      const j=await call('GET'); $('panel').hidden=false; $('login').hidden=true;
+      const pending=j.items.filter(i=>i.status==='pending').length;
+      $('sum').textContent=(type==='roses'? j.roses.toLocaleString('en-NG')+' roses laid in total' : j.items.length+' messages'+(pending?' · '+pending+' waiting for approval':''));
+      render(j.items); say('');
+    }catch(e){
+      if(e.code==='unauthorised'){ say('That key is not right.',true); $('login').hidden=false; $('panel').hidden=true; }
+      else if(e.code==='admin_not_configured'){ say('The admin key has not been set up yet. See the guide, step 7.',true); }
+      else say('Could not load. Check your connection and try again.',true);
+    }
+  }
+  $('login').addEventListener('submit',e=>{ e.preventDefault(); key=$('key').value.trim(); try{ sessionStorage.setItem('memorial-admin',key); }catch(x){} load(); });
+  document.querySelectorAll('[data-type]').forEach(b=>b.addEventListener('click',()=>{ type=b.dataset.type; document.querySelectorAll('[data-type]').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); load(); }));
+  if(key) load();
+})();
+</script>
+</body>
+</html>
