@@ -1318,6 +1318,8 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
 .film.playing .film-play,.film.playing .film-meta{display:none}
 .film-note{margin-top:var(--s4); font-family:var(--sans); font-size:var(--fs-meta); color:var(--ink-2); max-width:none}
 @media (max-width:880px){ .film-meta{left:var(--s4); right:var(--s4); bottom:var(--s3)} .film-title{font-size:var(--fs-small); white-space:nowrap} .film-len{display:none} .film-play{width:56px} }
+#gardenTitle:focus{outline:none}
+.close:focus-visible{outline:2px solid currentColor; outline-offset:2px}
 </style>
 </head>
 <body>
@@ -1917,7 +1919,7 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
         <div class="wreath-photo"><div class="ph" data-photo="cover.jpg" data-era="colour" data-n="1"></div></div>
       </div>
       <div class="garden-side">
-        <h2 id="gardenTitle" class="count"><b id="roseCount">&nbsp;</b><span class="cl"><span id="roseWord">roses</span> laid for</span><em>Nze Dr. Louis Chukwukadibia Akah</em></h2>
+        <h2 id="gardenTitle" class="count" tabindex="-1"><b id="roseCount">&nbsp;</b><span class="cl"><span id="roseWord">roses</span> laid for</span><em>Nze Dr. Louis Chukwukadibia Akah</em></h2>
         <p class="people" id="rosePeople"></p>
         <p class="garden-intro">Tap to lay a rose for Dede. You can lay up to ten.</p>
         <form id="roseForm" class="rose-form" novalidate>
@@ -2324,7 +2326,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     return g; }
   const GREEN=greenery();
   function drawWreath(animateIdx){
-    const n=Math.min(roses.count,MAXV);
+    const n=210; // the wreath is always full; the count above it is the live number
     const s=Math.max(8, Math.min(30, Math.sqrt(AREA/Math.max(n,70))*1.08));
     let out=''; 
     for(let i=0;i<n;i++){ const p=roseSlot(i,s); const last=i===animateIdx;
@@ -2387,7 +2389,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     myRose.n+=1; const myIndex=roses.count; myRose.idx.push(myIndex); saveMine();
     roses.count+=1; if(first) roses.people=(roses.people||0)+1;
     rsStatus.classList.remove('err');
-    rsStatus.textContent= myRose.n>=MAXR ? 'Thank you for your ten roses.' : myRose.n===1 ? 'Thank you. Your rose has been laid for Dede.' : myRose.n+' roses laid. Thank you.';
+    rsStatus.textContent= myRose.n>=MAXR ? '' : myRose.n===1 ? 'Thank you. Your rose has been laid for Dede.' : myRose.n+' roses laid. Thank you.';
     showRoses('keep');
     if(demo) return;
     roseQueue=roseQueue.then(async()=>{
@@ -2410,7 +2412,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     loadRoses(); if(!myRose) tsWidget(document.getElementById('rsTs'));
     clearInterval(poll); if(!demo) poll=setInterval(()=>{ if(!document.hidden) loadRoses(); },20000);
     try{ history.replaceState(null,'','#roses'); }catch(e){}
-    document.getElementById('rosesClose').focus({preventScroll:true});
+    document.getElementById('gardenTitle').focus({preventScroll:true});
   }
   function closeGarden(){
     if(garden.hidden) return;
