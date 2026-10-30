@@ -8,6 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nze Dr. Louis Chukwukadibia Akah · 1947–2026">
 <meta property="og:description" content="Obunakueze I of Umueze Village, Amawbia. Funeral arrangements, his story, tributes, and a book of condolence. Lay a rose for Dede.">
+<link rel="preload" href="photos/cover.jpg" as="image" fetchpriority="high">
 <meta property="og:image" content="/photos/share.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -12 24 24'%3E%3Ccircle r='11' fill='%239c4317'/%3E%3Cpath d='M-4 -1 Q-3 -6 2 -5.5 Q6 -4 5 1 Q4 5 -1 4.5 Q-4 3.5 -3 0 Q-2 -2.5 1 -2 Q3 -1 2 1' fill='none' stroke='%23f6dcab' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -1325,9 +1326,64 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
 /* real rose icon, like the wreath roses */
 .rail-rose .rose-ico{padding:4px}
 .btn-rose svg,.btn-line svg,.open-btn svg{width:20px; height:20px}
+
+/* ---------- opening loader: one of his sayings while the book is fetched ---------- */
+.loader{position:fixed; inset:0; z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px calc(32px + env(safe-area-inset-bottom,0px)); text-align:center;
+  background:radial-gradient(ellipse 70% 60% at 50% 42%, #3a281e 0%, #1c1410 55%, #110c09 100%); color:#f5e2d2; transition:opacity .9s ease, visibility 0s .9s}
+.loader.done{opacity:0; visibility:hidden; pointer-events:none}
+.ld-in{max-width:30em; display:flex; flex-direction:column; align-items:center}
+.ld-cross{width:14px; height:20px; color:#e0a07e; opacity:.85; margin-bottom:var(--s7,40px)}
+.ld-q{margin:0; transition:opacity .7s ease}
+.ld-q.swap{opacity:0}
+.ld-ig{font-family:var(--serif); font-size:clamp(32px,4.6vw,52px); line-height:1.15; font-weight:400; margin:0; color:#f5e2d2; text-wrap:balance}
+.ld-en{font-family:var(--serif); font-size:clamp(18px,1.7vw,21px); line-height:1.5; margin:var(--s4,16px) 0 0; color:rgba(245,226,210,.66); text-wrap:balance}
+.ld-line{width:72px; height:1px; margin-top:var(--s7,40px); background:rgba(245,226,210,.16); overflow:hidden}
+.ld-line i{display:block; height:100%; width:100%; background:#e0a07e; transform-origin:0 50%; transform:scaleX(0); animation:ldfill 9s cubic-bezier(.2,.6,.3,1) forwards}
+.loader.ready .ld-line i{animation:none; transform:scaleX(1); transition:transform .5s ease}
+.ld-foot{position:absolute; left:0; right:0; bottom:calc(28px + env(safe-area-inset-bottom,0px)); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:rgba(245,226,210,.42)}
+@keyframes ldfill{0%{transform:scaleX(0)} 100%{transform:scaleX(.92)}}
+@media (prefers-reduced-motion: reduce){ .ld-line i{animation:none; transform:scaleX(.5)} .loader,.ld-q{transition:none} }
 </style>
 </head>
 <body>
+<div class="loader" id="loader" role="status" aria-live="polite" aria-label="Opening the memorial book">
+  <div class="ld-in">
+    <svg class="ld-cross" viewBox="0 0 14 20" aria-hidden="true"><path d="M7 1v18M2 6.5h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
+    <blockquote class="ld-q" id="ldQ"><p class="ld-ig" lang="ig" id="ldIg"></p><p class="ld-en" id="ldEn"></p></blockquote>
+    <div class="ld-line" aria-hidden="true"><i></i></div>
+  </div>
+  <div class="ld-foot" aria-hidden="true">Dr. L. C. Akah</div>
+</div>
+<script>
+(function(){
+  // His sayings. Replace or add lines here; each is [the saying, its meaning]. Leave the meaning '' if none.
+  var SAYINGS=[
+    ['Ndụ bụ isi','Life is supreme.'],
+    ['Onye aghana nwanne ya','Let no one abandon their own.'],
+    ['Igwe bụ ike','In unity there is strength.'],
+    ['Egbe bere, ugo bere','Let the kite perch, and let the eagle perch.']
+  ];
+  var L=document.getElementById('loader'), Q=document.getElementById('ldQ'), IG=document.getElementById('ldIg'), EN=document.getElementById('ldEn');
+  var k=Math.floor(Math.random()*SAYINGS.length);
+  function show(i){ IG.textContent=SAYINGS[i][0]; EN.textContent=SAYINGS[i][1]; EN.hidden=!SAYINGS[i][1]; }
+  show(k);
+  var seen=false; try{ seen=sessionStorage.getItem('memorial-loader')==='1'; sessionStorage.setItem('memorial-loader','1'); }catch(e){}
+  var t0=Date.now(), MIN=seen?400:2600, MAX=12000, finished=false;
+  var rot=setInterval(function(){ Q.classList.add('swap'); setTimeout(function(){ k=(k+1)%SAYINGS.length; show(k); Q.classList.remove('swap'); },700); },6000);
+  function finish(){ if(finished) return; finished=true; clearInterval(rot); L.classList.add('ready');
+    setTimeout(function(){ L.classList.add('done'); setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); },1000); },450); }
+  function whenReady(){ var wait=Math.max(0,MIN-(Date.now()-t0)); setTimeout(finish,wait); }
+  setTimeout(finish,MAX);
+  function coverReady(){ return new Promise(function(res){
+    var ph=document.querySelector('.ph[data-photo="cover.jpg"]');
+    if(!ph || ph.classList.contains('has-img')) return res();
+    var img=new Image(); try{ img.fetchPriority='high'; }catch(e){} img.onload=img.onerror=function(){ res(); }; img.src='photos/cover.jpg'; }); }
+  function fontsReady(){ try{ return document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve(); }catch(e){ return Promise.resolve(); } }
+  function go(){ Promise.all([coverReady(),fontsReady()]).then(whenReady, whenReady); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',go); else go();
+})();
+</script>
+
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
