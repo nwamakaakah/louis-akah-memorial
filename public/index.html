@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Celebrating the life of Nze Dr. Louis Chukwukadibia Akah, Obunakueze I of Umueze Village, Amawbia, 1947–2026. Funeral arrangements, his story, tributes and a book of condolence.">
-<meta name="theme-color" content="#984a24">
+<meta name="theme-color" content="#f1ebdf">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nze Dr. Louis Chukwukadibia Akah · 1947–2026">
 <meta property="og:description" content="Obunakueze I of Umueze Village, Amawbia. Funeral arrangements, his story, tributes, and a book of condolence. Lay a rose for Dede.">
@@ -1526,10 +1526,28 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 .garden .people{margin-top:var(--s3) !important}
 /* his name as a footer only on the full-width photographs */
 .sheet:not(.bleed) .folio{display:none !important}
+/* ---------- the closed book rests on a light, paper-coloured table ---------- */
+body{background:#ece5d8}
+.bookgate{background-color:#f1ebdf; background-image:var(--noise), radial-gradient(ellipse 80% 70% at 50% 44%, #fbf8f2 0%, #f1ebdf 58%, #e4dccb 100%)}
+.open-btn{color:var(--ink); background:linear-gradient(155deg, rgba(255,255,255,.85), rgba(255,255,255,.55)); border:1px solid rgba(36,30,27,.12);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 14px 30px -14px rgba(60,36,20,.35)}
+.open-btn:hover{background:#fff; transform:translateY(-1px)}
+.open-btn.quiet{background:transparent; border-color:rgba(36,30,27,.22); box-shadow:none}
+.open-btn.quiet:hover{background:rgba(255,255,255,.6)}
+.intro-hint,.back-link,.intro-kicker{color:var(--ink-2)}
+.bookgate .sheet.board{box-shadow:0 0 0 1px rgba(60,36,20,.06), 0 40px 80px -30px rgba(80,48,24,.38), 0 14px 30px -14px rgba(80,48,24,.22) !important}
 /* the funeral day in the programme takes the title orange */
 .day.main .date{color:#c8541c !important}
 /* roses page: a few warm words under the count */
 .garden-note{font-family:var(--serif); font-size:var(--fs-body); line-height:1.7; color:var(--ink-2); max-width:30em; margin:var(--s5) 0 0}
+/* the table: a faint green uli pattern under the paper texture */
+.bookgate{background-image:var(--noise), radial-gradient(ellipse 80% 70% at 50% 44%, #fbf8f2 0%, #f1ebdf 58%, #e4dccb 100%)}
+.bookgate::before{content:""; position:absolute; inset:0; pointer-events:none; background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%2341604a' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M20 40 C 32 30, 44 30, 56 40 S 80 50, 92 40'/%3E%3Cpath d='M100 120 C 112 110, 124 110, 136 120 S 150 128, 158 124'/%3E%3Ccircle cx='120' cy='40' r='6'/%3E%3Ccircle cx='40' cy='118' r='4'/%3E%3C/g%3E%3Cg fill='%2341604a'%3E%3Ccircle cx='120' cy='40' r='1.6'/%3E%3Ccircle cx='108' cy='40' r='1.3'/%3E%3Ccircle cx='132' cy='40' r='1.3'/%3E%3Ccircle cx='40' cy='118' r='1.3'/%3E%3Ccircle cx='74' cy='88' r='1.2'/%3E%3Ccircle cx='12' cy='86' r='1'/%3E%3Ccircle cx='150' cy='80' r='1'/%3E%3C/g%3E%3C/svg%3E"); background-size:160px 160px; opacity:.09}
+/* the shadow under the book is warm orange, not grey */
+.bookgate .sheet.board{box-shadow:0 0 0 1px rgba(156,67,23,.08), 0 46px 90px -34px rgba(200,84,28,.42), 0 16px 34px -16px rgba(156,67,23,.3) !important}
+/* back cover: laying a rose is a rose button */
+.endgate .open-btn[data-roses]{color:#fff; background:var(--rose); border-color:var(--rose); box-shadow:0 14px 30px -12px rgba(220,30,68,.5)}
+.endgate .open-btn[data-roses]:hover{background:#c41a3c; border-color:#c41a3c}
 </style>
 </head>
 <body>
