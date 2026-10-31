@@ -1511,6 +1511,21 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 }
 /* phones: the page footer shows his name instead of the page number */
 @media (max-width:700px){ .folio .lbl{display:inline !important} .folio .n{display:none !important} }
+/* no page numbers anywhere: footers, the contents menu, or its page count */
+.folio .n,.rail .lb .pg,.rail .pageno{display:none !important}
+.folio .lbl{display:inline !important}
+.rail .pagename{display:block; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; padding:8px 0 2px 14px; white-space:nowrap; opacity:0}
+.rail:hover .pagename,.rail:focus-within .pagename,.rail.open .pagename{opacity:.6}
+@media (max-width:700px){ .rail .pagename{opacity:.6} }
+/* roses page: one lockup. The number and "roses laid for" share a baseline, "Our Dede" completes the line,
+   and "from 7 people" sits close beneath as a note. Numbers use the same Literata figures as his years. */
+.garden .count{display:flex !important; flex-wrap:wrap; align-items:baseline; column-gap:14px; row-gap:0; margin:0}
+.garden .count b{font-family:var(--year) !important; font-weight:500 !important; font-size:clamp(64px,7vw,96px) !important; line-height:1 !important; letter-spacing:-.025em !important; font-variant-numeric:lining-nums tabular-nums; margin:0 !important; color:var(--rose)}
+.garden .count .cl{padding:0 !important; line-height:1.2 !important; color:var(--ink-2)}
+.garden .count em,#gardenTitle em{flex-basis:100%; margin-top:var(--s2) !important; font-family:var(--display) !important; font-size:var(--fs-title) !important; font-weight:500; font-style:normal; line-height:1.15 !important; color:var(--ink) !important}
+.garden .people{margin-top:var(--s3) !important}
+/* his name as a footer only on the full-width photographs */
+.sheet:not(.bleed) .folio{display:none !important}
 </style>
 </head>
 <body>
@@ -2155,7 +2170,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
         <div class="wreath-photo"><div class="ph" data-photo="cover.jpg" data-era="colour" data-n="1"></div></div>
       </div>
       <div class="garden-side">
-        <h2 id="gardenTitle" class="count" tabindex="-1"><b id="roseCount">&nbsp;</b><span class="cl"><span id="roseWord">roses</span> laid</span><em>Our Dede</em></h2>
+        <h2 id="gardenTitle" class="count" tabindex="-1"><b id="roseCount">&nbsp;</b><span class="cl"><span id="roseWord">roses</span> laid for</span><em>Our Dede</em></h2>
         <p class="people" id="rosePeople"></p>
         <form id="roseForm" class="rose-form" novalidate>
           <div class="ts" id="rsTs"></div>
