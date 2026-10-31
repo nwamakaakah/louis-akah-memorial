@@ -1521,7 +1521,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
   function finish(){ if(finished) return; if(Date.now()-t0<MIN){ setTimeout(finish,MIN-(Date.now()-t0)); return; } finished=true; timers.forEach(clearTimeout); L.classList.remove('waiting');
     // both lines rewind in order (German, French, Igbo) and slide away the way they came, then the page lifts
     var back=0; if(!reduce){ L.classList.add('rewind'); for(var r=N-2;r>=-1;r--){ (function(r,d){ setTimeout(function(){ at(r); },d); })(r,back); back+=240; } }
-    setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); }, reduce?0:back+60);
+    setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); }, 0);   // the page lifts while the farewells rewind
     setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); D.classList.remove('ld-reveal'); }, reduce?800:back+2200); }
   function whenReady(){ var wait=Math.max(0,MIN-(Date.now()-t0)); setTimeout(finish,wait); }
   setTimeout(finish,MAX);
