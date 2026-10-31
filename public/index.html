@@ -1610,7 +1610,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
     <div class="rail-foot">
       <a class="rail-rose" href="#roses" data-roses aria-label="Lay a rose"><svg class="rose-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#rico"/></svg><span class="lb">Lay a rose <small id="drawerRoses"></small></span></a>
       <button class="rail-edit rail-write" type="button" data-write><span class="no" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 15.5V17h1.5L15 6.5 13.5 5 3 15.5zM12.5 6l1.5 1.5"/></svg></span><span class="lb">Write a message</span></button>
-      <span class="pageno lb" id="pageno">Page 1 of 12</span><span class="pagename lb" aria-hidden="true">Dr. L. C. Akah</span>
+      <span class="pageno lb" id="pageno">Page 1 of 12</span>
     </div>
     <span class="rail-track" aria-hidden="true"><i class="ribbon" id="ribbon"></i></span>
   </div>
@@ -2949,8 +2949,8 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     window.memorialLenis=lenis;
     // the roses page and the message writer get the same smooth scroll and the same gentle drift
     var touchP=false; try{ touchP=matchMedia('(pointer:coarse)').matches; }catch(e){}
-    [['#roses','.garden-in','.garden-top, .wreath-wrap, .garden-side > *'],
-     ['#write','.writer-in','.garden-top, .wr-head > *, .wr-paper > *, .wr-thanks-text > *']].forEach(function(cfg){
+    // (the page for writing to the family stays still: no drift and no smooth scroll while someone is writing)
+    [['#roses','.garden-in','.garden-top, .wreath-wrap, .garden-side > *']].forEach(function(cfg){
       var pane=document.querySelector(cfg[0]), inner=pane&&pane.querySelector(cfg[1]); if(!inner) return;
       var pl=new Lenis({wrapper:pane, content:inner, lerp:.065, smoothWheel:true, syncTouch:false});
       var blocks=[].slice.call(pane.querySelectorAll(cfg[2])).map(function(el){ return {el:el,y:0}; });
