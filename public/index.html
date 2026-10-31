@@ -1333,12 +1333,12 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
   position:fixed; inset:0; z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;
   padding:32px 24px calc(32px + env(safe-area-inset-bottom,0px)); text-align:center; color:var(--ld-ink);
   background-color:#f4efe5; background-image:var(--noise), radial-gradient(ellipse 85% 75% at 50% 44%, #fbf8f1 0%, #f4efe5 58%, #ebe3d4 100%);
-  --r:-24%; -webkit-mask-image:radial-gradient(circle at 50% 46%, transparent var(--r), #000 calc(var(--r) + 22%)); mask-image:radial-gradient(circle at 50% 46%, transparent var(--r), #000 calc(var(--r) + 22%));
-  transition:--r 1.5s cubic-bezier(.45,0,.2,1), opacity .8s ease .75s, visibility 0s 1.55s}
-@property --r{syntax:'<percentage>'; inherits:false; initial-value:-24%}
+  --r:-26%; -webkit-mask-image:linear-gradient(to top, transparent var(--r), #000 calc(var(--r) + 26%)); mask-image:linear-gradient(to top, transparent var(--r), #000 calc(var(--r) + 26%));
+  transition:--r 1.5s cubic-bezier(.4,0,.2,1), opacity .6s ease 1s, visibility 0s 1.6s}
+@property --r{syntax:'<percentage>'; inherits:false; initial-value:-26%}
 .loader::before{content:""; position:absolute; left:50%; top:46%; width:min(120vw,1100px); aspect-ratio:1; translate:-50% -50%; border-radius:50%; pointer-events:none;
   background:radial-gradient(circle, rgba(156,67,23,.10) 0%, rgba(156,67,23,.04) 38%, transparent 66%); animation:ldGlow 7s ease-in-out infinite alternate}
-.loader.done{--r:140%; opacity:0; visibility:hidden; pointer-events:none}
+.loader.done{--r:110%; opacity:0; visibility:hidden; pointer-events:none}
 .ld-in{position:relative; max-width:32em; display:flex; flex-direction:column; align-items:center; transition:opacity .7s ease, transform .9s cubic-bezier(.4,0,.2,1), filter .7s ease}
 .loader.leaving .ld-in{opacity:0; transform:translateY(-14px); filter:blur(5px)}
 .loader.leaving .ld-foot{opacity:0; transition:opacity .5s ease}
@@ -1500,10 +1500,7 @@ h1,h2,h3,.ld-ig,.garden .count b,.day .date{letter-spacing:-.022em}
 (function(){
   // His sayings. Replace or add lines here; each is [the saying, its meaning]. Leave the meaning '' if none.
   var SAYINGS=[
-    ['Ndụ bụ isi','Life is supreme.'],
-    ['Onye aghana nwanne ya','Let no one abandon their own.'],
-    ['Igwe bụ ike','In unity there is strength.'],
-    ['Egbe bere, ugo bere','Let the kite perch, and let the eagle perch.']
+    ['Obunakueze nke nge na nge','']
   ];
   var D=document.documentElement, L=document.getElementById('loader'), Q=document.getElementById('ldQ'), IG=document.getElementById('ldIg'), EN=document.getElementById('ldEn');
   var k=Math.floor(Math.random()*SAYINGS.length);
@@ -1519,10 +1516,10 @@ h1,h2,h3,.ld-ig,.garden .count b,.day .date{letter-spacing:-.022em}
   var seen=false; try{ seen=sessionStorage.getItem('memorial-loader')==='1'; sessionStorage.setItem('memorial-loader','1'); }catch(e){}
   var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
   var t0=Date.now(), MIN=seen?500:(reduce?1800:3600), MAX=14000, finished=false;
-  var rot=setInterval(function(){ Q.classList.add('out'); setTimeout(function(){ k=(k+1)%SAYINGS.length; Q.classList.remove('out'); show(k,false); },650); },7000);
+  var rot=SAYINGS.length<2?0:setInterval(function(){ Q.classList.add('out'); setTimeout(function(){ k=(k+1)%SAYINGS.length; Q.classList.remove('out'); show(k,false); },650); },7000);
   function finish(){ if(finished) return; finished=true; clearInterval(rot); L.classList.add('ready');
     setTimeout(function(){ L.classList.add('leaving'); },250);
-    setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); },420);
+    setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); },300);
     setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); D.classList.remove('ld-reveal'); },2600); }
   function whenReady(){ var wait=Math.max(0,MIN-(Date.now()-t0)); setTimeout(finish,wait); }
   setTimeout(finish,MAX);
