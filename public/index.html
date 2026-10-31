@@ -1351,7 +1351,8 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
 .ld-roll .tr{transform:translateY(calc(var(--k) * -1.25em)); transition:transform .85s cubic-bezier(.76,0,.24,1)}
 .ld-roll p{margin:0; height:1.25em; white-space:nowrap; font-size:inherit !important; line-height:inherit !important; letter-spacing:inherit !important; font-family:inherit; font-weight:inherit; color:var(--ld-ink)}
 .ld-roll em{font-style:italic; color:var(--ld-acc)}
-.ld-tag{height:1.6em; overflow:hidden; margin-top:var(--s3,12px); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--ld-ink2); line-height:1.6em}
+.ld-tag{height:1.6em; overflow:hidden; margin-top:var(--s2,8px); font-family:var(--serif); font-size:var(--fs-small,16px); font-weight:400; letter-spacing:0; color:var(--ld-ink2); line-height:1.6em}
+.ld-tag span{white-space:nowrap}
 .ld-tag .tr{transform:translateY(calc(var(--k) * -1.6em)); transition:transform .85s cubic-bezier(.76,0,.24,1) .07s}
 .ld-tag span{display:block; height:1.6em}
 
@@ -1472,6 +1473,27 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto !important}
 .lenis.lenis-smooth [data-lenis-prevent],.lenis .garden,.lenis .writer,.lenis .reader{overscroll-behavior:contain}
 .lenis.lenis-stopped{overflow:hidden}
+
+/* ---------- scroll moments: titles rise, photos develop, his line of years draws itself ---------- */
+/* 1. titles rise word by word from behind an edge, like the loader's farewells */
+html.sfx .flow .sheet h2 .rw{display:inline-block; overflow:hidden; vertical-align:top; padding:0 .08em .14em; margin:0 -.08em -.14em}
+html.sfx .flow .sheet h2 .ri{display:inline-block; transform:translateY(112%); transition:transform 1.05s cubic-bezier(.2,.8,.2,1); transition-delay:calc(var(--wi,0) * .08s)}
+html.sfx .flow .sheet h2.in .ri{transform:none}
+/* 2. photographs develop: soft and sepia, then full colour */
+html.sfx .flow .sheet:not(.board) .ph{filter:sepia(.75) saturate(.55) contrast(.9) brightness(1.05) blur(2px) grayscale(0); opacity:.55; transition:filter 2.2s cubic-bezier(.3,.6,.2,1), opacity 1.4s ease}
+html.sfx .flow .sheet:not(.board) .ph.dev{filter:sepia(0) saturate(1) contrast(1) brightness(1) blur(0) grayscale(0); opacity:1}
+/* developed prints keep their era: black and white, sepia, or seventies colour */
+html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=bw]{filter:sepia(0) saturate(1) contrast(1.06) brightness(1) blur(0) grayscale(1)}
+html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=sepia]{filter:sepia(.55) saturate(.85) contrast(.96) brightness(1) blur(0) grayscale(0)}
+html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=seventies]{filter:sepia(.18) saturate(.8) contrast(.95) brightness(1) blur(0) grayscale(0)}
+/* 3. the line beside his story fills in green as you read down; each year's dot lights when the line reaches it */
+html.sfx #story p[data-my]::before{background:linear-gradient(to bottom, var(--plum) 0, var(--plum) calc(var(--fill,0) * 100%), var(--rule) calc(var(--fill,0) * 100%)) !important; width:2px !important; margin-left:-.5px}
+html.sfx #story p[data-my].lit .my::after{background:var(--plum); border-color:var(--plum)}
+html.sfx #story p[data-my].lit .my b{color:var(--plum)}
+@media (prefers-reduced-motion: reduce){
+  html.sfx .flow .sheet h2 .ri{transform:none; transition:none}
+  html.sfx .flow .sheet:not(.board) .ph{opacity:1; transition:none}
+}
 </style>
 </head>
 <body>
@@ -1485,7 +1507,7 @@ html.lenis,html.lenis body{height:auto}
       <p lang="de">Bis wir uns wiedersehen, <em>Dede</em></p>
       <p aria-hidden="true">&nbsp;</p>
     </div></div>
-    <div class="ld-tag" aria-hidden="true"><div class="tr"><span>Igbo</span><span>Français</span><span>Deutsch</span><span>&nbsp;</span></div></div>
+    <div class="ld-tag"><div class="tr"><span lang="en">Go well, Dede</span><span lang="en">You are missing from me, Dede</span><span lang="en">Till we meet again, Dede</span><span aria-hidden="true">&nbsp;</span></div></div>
   </div>
   <div class="ld-foot" aria-hidden="true">Dr. L. C. Akah</div>
 </div>
@@ -2773,6 +2795,56 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   snapScene(); spy();
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ snapScene(); spy(); });
   loadRoses(); checkApi();
+})();
+</script>
+<script>
+(function(){
+  // Three quiet scroll moments. Nothing here hides content unless this script runs.
+  var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  var D=document.documentElement, B=document.body;
+  D.classList.add('sfx');
+  // 1. split each page title into words, keeping the italic word italic
+  var titles=[].slice.call(document.querySelectorAll('.flow .sheet h2'));
+  titles.forEach(function(h){
+    var n=0;
+    (function wrap(el){
+      [].slice.call(el.childNodes).forEach(function(c){
+        if(c.nodeType===3){
+          var parts=c.textContent.split(/(\s+)/), f=document.createDocumentFragment();
+          parts.forEach(function(p){
+            if(!p) return;
+            if(/^\s+$/.test(p)){ f.appendChild(document.createTextNode(' ')); return; }
+            var o=document.createElement('span'); o.className='rw'; var i=document.createElement('span'); i.className='ri'; i.textContent=p; i.style.setProperty('--wi',n++); o.appendChild(i); f.appendChild(o);
+          });
+          el.replaceChild(f,c);
+        } else if(c.nodeType===1 && c.tagName!=='BR'){ wrap(c); }
+      });
+    })(h);
+    h.setAttribute('aria-label',h.textContent.replace(/\s+/g,' ').trim());
+  });
+  var photos=[].slice.call(document.querySelectorAll('.flow .sheet:not(.board) .ph'));
+  var story=[].slice.call(document.querySelectorAll('#story p[data-my]'));
+  if(reduce){ titles.forEach(function(h){ h.classList.add('in'); }); photos.forEach(function(p){ p.classList.add('dev'); }); story.forEach(function(p){ p.style.setProperty('--fill',1); p.classList.add('lit'); }); return; }
+  var tick=0;
+  function check(){
+    tick=0;
+    if(B.classList.contains('intro-on')) return;   // wait until the book is open
+    var vh=window.innerHeight;
+    for(var i=titles.length-1;i>=0;i--){ var r=titles[i].getBoundingClientRect(); if(r.top<vh*.9 && r.bottom>0){ titles[i].classList.add('in'); titles.splice(i,1); } }
+    for(var j=photos.length-1;j>=0;j--){ var q=photos[j].getBoundingClientRect(); if(q.top<vh*.85 && q.bottom>vh*.05){ photos[j].classList.add('dev'); photos.splice(j,1); } }
+    var anchor=vh*.6;
+    story.forEach(function(p){
+      var r=p.getBoundingClientRect(), fs=parseFloat(getComputedStyle(p).fontSize)||18;
+      var top=r.top+fs*.6, len=(r.bottom+fs*1.6)-top, f=len>0? Math.max(0,Math.min(1,(anchor-top)/len)) : 0;
+      p.style.setProperty('--fill',f.toFixed(3));
+      p.classList.toggle('lit', anchor>r.top);
+    });
+  }
+  function onScroll(){ if(!tick) tick=requestAnimationFrame(check); }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  new MutationObserver(onScroll).observe(B,{attributes:true,attributeFilter:['class']});
+  check();
 })();
 </script>
 <script>/* Lenis 1.1.13, smooth scroll, MIT licence, darkroom.engineering */
