@@ -1495,17 +1495,14 @@ html.lenis,html.lenis body{height:auto}
   var D=document.documentElement, L=document.getElementById('loader');
   var N=L.querySelectorAll('.ld-roll p').length-1;   // the last, empty line is where the words roll away to
   function at(k){ L.style.setProperty('--k',k); }
-  var seen=false; try{ seen=sessionStorage.getItem('memorial-loader')==='1'; sessionStorage.setItem('memorial-loader','1'); }catch(e){}
   var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
   var STEP=1350, FIRST=380, t0=Date.now(), finished=false, timers=[];
-  // first visit: all three farewells; later in the same visit: just the first
-  var shown=seen?1:N, MIN=reduce?1600:(FIRST+STEP*(shown-1)+1250), MAX=15000;
-  if(reduce){ at(0); } else {
-    timers.push(setTimeout(function(){ at(0); },FIRST));
-    for(var i=1;i<shown;i++) (function(i){ timers.push(setTimeout(function(){ at(i); },FIRST+STEP*i)); })(i);
-  }
+  // every visit shows all three farewells; the loader never closes before the last one has been read
+  var shown=N, MIN=FIRST+STEP*(shown-1)+1250, MAX=15000;
+  timers.push(setTimeout(function(){ at(0); },FIRST));
+  for(var i=1;i<shown;i++) (function(i){ timers.push(setTimeout(function(){ at(i); },FIRST+STEP*i)); })(i);
   timers.push(setTimeout(function(){ if(!finished) L.classList.add('waiting'); },MIN+400));
-  function finish(){ if(finished) return; finished=true; timers.forEach(clearTimeout); L.classList.remove('waiting');
+  function finish(){ if(finished) return; if(Date.now()-t0<MIN){ setTimeout(finish,MIN-(Date.now()-t0)); return; } finished=true; timers.forEach(clearTimeout); L.classList.remove('waiting');
     if(!reduce) at(N);   // the last farewell rolls up and away
     setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); }, reduce?0:520);
     setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); D.classList.remove('ld-reveal'); }, reduce?800:2300); }
