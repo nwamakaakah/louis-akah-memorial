@@ -1488,6 +1488,9 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 /* a little more white space: every step of the spacing scale opens up by about a sixth */
 :root{--s5:28px; --s6:38px; --s7:56px; --s8:76px; --s9:112px; --s10:148px}
 @media (max-width:880px){ :root{--s5:26px; --s6:32px; --s7:46px; --s8:60px; --s9:84px; --s10:100px} }
+/* full-page photographs stay behind while the next page slides over them */
+.flow .sheet.bleed{overflow:hidden}
+.flow .sheet.bleed .bleed-photos{will-change:transform}
 </style>
 </head>
 <body>
@@ -2268,7 +2271,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   function draw(q,q2){
     const frontOn=!reduce? q<.9995 : q<.5;
     if(intro.hidden===frontOn) intro.hidden=!frontOn;
-    if(frontOn){ if(reduce) poseIntro(0,1); else poseIntro(180*easeTurn(clamp((q-.04)/.56,0,1)), 1-smooth(.6,1,q)); intro.classList.toggle('opening', q>.02); }
+    if(frontOn){ if(reduce) poseIntro(0,1); else poseIntro(180*easeTurn(clamp((q-.03)/.55,0,1)), 1-smooth(.36,.9,q)); intro.classList.toggle('opening', q>.02); }
     const endOn=!reduce? q2>.0005 : q2>.5;
     if(endgate.hidden===endOn) endgate.hidden=!endOn;
     if(endOn){ poseEnd(reduce?1:q2); endgate.classList.toggle('done', reduce || q2>.985); }
@@ -2308,7 +2311,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     else if(y>ls+2 && y<ls+Z-2){ const t=dir>0? ls+Z : ls; glide(t, 300+1500*Math.abs(t-y)/Z); }
   }
 
-  function openBook(then){ glide(Z, 3200, then); }
+  function openBook(then){ glide(Z, 2600, then); }
   function closeBook(){ if(window.scrollY>Z) window.scrollTo(0,Z); glide(0,3200); }
   function closeAtEnd(){ closeDrawer(); const ls=lastStart(); if(window.scrollY<ls-H) window.scrollTo(0,ls); glide(maxY(),3400); }
   function backToLastPage(){ glide(lastStart(),3400); }
@@ -2806,16 +2809,16 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   // drift: while the page is being scrolled, every block trails a few pixels in the direction of the scroll,
   // the lower on screen the more it trails, and eases back into place when the scroll stops
   var touch=false; try{ touch=matchMedia('(pointer:coarse)').matches; }catch(e){}
-  var SEL='.head > *, h2, h3, p, figure, li, blockquote, .day, .tribute, .letter, .msg, .mnote, .facts > div, .write-cta, .roses-card, .film, .film-note, .reg-names, .thanks, .sig, .label, .gallery, .bleed-fig';
+  var SEL='.head > *, h2, h3, p, figure, li, blockquote, .day, .tribute, .letter, .msg, .mnote, .facts > div, .write-cta, .roses-card, .film, .film-note, .reg-names, .thanks, .sig, .label, .gallery';
   var blocks=[];
-  [].slice.call(document.querySelectorAll('.flow .sheet:not(.board) .inner')).forEach(function(w){
+  [].slice.call(document.querySelectorAll('.flow .sheet:not(.board):not(.bleed) .inner')).forEach(function(w){
     [].slice.call(w.querySelectorAll(SEL)).forEach(function(el){
       if(el.closest('.drift')) return;
       if(el.closest('.folio') || !el.getClientRects().length) return;
       el.classList.add('drift'); blocks.push({el:el, y:0});
     });
   });
-  var MAX=touch? 10 : 20, lastY=window.scrollY, vel=0, loop=0;
+  var MAX=touch? 16 : 34, lastY=window.scrollY, vel=0, loop=0;
   function drift(){
     loop=0;
     var vh=window.innerHeight, y=window.scrollY, L=window.memorialLenis;
@@ -2826,8 +2829,8 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       var B=blocks[i], r=B.el.getBoundingClientRect();
       if(r.bottom<-120 || r.top>vh+120){ if(B.y){ B.y=0; B.el.style.translate=''; } continue; }
       var pos=Math.max(0,Math.min(1,(r.top+r.height/2)/vh));     // 0 at the top of the screen, 1 at the bottom
-      var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*1.4));
-      B.y+= (target-B.y)*.07;                            // every block eases towards where it should be
+      var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*2.3));
+      B.y+= (target-B.y)*.1;                            // every block eases towards where it should be
       if(Math.abs(B.y)<.05 && !moving){ B.y=0; B.el.style.translate=''; }
       else { B.el.style.translate='0 '+B.y.toFixed(2)+'px'; moving=true; }
     }
@@ -2835,7 +2838,19 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   }
   function kick(){ if(!loop && !B.classList.contains('intro-on')) loop=requestAnimationFrame(drift); }
   window.addEventListener('scroll',kick,{passive:true});
-  function parallax(){}
+  // full-page photographs: as the page scrolls on, the photo moves at half speed inside its page,
+  // so the next page slides up over it instead of the photo simply scrolling away
+  var bleeds=[].slice.call(document.querySelectorAll('.flow .sheet.bleed')).map(function(sh){ return {sh:sh, ph:sh.querySelector('.bleed-photos'), top:sh.querySelector('.over-top')}; }).filter(function(b){ return b.ph; });
+  function parallax(vh){
+    for(var i=0;i<bleeds.length;i++){
+      var b=bleeds[i], r=b.sh.getBoundingClientRect();
+      if(r.bottom<0 || r.top>vh){ continue; }
+      var past=Math.max(0,-r.top), off=Math.min(past*.5, r.height*.5), dim=Math.min(1, past/r.height);
+      b.ph.style.transform= off? 'translate3d(0,'+off.toFixed(1)+'px,0)' : '';
+      b.ph.style.filter= dim>.01? 'brightness('+(1-dim*.35).toFixed(3)+')' : '';
+      if(b.top) b.top.style.transform= off? 'translate3d(0,'+off.toFixed(1)+'px,0)' : '';
+    }
+  }
   var tick=0;
   function check(){
     tick=0;
@@ -2872,6 +2887,30 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       prevent:function(n){ return !!(n && n.closest && n.closest('.garden,.writer,.reader,[data-lenis-prevent]')); }
     });
     window.memorialLenis=lenis;
+    // the roses page and the message writer get the same smooth scroll and the same gentle drift
+    var touchP=false; try{ touchP=matchMedia('(pointer:coarse)').matches; }catch(e){}
+    [['#roses','.garden-in','.garden-top, .wreath-wrap, .garden-side > *'],
+     ['#write','.writer-in','.garden-top, .wr-head > *, .wr-paper > *, .wr-thanks-text > *']].forEach(function(cfg){
+      var pane=document.querySelector(cfg[0]), inner=pane&&pane.querySelector(cfg[1]); if(!inner) return;
+      var pl=new Lenis({wrapper:pane, content:inner, lerp:.065, smoothWheel:true, syncTouch:false});
+      var blocks=[].slice.call(pane.querySelectorAll(cfg[2])).map(function(el){ return {el:el,y:0}; });
+      var MAX=touchP? 16 : 34, vel=0, loop=0, lastT=pane.scrollTop;
+      function drift(){
+        loop=0;
+        var v= typeof pl.velocity==='number'? pl.velocity : (pane.scrollTop-lastT); lastT=pane.scrollTop;
+        vel+= (v-vel)*.18;
+        var vh=pane.clientHeight, top0=pane.getBoundingClientRect().top, moving=Math.abs(vel)>.05;
+        for(var i=0;i<blocks.length;i++){
+          var B=blocks[i], r=B.el.getBoundingClientRect(), pos=Math.max(0,Math.min(1,(r.top-top0+r.height/2)/vh));
+          var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*2.3));
+          B.y+= (target-B.y)*.1;
+          if(Math.abs(B.y)<.05 && !moving){ B.y=0; B.el.style.translate=''; } else { B.el.style.translate='0 '+B.y.toFixed(2)+'px'; moving=true; }
+        }
+        if(moving) loop=requestAnimationFrame(drift);
+      }
+      pane.addEventListener('scroll',function(){ if(!loop) loop=requestAnimationFrame(drift); },{passive:true});
+      (function raf(t){ if(!pane.hidden) pl.raf(t); requestAnimationFrame(raf); })(0);
+    });
     // while one of those pages is open, the book underneath stays still
     var mo=new MutationObserver(function(){ var b=document.body.classList; if(b.contains('garden-open')||b.contains('writer-open')||b.contains('reader-open')) lenis.stop(); else lenis.start(); });
     mo.observe(document.body,{attributes:true,attributeFilter:['class']});
