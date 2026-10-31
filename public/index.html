@@ -1348,7 +1348,7 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
 
 /* each farewell rolls up into a fixed window, like a slot turning */
 .ld-roll{height:1.25em; overflow:hidden; font-family:var(--display,var(--serif)); font-size:clamp(23px,5.6vw,34px); font-weight:500; letter-spacing:-.02em; line-height:1.25em}
-.ld-roll .tr{transform:translateY(calc(var(--k) * -1.25em)); transition:transform 1.25s cubic-bezier(.83,.05,.56,1)}
+.ld-roll .tr{display:flex; flex-direction:column-reverse; transform:translateY(calc((var(--k) - var(--n,3)) * 1.25em)); transition:transform 1.25s cubic-bezier(.83,.05,.56,1)}
 .ld-roll p,.ld-tag span{opacity:0; transition:opacity 1s cubic-bezier(.45,0,.25,1)}
 .ld-roll p.cur,.ld-tag span.cur{opacity:1; transition-delay:.25s}
 .ld-roll p{margin:0; height:1.25em; white-space:nowrap; font-size:inherit !important; line-height:inherit !important; letter-spacing:inherit !important; font-family:inherit; font-weight:inherit; color:var(--ld-ink)}
@@ -1356,6 +1356,9 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
 .ld-tag{height:1.6em; overflow:hidden; margin-top:var(--s2,8px); font-family:var(--serif); font-size:var(--fs-small,16px); font-weight:400; letter-spacing:0; color:var(--ld-ink2); line-height:1.6em}
 .ld-tag span{white-space:nowrap}
 .ld-tag .tr{transform:translateY(calc(var(--k) * -1.6em)); transition:transform 1.25s cubic-bezier(.83,.05,.56,1) .1s}
+/* at the end both rewind, line by line, back to the start */
+.loader.rewind .ld-roll .tr,.loader.rewind .ld-tag .tr{transition-duration:.55s; transition-timing-function:cubic-bezier(.65,0,.35,1); transition-delay:0s}
+.loader.rewind .ld-roll p,.loader.rewind .ld-tag span{transition-duration:.45s; transition-delay:0s}
 .ld-tag span{display:block; height:1.6em}
 
 .ld-foot{position:absolute; left:0; right:0; bottom:calc(28px + env(safe-area-inset-bottom,0px)); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--ld-ink2);
@@ -1477,9 +1480,8 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-stopped{overflow:hidden}
 
 /* ---------- scroll moments: titles rise, photos develop, his line of years draws itself ---------- */
-/* 1. a page's title, then the line under it, rise gently from below and fade in (same curve as nwamaka.framer.website) */
-html.sfx .flow .sheet .rise{opacity:0; transform:translateY(42px); transition:opacity 1.4s cubic-bezier(.83,.05,.56,1), transform 1.4s cubic-bezier(.83,.05,.56,1); transition-delay:var(--rd,0s)}
-html.sfx .flow .sheet .rise.in{opacity:1; transform:none}
+/* 1. everything on a page rolls in from just below as it comes into view (curve from nwamaka.framer.website/my-resume) */
+html.sfx .flow .sheet .rise{opacity:0}
 /* 2. photographs develop: soft and sepia, then full colour */
 html.sfx .flow .sheet:not(.board) .ph{filter:sepia(.75) saturate(.55) contrast(.9) brightness(1.05) blur(2px) grayscale(0); opacity:.55; transition:filter 2.2s cubic-bezier(.3,.6,.2,1), opacity 1.4s ease}
 html.sfx .flow .sheet:not(.board) .ph.dev{filter:sepia(0) saturate(1) contrast(1) brightness(1) blur(0) grayscale(0); opacity:1}
@@ -1492,7 +1494,7 @@ html.sfx #story p[data-my]::before{background:linear-gradient(to bottom, var(--p
 html.sfx #story p[data-my].lit .my::after{background:var(--plum); border-color:var(--plum)}
 html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 @media (prefers-reduced-motion: reduce){
-  html.sfx .flow .sheet .rise{opacity:1; transform:none; transition:none}
+  html.sfx .flow .sheet .rise{opacity:1}
   html.sfx .flow .sheet:not(.board) .ph{opacity:1; transition:none}
 }
 /* roses page: the count reads "30 roses laid"; the line under the button explains, then thanks */
@@ -1500,6 +1502,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 </style>
 </head>
 <body>
+
 
 <div class="loader" id="loader" role="status" aria-live="polite" aria-label="Opening the memorial book">
   <div class="ld-in">
@@ -1520,6 +1523,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
   var D=document.documentElement, L=document.getElementById('loader');
   var N=L.querySelectorAll('.ld-roll p').length-1;   // the last, empty line is where the words roll away to
   var LINES=L.querySelectorAll('.ld-roll p'), TAGS=L.querySelectorAll('.ld-tag span');
+  L.style.setProperty('--n',N);
   function at(k){ L.style.setProperty('--k',k); [LINES,TAGS].forEach(function(list){ for(var j=0;j<list.length;j++) list[j].classList.toggle('cur', j===k); }); }
   var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
   var STEP=1700, FIRST=300, t0=Date.now(), finished=false, timers=[];
@@ -1529,9 +1533,10 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
   for(var i=1;i<shown;i++) (function(i){ timers.push(setTimeout(function(){ at(i); },FIRST+STEP*i)); })(i);
   timers.push(setTimeout(function(){ if(!finished) L.classList.add('waiting'); },MIN+400));
   function finish(){ if(finished) return; if(Date.now()-t0<MIN){ setTimeout(finish,MIN-(Date.now()-t0)); return; } finished=true; timers.forEach(clearTimeout); L.classList.remove('waiting');
-    if(!reduce) at(N);   // the last farewell rolls up and away
-    setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); }, reduce?0:850);
-    setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); D.classList.remove('ld-reveal'); }, reduce?800:2700); }
+    // both lines rewind in order (German, French, Igbo) and slide away the way they came, then the page lifts
+    var back=0; if(!reduce){ L.classList.add('rewind'); for(var r=N-2;r>=-1;r--){ (function(r,d){ setTimeout(function(){ at(r); },d); })(r,back); back+=520; } back-=120; }
+    setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); }, reduce?0:back+350);
+    setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); D.classList.remove('ld-reveal'); }, reduce?800:back+2200); }
   function whenReady(){ var wait=Math.max(0,MIN-(Date.now()-t0)); setTimeout(finish,wait); }
   setTimeout(finish,MAX);
   function coverReady(){ return new Promise(function(res){
@@ -2806,22 +2811,37 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
   var D=document.documentElement, B=document.body;
   D.classList.add('sfx');
-  // 1. each page title, and the sentence under it, rise as one
+  // 1. every block on an inside page (title, paragraphs, pictures, lists, cards) rises on its own as it comes into view;
+  //    whatever is on screen at the same moment rises together, a few hundredths of a second apart
+  var SEL='.head > *, h2, h3, p, figure, li, blockquote, .day, .tribute, .letter, .msg, .mnote, .facts > div, .write-cta, .roses-card, .film-frame, .film-box, .reg-names, .thanks, .sig, .label, .gallery > *';
   var titles=[];
-  [].slice.call(document.querySelectorAll('.flow .sheet h2')).forEach(function(h){
-    h.classList.add('rise'); titles.push(h);
-    var head=h.closest('.head')||h.parentElement, lead=head&&head.querySelector('.intro');
-    if(lead){ lead.classList.add('rise'); lead.style.setProperty('--rd','.18s'); titles.push(lead); }
+  [].slice.call(document.querySelectorAll('.flow .sheet:not(.board):not(.bleed) .wrap')).forEach(function(w){
+    [].slice.call(w.querySelectorAll(SEL)).forEach(function(el){
+      if(el.closest('.rise')) return;                      // its parent already rises
+      if(!el.getClientRects().length) return;               // hidden pieces stay as they are
+      el.classList.add('rise'); titles.push(el);
+    });
   });
   var photos=[].slice.call(document.querySelectorAll('.flow .sheet:not(.board) .ph'));
   var story=[].slice.call(document.querySelectorAll('#story p[data-my]'));
-  if(reduce){ titles.forEach(function(h){ h.classList.add('in'); }); photos.forEach(function(p){ p.classList.add('dev'); }); story.forEach(function(p){ p.style.setProperty('--fill',1); p.classList.add('lit'); }); return; }
+  if(reduce){ titles.forEach(function(h){ h.classList.remove('rise'); }); photos.forEach(function(p){ p.classList.add('dev'); }); story.forEach(function(p){ p.style.setProperty('--fill',1); p.classList.add('lit'); }); return; }
+  // the roll itself: Web Animations, added on top of whatever the element already does, so tilted prints stay tilted
+  var EASE='cubic-bezier(.85,.03,.56,1)', DUR=1100, DIST=56;
+  function rise(el,delay){
+    el.classList.remove('rise');
+    if(!el.animate){ return; }
+    try{
+      el.animate([{opacity:0},{opacity:1}],{duration:DUR,easing:EASE,delay:delay,fill:'backwards'});
+      el.animate([{transform:'translateY('+DIST+'px)',composite:'add'},{transform:'translateY(0px)',composite:'add'}],{duration:DUR,easing:EASE,delay:delay,fill:'backwards'});
+    }catch(e){}
+  }
   var tick=0;
   function check(){
     tick=0;
     if(B.classList.contains('intro-on')) return;   // wait until the book is open
     var vh=window.innerHeight;
-    for(var i=titles.length-1;i>=0;i--){ var r=titles[i].getBoundingClientRect(); if(r.top<vh*.92 && r.bottom>0){ titles[i].classList.add('in'); titles.splice(i,1); } }
+    var batch=[]; for(var i=titles.length-1;i>=0;i--){ var r=titles[i].getBoundingClientRect(); if(r.top<vh*.96 && r.bottom>0){ batch.push([r.top,titles[i]]); titles.splice(i,1); } }
+    batch.sort(function(a,b){ return a[0]-b[0]; }).forEach(function(x,j){ rise(x[1], Math.min(j*40,320)); });
     for(var j=photos.length-1;j>=0;j--){ var q=photos[j].getBoundingClientRect(); if(q.top<vh*.85 && q.bottom>vh*.05){ photos[j].classList.add('dev'); photos.splice(j,1); } }
     var anchor=vh*.6;
     story.forEach(function(p){
