@@ -326,7 +326,7 @@ body.on-bleed .rose-chip{background:rgba(255,255,255,.92); color:var(--plum)}
 #wreath{position:absolute; inset:0; width:100%; height:100%; overflow:visible}
 .wreath-photo{position:absolute; left:50%; top:50%; width:43%; aspect-ratio:1; translate:-50% -50%; border-radius:50%; overflow:hidden; border:7px solid #fdfcf9; box-shadow:0 1px 2px rgba(0,0,0,.12), 0 18px 30px -16px rgba(40,25,20,.6)}
 .wreath-photo .ph{height:100%}
-.rose-new{transform-box:fill-box; transform-origin:center; animation:roseBloom .9s cubic-bezier(.2,.9,.3,1.25) both}
+.rose-new{transform-box:fill-box; transform-origin:center; animation:roseBloom .9s cubic-bezier(.22,1,.36,1) both}
 @keyframes roseBloom{0%{opacity:0; transform:scale(.25) rotate(-60deg)} 100%{opacity:1; transform:none}}
 @keyframes roseIn{0%{opacity:0; transform:translate(0px,-170px) scale(1.9)} 60%{opacity:1} 100%{opacity:1; transform:none}}
 .count{font-size:clamp(26px,2.6vw,34px); line-height:1.15; font-weight:400; margin:0}
@@ -838,7 +838,7 @@ body.writer-open .rail{visibility:hidden}
 .env-seal span{font-family:var(--serif); font-style:italic; font-size:clamp(17px,1.9vw,22px); color:#f6dcab; letter-spacing:.04em; text-shadow:0 -1px 0 rgba(0,0,0,.3)}
 .play .env-letter{animation:letterIn 1s .25s cubic-bezier(.45,.05,.3,1) both}
 .play .env-flap{animation:flapShut .6s 1.25s cubic-bezier(.5,0,.3,1) both}
-.play .env-seal{animation:sealOn .5s 1.8s cubic-bezier(.3,1.6,.5,1) both}
+.play .env-seal{animation:sealOn .5s 1.8s cubic-bezier(.22,1,.36,1) both}
 .play .env{animation:envLift 1s 2.35s cubic-bezier(.3,.7,.2,1) both}
 .play .wr-thanks-text>*{animation:thanksUp .8s cubic-bezier(.2,.7,.25,1) both}
 .play .wr-thanks-text>*:nth-child(1){animation-delay:2.6s}
@@ -922,7 +922,7 @@ body.writer-open .rail{visibility:hidden}
 .years.pre .axis-dots i{transform:scale(0)}
 .years.in .years-list li{transition:opacity .7s var(--ease-soft) calc(var(--i)*90ms), transform .7s cubic-bezier(.2,.7,.3,1) calc(var(--i)*90ms), box-shadow .47s var(--ease-soft)}
 .years.in .axis-line{transition:transform 1.4s cubic-bezier(.4,0,.2,1) .2s}
-.years.in .axis-dots i{transition:transform .65s cubic-bezier(.3,1.6,.5,1) calc(.4s + var(--i)*110ms)}
+.years.in .axis-dots i{transition:transform .65s cubic-bezier(.22,1,.36,1) calc(.4s + var(--i)*110ms)}
 .years-links path{stroke-dasharray:var(--len); stroke-dashoffset:0}
 .years.pre .years-links path{stroke-dashoffset:var(--len)}
 .years.in .years-links path{transition:stroke-dashoffset .8s var(--ease-soft) calc(.5s + var(--i)*110ms), stroke .41s var(--ease-soft), stroke-width .41s var(--ease-soft)}
@@ -2635,7 +2635,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     const sway=(Math.random()<.5?-1:1)*(4+Math.random()*5), drift=(Math.random()*30-15);
     el.animate([
       {transform:'translate(0,30px) scale(.15) rotate(0deg)',opacity:0},
-      {transform:'translate(0,-40px) scale(1.06) rotate('+(-sway/2)+'deg)',opacity:1,offset:.22},
+      {transform:'translate(0,-40px) scale(1) rotate('+(-sway/2)+'deg)',opacity:1,offset:.22},
       {transform:'translate('+(drift*.4)+'px,-80px) scale(1) rotate('+sway+'deg)',opacity:1,offset:.45},
       {transform:'translate('+(drift*.8)+'px,-125px) scale(.98) rotate('+(-sway*.6)+'deg)',opacity:.7,offset:.72},
       {transform:'translate('+drift+'px,-160px) scale(.95) rotate('+(sway*.3)+'deg)',opacity:0}],
@@ -2883,14 +2883,14 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     loop=0;
     var vh=window.innerHeight, y=window.scrollY, L=window.memorialLenis;
     var v= L && typeof L.velocity==='number' ? L.velocity : (y-lastY); lastY=y;
-    vel+= (v-vel)*.18;                                   // smoothed speed of the scroll
+    vel+= (v-vel)*.06;                                   // smoothed speed of the scroll
     var moving=Math.abs(vel)>.05;
     for(var i=0;i<blocks.length;i++){
       var B=blocks[i], r=B.el.getBoundingClientRect();
-      if(r.bottom<-120 || r.top>vh+120){ if(B.y){ B.y=0; B.el.style.translate=''; } continue; }
+      if((r.bottom<-240 || r.top>vh+240) && Math.abs(B.y)<.5){ if(B.y){ B.y=0; B.el.style.translate=''; } continue; }
       var pos=Math.max(0,Math.min(1,(r.top+r.height/2)/vh));     // 0 at the top of the screen, 1 at the bottom
-      var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*1.8));
-      B.y+= (target-B.y)*.1;                            // every block eases towards where it should be
+      var target=Math.max(-MAX,Math.min(MAX, vel*(1+.3*pos)*1.6));
+      B.y+= (target-B.y)*.08;                            // every block eases towards where it should be
       if(Math.abs(B.y)<.05 && !moving){ B.y=0; B.el.style.translate=''; }
       else { B.el.style.translate='0 '+B.y.toFixed(2)+'px'; moving=true; }
     }
@@ -2958,12 +2958,12 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       function drift(){
         loop=0;
         var v= typeof pl.velocity==='number'? pl.velocity : (pane.scrollTop-lastT); lastT=pane.scrollTop;
-        vel+= (v-vel)*.18;
+        vel+= (v-vel)*.06;
         var vh=pane.clientHeight, top0=pane.getBoundingClientRect().top, moving=Math.abs(vel)>.05;
         for(var i=0;i<blocks.length;i++){
           var B=blocks[i], r=B.el.getBoundingClientRect(), pos=Math.max(0,Math.min(1,(r.top-top0+r.height/2)/vh));
-          var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*1.8));
-          B.y+= (target-B.y)*.1;
+          var target=Math.max(-MAX,Math.min(MAX, vel*(1+.3*pos)*1.6));
+          B.y+= (target-B.y)*.08;
           if(Math.abs(B.y)<.05 && !moving){ B.y=0; B.el.style.translate=''; } else { B.el.style.translate='0 '+B.y.toFixed(2)+'px'; moving=true; }
         }
         if(moving) loop=requestAnimationFrame(drift);
