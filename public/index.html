@@ -1494,6 +1494,8 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
   html.sfx .flow .sheet h2 .ri{transform:none; transition:none}
   html.sfx .flow .sheet:not(.board) .ph{opacity:1; transition:none}
 }
+/* roses page: the count reads "30 roses laid"; the line under the button explains, then thanks */
+#rsStatus{font-size:var(--fs-small) !important; line-height:1.6 !important; margin-top:var(--s3,12px)}
 </style>
 </head>
 <body>
@@ -2133,16 +2135,15 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
         <div class="wreath-photo"><div class="ph" data-photo="cover.jpg" data-era="colour" data-n="1"></div></div>
       </div>
       <div class="garden-side">
-        <h2 id="gardenTitle" class="count" tabindex="-1"><b id="roseCount">&nbsp;</b><span class="cl"><span id="roseWord">roses</span> laid for</span><em>Nze Dr. Louis Chukwukadibia Akah</em></h2>
+        <h2 id="gardenTitle" class="count" tabindex="-1"><b id="roseCount">&nbsp;</b><span class="cl"><span id="roseWord">roses</span> laid</span></h2>
         <p class="people" id="rosePeople"></p>
-        <p class="garden-intro">Tap to lay a rose for Dede. You can lay up to ten.</p>
         <form id="roseForm" class="rose-form" novalidate>
           <div class="ts" id="rsTs"></div>
           <div class="rose-row">
             <button class="btn-rose" id="rsBtn" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#rico"/></svg><span id="rsBtnText">Lay a rose</span></button>
             <span class="mine" id="rsMine" aria-hidden="true"></span>
           </div>
-          <p class="form-status" id="rsStatus" role="status" aria-live="polite"></p>
+          <p class="form-status" id="rsStatus" role="status" aria-live="polite">Tap to lay a rose for Dede. You can lay up to ten.</p>
         </form>
         <p class="demo-note" data-demo-note hidden>Preview only: the roses here are examples, and the roses you lay stay on this device. <button class="demo-reset" type="button" id="roseReset">Start again</button></p>
       </div>
@@ -2567,7 +2568,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     [...dots.children].forEach((d,k)=>d.classList.toggle('on',k<n));
     dots.title=n+' of '+MAXR+' roses laid';
     roseForm.classList.toggle('laid',n>=MAXR);
-    rsBtn.disabled=n>=MAXR;
+    rsBtn.disabled=n>=MAXR; if(n>=MAXR && !rsStatus.classList.contains('err')) rsStatus.textContent='';
     document.getElementById('rsBtnText').textContent= n>=MAXR ? 'Thank you for your roses' : n ? 'Lay another rose' : 'Lay a rose';
   }
   async function loadRoses(){
@@ -2706,7 +2707,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   paintCta();
   // preview only: let the family try the rose and the letter again
   const forget=k=>{ try{ localStorage.removeItem(k); }catch(e){} };
-  document.getElementById('roseReset').addEventListener('click',()=>{ forget('memorial-rose'); myRose=null; rsStatus.textContent=''; loadRoses(); garden.scrollTo({top:0,behavior:'smooth'}); });
+  document.getElementById('roseReset').addEventListener('click',()=>{ forget('memorial-rose'); myRose=null; rsStatus.textContent='Tap to lay a rose for Dede. You can lay up to ten.'; loadRoses(); garden.scrollTo({top:0,behavior:'smooth'}); });
   document.getElementById('noteReset').addEventListener('click',()=>{ forget('memorial-note'); myNote=null;
     const cta=document.getElementById('writeCta'); cta.classList.remove('sent');
     document.getElementById('wcLine').textContent='Share a memory or a word of comfort. The family reads every message and adds them to this page.';
