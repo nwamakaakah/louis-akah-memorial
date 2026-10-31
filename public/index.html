@@ -1494,6 +1494,23 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 /* message writer: 'Lay a rose for Dede' is a secondary button in rose */
 .wr-actions .wr-rose.btn-line{margin-top:0; color:var(--rose); border-color:var(--rose); text-decoration:none}
 .wr-actions .wr-rose.btn-line:hover{background:var(--rose); color:#fff; box-shadow:0 10px 24px -10px rgba(220,30,68,.45)}
+/* roses page: the wreath settles into place as the page opens */
+@keyframes wreathIn{from{opacity:0; transform:rotate(-10deg) scale(.94)} to{opacity:1; transform:none}}
+.wreath-wrap.bloom #wreath{animation:wreathIn 2.2s cubic-bezier(.22,1,.36,1) both}
+.wreath-wrap.bloom .wreath-photo{animation:ldFade 1.4s cubic-bezier(.22,1,.36,1) .2s both}
+@media (prefers-reduced-motion: reduce){ .wreath-wrap.bloom #wreath,.wreath-wrap.bloom .wreath-photo{animation:none} }
+/* contents menu: a close button and his name only show on phones */
+.rail-close,.rail .pagename{display:none}
+@media (max-width:700px){
+  .rail-close{display:grid; place-items:center; position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; border:0; background:rgba(36,30,27,.06); color:inherit; cursor:pointer; z-index:3}
+  body.on-dark .rail-close{background:rgba(255,255,255,.12)}
+  .rail-close svg{width:14px; height:14px}
+  .rail .pageno{display:none}
+  .rail .pagename{display:block; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; padding:8px 0 2px 14px; opacity:.6; white-space:nowrap}
+  .rail-brand{padding-right:48px}
+}
+/* phones: the page footer shows his name instead of the page number */
+@media (max-width:700px){ .folio .lbl{display:inline !important} .folio .n{display:none !important} }
 </style>
 </head>
 <body>
@@ -1563,6 +1580,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 <nav class="rail" id="rail" aria-label="Contents">
   <button class="rail-toggle" id="menuBtn" type="button" aria-expanded="false" aria-controls="railPanel"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="sr">Contents</span></button>
   <div class="rail-panel" id="railPanel">
+    <button class="rail-close" id="railClose" type="button" aria-label="Close contents"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
     <a class="rail-brand" href="#cover" data-go="cover" tabindex="-1"><b>Louis C. Akah</b><span>1947 – 2026</span></a>
     <ol class="nav">
         <li><a href="#programme" data-go="programme" aria-label="Programme"><span class="no" aria-hidden="true"><svg><use href="#ic-programme"/></svg></span><span class="lb">Programme <small class="pg"></small></span></a></li>
@@ -1577,7 +1595,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
     <div class="rail-foot">
       <a class="rail-rose" href="#roses" data-roses aria-label="Lay a rose"><svg class="rose-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#rico"/></svg><span class="lb">Lay a rose <small id="drawerRoses"></small></span></a>
       <button class="rail-edit rail-write" type="button" data-write><span class="no" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 15.5V17h1.5L15 6.5 13.5 5 3 15.5zM12.5 6l1.5 1.5"/></svg></span><span class="lb">Write a message</span></button>
-      <span class="pageno lb" id="pageno">Page 1 of 12</span>
+      <span class="pageno lb" id="pageno">Page 1 of 12</span><span class="pagename lb" aria-hidden="true">Dr. L. C. Akah</span>
     </div>
     <span class="rail-track" aria-hidden="true"><i class="ribbon" id="ribbon"></i></span>
   </div>
@@ -2277,7 +2295,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     if(frontOn){ if(reduce) poseIntro(0,1); else poseIntro(180*easeTurn(clamp((q-.03)/.55,0,1)), 1-smooth(.36,.9,q)); intro.classList.toggle('opening', q>.02); }
     const endOn=!reduce? q2>.0005 : q2>.5;
     if(endgate.hidden===endOn) endgate.hidden=!endOn;
-    if(endOn){ poseEnd(reduce?1:q2); endgate.classList.toggle('done', reduce || q2>.985); }
+    if(endOn){ poseEnd(reduce?1:q2); endgate.classList.toggle('done', reduce || q2>.85); }
     document.body.classList.toggle('intro-on', frontOn||endOn);
   }
   function frame(now){
@@ -2375,6 +2393,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   });
   const rail=document.getElementById('rail'), menuBtn=document.getElementById('menuBtn');
   function closeDrawer(){ rail.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false'); if(rail.contains(document.activeElement)) document.activeElement.blur(); }
+  document.getElementById('railClose').addEventListener('click',e=>{ e.stopPropagation(); closeDrawer(); menuBtn.focus({preventScroll:true}); });
   menuBtn.addEventListener('click',e=>{ e.stopPropagation(); const open=!rail.classList.contains('open'); rail.classList.toggle('open',open); menuBtn.setAttribute('aria-expanded',String(open)); if(open){ const on=rail.querySelector('.nav a.on')||rail.querySelector('.nav a'); on.focus({preventScroll:true}); } });
   document.addEventListener('click',e=>{ if(rail.classList.contains('open') && !rail.contains(e.target)) closeDrawer(); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape' && rail.classList.contains('open')) closeDrawer(); });
@@ -2557,8 +2576,17 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   const saveMine=()=>store.set('memorial-rose',JSON.stringify(myRose));
   const dots=document.getElementById('rsMine');
   for(let k=0;k<MAXR;k++) dots.appendChild(document.createElement('i'));
+  // the number counts up from nought each time the roses page is opened
+  let countUp=false, countRaf=0;
+  function setCount(n, animate){
+    const el=document.getElementById('roseCount'); cancelAnimationFrame(countRaf);
+    if(!animate || reduce){ el.textContent=fmt(n); return; }
+    const t0=performance.now(), D=1900;
+    const step=now=>{ const p=Math.min(1,(now-t0)/D), e=1-Math.pow(1-p,4); el.textContent=fmt(Math.round(n*e)); if(p<1) countRaf=requestAnimationFrame(step); };
+    el.textContent=fmt(0); countRaf=requestAnimationFrame(step);
+  }
   function showRoses(animateIdx){
-    document.getElementById('roseCount').textContent=fmt(roses.count);
+    setCount(roses.count, countUp && !garden.hidden); if(!garden.hidden) countUp=false;
     document.getElementById('roseWord').textContent=roses.count===1?'rose':'roses';
     const ppl=roses.people||0;
     document.getElementById('rosePeople').textContent= ppl ? 'from '+fmt(ppl)+(ppl===1?' person':' people') : '';
@@ -2626,6 +2654,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     if(!garden.hidden) return;
     lastFocus=document.activeElement; closeDrawer();
     garden.hidden=false; document.body.classList.add('garden-open'); garden.scrollTop=0;
+    countUp=true; const ww=garden.querySelector('.wreath-wrap'); if(ww){ ww.classList.remove('bloom'); void ww.offsetWidth; ww.classList.add('bloom'); }
     loadRoses(); if(!myRose) tsWidget(document.getElementById('rsTs'));
     clearInterval(poll); if(!demo) poll=setInterval(()=>{ if(!document.hidden) loadRoses(); },20000);
     try{ history.replaceState(null,'','#roses'); }catch(e){}
@@ -2834,7 +2863,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       });
     });
   });
-  var MAX=touch? 16 : 34, lastY=window.scrollY, vel=0, loop=0;
+  var MAX=touch? 12 : 26, lastY=window.scrollY, vel=0, loop=0;
   function drift(){
     loop=0;
     var vh=window.innerHeight, y=window.scrollY, L=window.memorialLenis;
@@ -2845,7 +2874,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       var B=blocks[i], r=B.el.getBoundingClientRect();
       if(r.bottom<-120 || r.top>vh+120){ if(B.y){ B.y=0; B.el.style.translate=''; } continue; }
       var pos=Math.max(0,Math.min(1,(r.top+r.height/2)/vh));     // 0 at the top of the screen, 1 at the bottom
-      var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*2.3));
+      var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*1.8));
       B.y+= (target-B.y)*.1;                            // every block eases towards where it should be
       if(Math.abs(B.y)<.05 && !moving){ B.y=0; B.el.style.translate=''; }
       else { B.el.style.translate='0 '+B.y.toFixed(2)+'px'; moving=true; }
@@ -2910,7 +2939,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       var pane=document.querySelector(cfg[0]), inner=pane&&pane.querySelector(cfg[1]); if(!inner) return;
       var pl=new Lenis({wrapper:pane, content:inner, lerp:.065, smoothWheel:true, syncTouch:false});
       var blocks=[].slice.call(pane.querySelectorAll(cfg[2])).map(function(el){ return {el:el,y:0}; });
-      var MAX=touchP? 16 : 34, vel=0, loop=0, lastT=pane.scrollTop;
+      var MAX=touchP? 12 : 26, vel=0, loop=0, lastT=pane.scrollTop;
       function drift(){
         loop=0;
         var v= typeof pl.velocity==='number'? pl.velocity : (pane.scrollTop-lastT); lastT=pane.scrollTop;
@@ -2918,7 +2947,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
         var vh=pane.clientHeight, top0=pane.getBoundingClientRect().top, moving=Math.abs(vel)>.05;
         for(var i=0;i<blocks.length;i++){
           var B=blocks[i], r=B.el.getBoundingClientRect(), pos=Math.max(0,Math.min(1,(r.top-top0+r.height/2)/vh));
-          var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*2.3));
+          var target=Math.max(-MAX,Math.min(MAX, vel*(.9+.9*pos)*1.8));
           B.y+= (target-B.y)*.1;
           if(Math.abs(B.y)<.05 && !moving){ B.y=0; B.el.style.translate=''; } else { B.el.style.translate='0 '+B.y.toFixed(2)+'px'; moving=true; }
         }
