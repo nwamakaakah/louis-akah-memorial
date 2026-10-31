@@ -1528,6 +1528,8 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 .sheet:not(.bleed) .folio{display:none !important}
 /* the funeral day in the programme takes the title orange */
 .day.main .date{color:#c8541c !important}
+/* roses page: a few warm words under the count */
+.garden-note{font-family:var(--serif); font-size:var(--fs-body); line-height:1.7; color:var(--ink-2); max-width:30em; margin:var(--s5) 0 0}
 </style>
 </head>
 <body>
@@ -1660,7 +1662,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
             <div class="head">
               <span class="label">Order of events</span>
               <h2>The <em>Send-forth</em></h2>
-              <p class="intro">Family and friends are invited to Amawbia as we lay Dede to rest. Everyone who knew and loved him is welcome at every event.</p>
+              <p class="intro">We are bringing Dede home to Amawbia to rest. If you knew him, loved him, or were loved by him, please come and stand with us. There is a place for you at every one of these gatherings.</p>
             </div>
             <div class="order">
               <div class="day">
@@ -1807,7 +1809,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
                 <b>Mrs. Uchenna Ibe</b><b>Mr. Anayo Akah</b>
               </div></div>
             </div>
-            <p class="reg-foot">and a host of relations, in-laws, friends and former students.</p>
+            <p class="reg-foot">and so many more who called him their own: relations, in-laws, friends, and generations of former students.</p>
           </div>
         </div>
       </div>
@@ -1900,7 +1902,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
             <div class="write-cta" id="writeCta">
               <div class="wc-text">
                 <span class="label">Write to the family</span>
-                <p class="wc-line" id="wcLine">Share a memory or a word of comfort. The family reads every message and adds them to this page.</p>
+                <p class="wc-line" id="wcLine">Tell us about the Dede you knew: a lesson, a joke, a day you will never forget. We read every message ourselves, and we will add yours to this page.</p>
               </div>
               <button class="btn-ink wc-btn" id="wcBtn" type="button" data-write><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 15.5V17h1.5L15 6.5 13.5 5 3 15.5zM12.5 6l1.5 1.5"/></svg><span>Write a message</span></button>
               <button class="wc-sent done" id="wcSent" type="button" data-write hidden aria-label="Message sent. View it"><span class="env" aria-hidden="true"><span class="env-back"></span><span class="env-letter"></span><span class="env-front"></span><span class="env-flap"></span><span class="env-seal"><svg class="seal-cross" viewBox="0 0 24 24"><path d="M12 4v16M6.5 9.5h11"/></svg></span></span><small>Sent</small></button>
@@ -1932,7 +1934,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
               <div class="msg"><p>Every Sunday he sat in the third pew and sang the loudest. The choir will miss his voice and his encouragement.</p><div class="who">St. Joseph's Church Choir</div><div class="where">Amawbia</div></div>
               <div class="msg"><p>He taught me algebra in 1994 and taught me how to be a man the same year. When my father could not pay my WAEC fees, I found my name on the list of candidates anyway, and nobody would tell me who had paid. Years later, at my housemanship, a letter arrived in his handwriting: "Chinedu, I hear you are now a doctor. Remember the people who cannot pay." I have kept that letter on my desk for twenty years. Rest well, sir.</p><div class="who">Dr. Chinedu Obi</div><div class="where">Class of 1996</div></div>
             </div>
-            <div class="roses-card"><span class="label">Roses for our Dede</span><p><span data-rose-count>Roses</span> laid so far.</p><a class="btn-line" href="#roses" data-roses><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#rico"/></svg><span data-rose-cta>Lay a rose</span></a></div>
+            <div class="roses-card"><span class="label">Roses for our Dede</span><p><span data-rose-count>Roses</span> laid for him so far.</p><a class="btn-line" href="#roses" data-roses><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#rico"/></svg><span data-rose-cta>Lay a rose</span></a></div>
           </div>
         </div>
       </div>
@@ -1961,7 +1963,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
         <div class="rh"><span>His life in photos</span><span class="orn"><svg><use href="#uli"/></svg></span><span>1964 – 2024</span></div>
         <div class="layout">
           <aside class="margin">
-            <div class="mnote"><span class="label">The album</span><p>Seventy-nine years, gathered from the family's albums and phones.</p></div>
+            <div class="mnote"><span class="label">The album</span><p>Seventy-nine years, gathered from old albums, drawers and all of our phones.</p></div>
           </aside>
           <div class="main">
             <div class="head">
@@ -1995,14 +1997,14 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
       <div class="wrap">
         <div class="head">
           <h2>His life in <em>motion</em></h2>
-          <p class="intro">A short film made by the family from home videos and photographs.</p>
+          <p class="intro">Home videos and old photographs from every corner of the family, put together so we can watch him smile again.</p>
         </div>
         <div class="film" id="filmBox" data-youtube="" data-src="">
           <div class="film-poster ph" data-photo="film-poster.jpg" data-era="colour" data-n="1"></div>
           <button class="film-play" type="button" aria-label="Play the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
           <div class="film-meta"><span class="film-title">Dede · 1947–2026</span><span class="film-len" id="filmLen">Film coming soon</span></div>
         </div>
-        <p class="film-note">Turn your sound on. On a phone, turn it sideways to watch full screen.</p>
+        <p class="film-note">Turn your sound on, and if you can, watch it with someone you love. On a phone, turn it sideways for full screen.</p>
       </div>
       <footer class="folio"><span class="lbl">Dr. L. C. Akah</span><span class="n"></span><button class="turn" data-next>Turn the page <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></footer>
     </div>
@@ -2030,9 +2032,9 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
         <article class="insert thanks">
           <span class="label">A note from the family</span>
           <h2>Thank <em>you</em></h2>
-          <p class="lede">The family of the late Nze Dr. Louis Chukwukadibia Akah is deeply grateful for the love that has surrounded us since 10 August.</p>
-          <p>To everyone who visited, prayed, cooked, sang, sent messages or travelled to Amawbia: thank you. To the doctors and nurses who cared for Dede in his last months, and to Rev. Fr. Anselm Okeke and the parish of St. Joseph's, we are grateful beyond words.</p>
-          <p>May God reward your kindness, and may you return safely to your homes.</p>
+          <p class="lede">Since 10 August, your love has held us up. Every visit, every call, every meal and every prayer reminded us how many lives Dede touched, and how deeply he was loved in return.</p>
+          <p>To all of you who sat with us, cooked, sang, prayed, sent messages or made the long journey home to Amawbia: thank you. To the doctors and nurses who cared for Dede so gently in his last months, and to Rev. Fr. Anselm Okeke and our St. Joseph's family, we are grateful beyond words.</p>
+          <p>May God bless you for every kindness, and carry each of you safely home.</p>
           <p class="daalu">Daalụ nụ.</p>
           <div class="sig"><span class="hand">Ngozi Akah</span><small>For the family</small></div>
         </article>
@@ -2118,11 +2120,11 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
     <div class="wr-stage" id="wrCompose">
       <div class="wr-head">
         <h2 id="wrTitle">A word for the <em>family</em></h2>
-        <p class="wr-intro">Share a memory of Dede, or a word of comfort. The family reads every message before adding it to this page. You can send one message.</p>
+        <p class="wr-intro">Tell us something you remember about Dede, or simply send us a word of comfort. We read every message ourselves before adding it to this page. You can send one.</p>
       </div>
       <form class="wr-paper" id="bookForm" novalidate>
         <p class="wr-to">To the family of Nze Dr. Louis Chukwukadibia Akah,</p>
-        <label class="wr-msg" for="bkMsg"><span class="vh">Your message</span><textarea id="bkMsg" name="message" maxlength="1000" rows="7" required placeholder="Write your message here…"></textarea></label>
+        <label class="wr-msg" for="bkMsg"><span class="vh">Your message</span><textarea id="bkMsg" name="message" maxlength="1000" rows="7" required placeholder="Write from the heart…"></textarea></label>
         <div class="wr-count"><span id="bkCount">0</span> / 1000</div>
         <div class="wr-sign">
           <label for="bkName"><span>Your name</span><input id="bkName" name="name" maxlength="80" autocomplete="name" required></label>
@@ -2143,7 +2145,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
       </div>
       <div class="wr-thanks-text">
         <h2 id="wrThanksTitle" tabindex="-1">Thank <em>you</em></h2>
-        <p class="wr-thanks-line" id="wrThanksLine">Your message is on its way to the family. They read every one, and will add yours to this page.</p>
+        <p class="wr-thanks-line" id="wrThanksLine">Your words are on their way to us. Thank you for remembering Dede with us. We will read your message and add it to this page.</p>
         <p class="daalu">Daalụ nụ.</p>
         <p class="demo-note wr-demo" data-demo-note hidden>Preview only. <button class="demo-reset" type="button" id="noteReset">Write another test message</button></p>
         <div class="wr-actions"><button class="btn-ink" id="wrDone" type="button">Back to the book</button><a class="wr-rose btn-line" id="wrRose" href="#roses" data-roses><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#rico"/></svg>Lay a rose for Dede</a></div>
@@ -2174,6 +2176,7 @@ html.sfx #story p[data-my].lit .my b{color:var(--plum)}
       <div class="garden-side">
         <h2 id="gardenTitle" class="count" tabindex="-1"><b id="roseCount">&nbsp;</b><span class="cl"><span id="roseWord">roses</span> laid for</span><em>Dr. L. C. Akah</em></h2>
         <p class="people" id="rosePeople"></p>
+        <p class="garden-note">Every rose on this wreath was laid by someone who loved him: a child, a neighbour, a friend, a student who still remembers his voice in class. Lay one for Dede, and it joins the others around his photograph.</p>
         <form id="roseForm" class="rose-form" novalidate>
           <div class="ts" id="rsTs"></div>
           <div class="rose-row">
@@ -2651,7 +2654,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     myRose.n+=1; const myIndex=roses.count; myRose.idx.push(myIndex); saveMine();
     roses.count+=1; if(first) roses.people=(roses.people||0)+1;
     rsStatus.classList.remove('err');
-    rsStatus.textContent= myRose.n>=MAXR ? '' : myRose.n===1 ? 'Thank you. Your rose has been laid for Dede.' : myRose.n+' roses laid. Thank you.';
+    rsStatus.textContent= myRose.n>=MAXR ? '' : myRose.n===1 ? 'Thank you. Your rose is on the wreath for Dede.' : myRose.n+' roses from you. Thank you for loving him.';
     showRoses('keep');
     if(demo) return;
     roseQueue=roseQueue.then(async()=>{
@@ -2706,7 +2709,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     document.getElementById('wrThanksTitle').innerHTML='Thank <em>you</em>'+(n?', '+n.replace(/[&<>]/g,''):'');
     document.getElementById('wrThanksLine').textContent= already
       ? 'You have already sent the family a message from this device. They read every one, and will add yours to this page.'
-      : 'Your message is on its way to the family. They read every one, and will add yours to this page.';
+      : 'Your words are on their way to us. Thank you for remembering Dede with us. We will read your message and add it to this page.';
     document.getElementById('wrRose').hidden=!!(myRose&&myRose.n>=10);
     wrThanks.classList.remove('play','done'); void wrThanks.offsetWidth;
     wrThanks.classList.add(animate?'play':'done');
@@ -2758,7 +2761,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   document.getElementById('roseReset').addEventListener('click',()=>{ forget('memorial-rose'); myRose=null; rsStatus.textContent='Tap to lay a rose for Dede. You can lay up to ten.'; loadRoses(); garden.scrollTo({top:0,behavior:'smooth'}); });
   document.getElementById('noteReset').addEventListener('click',()=>{ forget('memorial-note'); myNote=null;
     const cta=document.getElementById('writeCta'); cta.classList.remove('sent');
-    document.getElementById('wcLine').textContent='Share a memory or a word of comfort. The family reads every message and adds them to this page.';
+    document.getElementById('wcLine').textContent='Tell us about the Dede you knew: a lesson, a joke, a day you will never forget. We read every message ourselves, and we will add yours to this page.';
     document.getElementById('wcBtn').hidden=false; document.getElementById('wcSent').hidden=true;
     wrThanks.hidden=true; wrCompose.hidden=false; writer.scrollTop=0; tsWidget(document.getElementById('bkTs')); bkMsg.focus({preventScroll:true}); });
 
@@ -2864,7 +2867,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     [].slice.call(w.querySelectorAll(SEL)).forEach(function(el){
       if(el.closest('.drift')) return;
       if(!el.getClientRects().length) return;
-      el.classList.add('drift'); blocks.push({el:el, y:0});
+      el.classList.add('drift'); blocks.push({el:el, y:0, k: el.tagName==='H2'? 1 : .42});   // big titles drift fully, everything else much less
     });
     // dividers drawn as the border of a larger box get their own line, so they drift with everything else
     [].slice.call(w.querySelectorAll('.order, .letters, .msgs, .reg-row, .layout, .head, .years-head')).forEach(function(box){
@@ -2880,10 +2883,13 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       });
     });
   });
+  var bleedSheets=[].slice.call(document.querySelectorAll('.flow .sheet.bleed'));
   var MAX=touch? 12 : 26, lastY=window.scrollY, vel=0, loop=0;
   function drift(){
     loop=0;
     var vh=window.innerHeight, y=window.scrollY, L=window.memorialLenis;
+    // full-width photographs on screen: text near them barely moves, so the slide-over stays clean
+    var near=[]; for(var q=0;q<bleedSheets.length;q++){ var br=bleedSheets[q].getBoundingClientRect(); if(br.bottom>-400 && br.top<vh+400) near.push(br); }
     var v= L && typeof L.velocity==='number' ? L.velocity : (y-lastY); lastY=y;
     vel+= (v-vel)*.06;                                   // smoothed speed of the scroll
     var moving=Math.abs(vel)>.05;
@@ -2891,7 +2897,9 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       var B=blocks[i], r=B.el.getBoundingClientRect();
       if((r.bottom<-240 || r.top>vh+240) && Math.abs(B.y)<.5){ if(B.y){ B.y=0; B.el.style.translate=''; } continue; }
       var pos=Math.max(0,Math.min(1,(r.top+r.height/2)/vh));     // 0 at the top of the screen, 1 at the bottom
-      var target=Math.max(-MAX,Math.min(MAX, vel*(1+.3*pos)*1.6));
+      var k=B.k||1;
+      for(var q2=0;q2<near.length;q2++){ var nb=near[q2], dist= r.bottom<nb.top? nb.top-r.bottom : (r.top>nb.bottom? r.top-nb.bottom : 0); if(dist<360) k*= .15+.85*(dist/360); }
+      var target=Math.max(-MAX,Math.min(MAX, vel*(1+.3*pos)*1.6*k));
       B.y+= (target-B.y)*.08;                            // every block eases towards where it should be
       if(Math.abs(B.y)<.05 && !moving){ B.y=0; B.el.style.translate=''; }
       else { B.el.style.translate='0 '+B.y.toFixed(2)+'px'; moving=true; }
