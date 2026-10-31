@@ -1329,7 +1329,7 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
 .btn-rose svg,.btn-line svg,.open-btn svg{width:20px; height:20px}
 
 /* ---------- opening loader: three farewells roll past, then the page lifts away ---------- */
-.loader{--ld-ink:#241e1b; --ld-ink2:#6a5f58; --ld-acc:#9c4317; --k:-1;
+.loader{--ld-ink:#241e1b; --ld-ink2:#6a5f58; --ld-acc:#c8541c; --k:-1;
   position:fixed; inset:0; z-index:10000; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;
   padding:32px 20px calc(32px + env(safe-area-inset-bottom,0px)); text-align:center; color:var(--ld-ink);
   background-color:#f4efe5; background-image:var(--noise), radial-gradient(ellipse 85% 75% at 50% 44%, #fbf8f1 0%, #f4efe5 58%, #ebe3d4 100%);
@@ -1382,7 +1382,7 @@ html.ld-reveal #intro .intro-cta{animation:ldRise .9s cubic-bezier(.22,.8,.24,1)
 }
 /* the covers are orange cloth; everything inside is green */
 /* titles carry the cover's orange */
-h2 em,.wr-head h2 em,.wr-thanks h2 em{color:#9c4317}
+h2 em,.wr-head h2 em,.wr-thanks h2 em{color:#c8541c}
 .garden .count h2 em,.garden h2 .count em,#gardenTitle em{color:var(--ink)}
 .sheet.board.front-cover{background-color:#984a24}
 .sheet.board.back-cover{background-color:#934823}
@@ -1478,13 +1478,23 @@ html.lenis,html.lenis body{height:auto}
 
 /* ---------- scroll moments: titles rise, photos develop, his line of years draws itself ---------- */
 /* inside pages: blocks drift with a gentle parallax (set from the script); nothing fades or rolls in */
-html.sfx .flow .sheet .plx{will-change:translate}
+html.sfx .flow .sheet .bleed-fig .ph.plx-in{scale:1.16; will-change:translate}
+/* photographs develop: soft and sepia, then their own colour, as they come into view */
+html.sfx .flow .sheet:not(.board) .ph{filter:sepia(.75) saturate(.55) contrast(.9) brightness(1.05) blur(2px) grayscale(0); opacity:.55; transition:filter 2.2s cubic-bezier(.3,.6,.2,1), opacity 1.4s ease}
+html.sfx .flow .sheet:not(.board) .ph.dev{filter:sepia(0) saturate(1) contrast(1) brightness(1) blur(0) grayscale(0); opacity:1}
+html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=bw]{filter:sepia(0) saturate(1) contrast(1.06) brightness(1) blur(0) grayscale(1)}
+html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=sepia]{filter:sepia(.55) saturate(.85) contrast(.96) brightness(1) blur(0) grayscale(0)}
+html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=seventies]{filter:sepia(.18) saturate(.8) contrast(.95) brightness(1) blur(0) grayscale(0)}
+@media (prefers-reduced-motion: reduce){ html.sfx .flow .sheet:not(.board) .ph{transition:none} }
 /* 3. the line beside his story fills in green as you read down; each year's dot lights when the line reaches it */
 html.sfx #story p[data-my]::before{background:linear-gradient(to bottom, var(--plum) 0, var(--plum) calc(var(--fill,0) * 100%), var(--rule) calc(var(--fill,0) * 100%)) !important; width:2px !important; margin-left:-.5px}
 html.sfx #story p[data-my].lit .my::after{background:var(--plum); border-color:var(--plum)}
 html.sfx #story p[data-my].lit .my b{color:var(--plum)}
 /* roses page: the count reads "30 roses laid"; the line under the button explains, then thanks */
 #rsStatus{font-size:var(--fs-small) !important; line-height:1.6 !important; margin-top:var(--s3,12px)}
+/* a little more white space: every step of the spacing scale opens up by about a sixth */
+:root{--s5:28px; --s6:38px; --s7:56px; --s8:76px; --s9:112px; --s10:148px}
+@media (max-width:880px){ :root{--s5:26px; --s6:32px; --s7:46px; --s8:60px; --s9:84px; --s10:100px} }
 </style>
 </head>
 <body>
@@ -2799,31 +2809,29 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   var D=document.documentElement, B=document.body;
   D.classList.add('sfx');
   var story=[].slice.call(document.querySelectorAll('#story p[data-my]'));
-  if(reduce){ story.forEach(function(p){ p.style.setProperty('--fill',1); p.classList.add('lit'); }); return; }
-  // every block on an inside page drifts a little slower than the page; pictures drift more than words,
-  // so the page reads in two gentle layers
-  var SEL='.head > *, h2, h3, p, figure, li, blockquote, .day, .tribute, .letter, .msg, .mnote, .facts > div, .write-cta, .roses-card, .film-frame, .film-box, .reg-names, .thanks, .sig, .label, .gallery';
-  var blocks=[];
-  [].slice.call(document.querySelectorAll('.flow .sheet:not(.board):not(.bleed) .wrap')).forEach(function(w){
-    [].slice.call(w.querySelectorAll(SEL)).forEach(function(el){
-      if(el.closest('.plx')) return;                       // its parent already drifts
-      if(!el.getClientRects().length) return;
-      el.classList.add('plx');
-      var pic=el.tagName==='FIGURE' || !!el.querySelector('.ph,img');
-      blocks.push([el, pic? .1 : .05]);
-    });
-  });
+  var photos=[].slice.call(document.querySelectorAll('.flow .sheet:not(.board) .ph'));
+  if(reduce){ story.forEach(function(p){ p.style.setProperty('--fill',1); p.classList.add('lit'); }); photos.forEach(function(p){ p.classList.add('dev'); }); return; }
+  // parallax in layers that never collide:
+  //   - a page's title (and the line under it) moves up a little faster than the page as you scroll past it
+  //   - the side column of a page (the photo and facts beside his story) trails a little behind the text column
+  //   - the full-page photographs move slowly inside their frames
   var touch=false; try{ touch=matchMedia('(pointer:coarse)').matches; }catch(e){}
-  var CAP=touch? 28 : 48;
+  var F=touch? .6 : 1, layers=[];
+  [].slice.call(document.querySelectorAll('.flow .sheet:not(.board)')).forEach(function(sh){
+    var h=sh.querySelector('.wrap h2'); if(h){ var head=h.parentElement.classList.contains('head')? h.parentElement : h; layers.push({el:head, sheet:sh, kind:'head'}); }
+    var aside=sh.querySelector('.layout > aside.margin'), main=sh.querySelector('.layout > .main');
+    if(aside && main && aside.offsetHeight) layers.push({el:aside, sheet:sh, kind:'side', main:main});
+    [].slice.call(sh.querySelectorAll('.bleed-fig .ph')).forEach(function(ph){ ph.classList.add('plx-in'); layers.push({el:ph, sheet:sh, kind:'photo'}); });
+  });
   function parallax(vh){
-    var mid=vh/2;
-    for(var i=0;i<blocks.length;i++){
-      var el=blocks[i][0], k=blocks[i][1]*(touch?.6:1), r=el.getBoundingClientRect();
-      var base=parseFloat(el.dataset.py||0), top=r.top-base;            // where it would be without the drift
-      if(top+r.height<-vh*.6 || top>vh*1.6){ continue; }
-      var d=(top+r.height/2)-mid, off=Math.max(-CAP,Math.min(CAP,-d*k));
-      el.dataset.py=off.toFixed(1);
-      el.style.translate='0 '+off.toFixed(1)+'px';
+    for(var i=0;i<layers.length;i++){
+      var L=layers[i], r=L.sheet.getBoundingClientRect();
+      if(r.bottom<-vh*.2 || r.top>vh*1.2) continue;
+      var v=0;
+      if(L.kind==='head'){ var past=Math.max(0, vh*.35 - r.top); v=-Math.min(past*.22*F, 140*F); }
+      else if(L.kind==='side'){ var room=Math.max(0, L.main.offsetHeight - L.el.offsetHeight - 24); var past2=Math.max(0, vh*.25 - r.top); v=Math.min(past2*.18*F, room, 220); }
+      else { var c=(r.top + r.height/2 - vh/2)/vh; v=Math.max(-1,Math.min(1,c))*-7; L.el.style.translate='0 '+v.toFixed(2)+'%'; continue; }
+      L.el.style.translate='0 '+v.toFixed(1)+'px';
     }
   }
   var tick=0;
@@ -2831,6 +2839,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     tick=0;
     if(B.classList.contains('intro-on')) return;   // nothing moves while the book is closed
     var vh=window.innerHeight;
+    for(var j=photos.length-1;j>=0;j--){ var q=photos[j].getBoundingClientRect(); if(q.top<vh*.85 && q.bottom>vh*.05){ photos[j].classList.add('dev'); photos.splice(j,1); } }
     parallax(vh);
     var anchor=vh*.6;
     story.forEach(function(p){
