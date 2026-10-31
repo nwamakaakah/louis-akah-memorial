@@ -1479,13 +1479,6 @@ html.lenis,html.lenis body{height:auto}
 /* ---------- scroll moments: titles rise, photos develop, his line of years draws itself ---------- */
 /* inside pages: blocks drift with a gentle parallax (set from the script); nothing fades or rolls in */
 html.sfx .flow .sheet .drift{will-change:translate}
-/* photographs develop: soft and sepia, then their own colour, as they come into view */
-html.sfx .flow .sheet:not(.board) .ph{filter:sepia(.75) saturate(.55) contrast(.9) brightness(1.05) blur(2px) grayscale(0); opacity:.55; transition:filter 2.2s cubic-bezier(.3,.6,.2,1), opacity 1.4s var(--ease-soft)}
-html.sfx .flow .sheet:not(.board) .ph.dev{filter:sepia(0) saturate(1) contrast(1) brightness(1) blur(0) grayscale(0); opacity:1}
-html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=bw]{filter:sepia(0) saturate(1) contrast(1.06) brightness(1) blur(0) grayscale(1)}
-html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=sepia]{filter:sepia(.55) saturate(.85) contrast(.96) brightness(1) blur(0) grayscale(0)}
-html.sfx .flow .sheet:not(.board) .ph.dev.has-img[data-era=seventies]{filter:sepia(.18) saturate(.8) contrast(.95) brightness(1) blur(0) grayscale(0)}
-@media (prefers-reduced-motion: reduce){ html.sfx .flow .sheet:not(.board) .ph{transition:none} }
 /* 3. the line beside his story fills in green as you read down; each year's dot lights when the line reaches it */
 html.sfx #story p[data-my]::before{background:linear-gradient(to bottom, var(--plum) 0, var(--plum) calc(var(--fill,0) * 100%), var(--rule) calc(var(--fill,0) * 100%)) !important; width:2px !important; margin-left:-.5px}
 html.sfx #story p[data-my].lit .my::after{background:var(--plum); border-color:var(--plum)}
@@ -2809,8 +2802,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   var D=document.documentElement, B=document.body;
   D.classList.add('sfx');
   var story=[].slice.call(document.querySelectorAll('#story p[data-my]'));
-  var photos=[].slice.call(document.querySelectorAll('.flow .sheet:not(.board) .ph'));
-  if(reduce){ story.forEach(function(p){ p.style.setProperty('--fill',1); p.classList.add('lit'); }); photos.forEach(function(p){ p.classList.add('dev'); }); return; }
+  if(reduce){ story.forEach(function(p){ p.style.setProperty('--fill',1); p.classList.add('lit'); }); return; }
   // drift: while the page is being scrolled, every block trails a few pixels in the direction of the scroll,
   // the lower on screen the more it trails, and eases back into place when the scroll stops
   var touch=false; try{ touch=matchMedia('(pointer:coarse)').matches; }catch(e){}
@@ -2849,7 +2841,6 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     tick=0;
     if(B.classList.contains('intro-on')) return;   // nothing moves while the book is closed
     var vh=window.innerHeight;
-    for(var j=photos.length-1;j>=0;j--){ var q=photos[j].getBoundingClientRect(); if(q.top<vh*.85 && q.bottom>vh*.05){ photos[j].classList.add('dev'); photos.splice(j,1); } }
     parallax(vh);
     var anchor=vh*.6;
     story.forEach(function(p){
