@@ -1,3 +1,6 @@
 node_modules/
 .wrangler/
 .dev.vars
+
+# family working documents, kept off GitHub
+Content for the book/
