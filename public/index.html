@@ -1566,6 +1566,12 @@ body{background:#ece5d8}
 }
 /* grandchildren: full names read best one per line on phones */
 @media (max-width:700px){ .reg-names.cols{grid-template-columns:1fr !important; columns:auto !important; row-gap:var(--s2)} }
+/* grandchildren: one column per family, in the order of his children */
+.reg-names.gc{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s5) var(--s6)}
+.gc-fam{display:grid; gap:var(--s2); align-content:start}
+.gc-fam b{display:block}
+@media (min-width:1100px){ .reg-names.gc{grid-template-columns:repeat(4,max-content); column-gap:var(--s7)} }
+@media (max-width:700px){ .reg-names.gc{grid-template-columns:1fr; gap:var(--s4)} }
 </style>
 </head>
 <body>
@@ -1841,12 +1847,17 @@ body{background:#ece5d8}
                 <b>Mr. David Akah</b>
                 <b>Mr. Chiemelie Akah</b>
                 <b>Miss Chimamanda Akah</b>
+                <b>Miss --- Akah</b>
+                <b>Miss --- Akah</b>
               </div></div>
-              <div class="reg-row"><span class="label">Grandchildren</span><div class="reg-names cols">
-                <b>Chidera Akah</b><b>Munachi Akah</b><b>Ugonna Duru</b><b>Chiemelie Akah</b><b>Chidimma Egwuatu</b><b>Ijemabalum Onyiuke</b><b>Chinyere Egwuatu</b><b>Nwabufo Onyiuke</b><b>Adanna Duru</b><b>Kaosisochukwu Akah</b><b>Chimbuifem Egwuatu</b><b>Akuezue Onyiuke</b><b>Lotanna Akah</b><b>Ifeanyichukwu Egwuatu</b><b>Ogechukwu Egwuatu</b>
+              <div class="reg-row"><span class="label">Grandchildren</span><div class="reg-names gc">
+                <div class="gc-fam"><b>Chidera Akah</b><b>Munachi Akah</b><b>Chiemelie Akah</b><b>Kaosisochukwu Akah</b><b>Lotanna Akah</b></div>
+                <div class="gc-fam"><b>Ugonna Duru</b><b>Adanna Duru</b></div>
+                <div class="gc-fam"><b>Ijemabalum Onyiuke</b><b>Nwabufo Onyiuke</b><b>Akuezue Onyiuke</b></div>
+                <div class="gc-fam"><b>Chidimma Egwuatu</b><b>Chinyere Egwuatu</b><b>Chimbuifem Egwuatu</b><b>Ifeanyichukwu Egwuatu</b><b>Ogechukwu Egwuatu</b></div>
               </div></div>
               <div class="reg-row"><span class="label">Siblings</span><div class="reg-names">
-                <b>Nwamulunamma</b><b>Benard Akah</b>
+                <b>Nwamulunamma</b><b>Bernard Akah</b>
               </div></div>
             </div>
             <p class="reg-foot">and so many more who called him their own: relations, in-laws, friends, and generations of former students.</p>
