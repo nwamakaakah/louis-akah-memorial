@@ -1355,7 +1355,7 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
 .ld-tag span{white-space:nowrap}
 .ld-tag .tr{transform:translateY(calc(var(--k) * -1.6em)); transition:transform 1.45s cubic-bezier(.6,0,.25,1) .08s}
 /* at the end both rewind, line by line, back to the start */
-.loader.rewind .ld-roll .tr,.loader.rewind .ld-tag .tr{transition-duration:1.25s; transition-timing-function:cubic-bezier(.5,0,.2,1); transition-delay:0s}
+.loader.rewind .ld-roll .tr,.loader.rewind .ld-tag .tr{transition-duration:.44s; transition-timing-function:cubic-bezier(.65,0,.35,1); transition-delay:0s}
 .ld-tag span{display:block; height:1.6em}
 
 .ld-foot{position:absolute; left:0; right:0; bottom:calc(28px + env(safe-area-inset-bottom,0px)); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--ld-ink2);
@@ -1607,8 +1607,10 @@ body{background:#ece5d8}
   timers.push(setTimeout(function(){ if(!finished) L.classList.add('waiting'); },MIN+400));
   function finish(){ if(finished) return; if(Date.now()-t0<MIN){ setTimeout(finish,MIN-(Date.now()-t0)); return; } finished=true; timers.forEach(clearTimeout); L.classList.remove('waiting');
     // both lines rewind in order (German, French, Igbo) and slide away the way they came, then the page lifts
-    var back=0; if(!reduce){ L.classList.add('rewind'); at(-1); back=1250; }   // one smooth glide back through French and Igbo
-    setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); }, 0);   // the page lifts while the farewells rewind
+    // the farewells rewind one at a time (Xhosa, French, Igbo) and slide away the way they came;
+    // the moment the last one has gone, the page lifts
+    var back=0, STEPR=480; if(!reduce){ L.classList.add('rewind'); for(var r=N-2;r>=-1;r--){ (function(r,d){ setTimeout(function(){ at(r); },d); })(r,back); back+=STEPR; } back+=440-STEPR+60; }
+    setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); }, reduce?0:back);
     setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); D.classList.remove('ld-reveal'); }, reduce?800:back+2200); }
   function whenReady(){ var wait=Math.max(0,MIN-(Date.now()-t0)); setTimeout(finish,wait); }
   setTimeout(finish,MAX);
@@ -2087,7 +2089,7 @@ body{background:#ece5d8}
           <p>To all of you who sat with us, cooked, sang, prayed, sent messages or made the long journey home to Amawbia: thank you. To the doctors and nurses who cared for Dede so gently in his last months, and to Rev. Fr. Anselm Okeke and our St. Joseph's family, we are grateful beyond words.</p>
           <p>May God bless you for every kindness, and carry each of you safely home.</p>
           <p class="daalu">Daalụ nụ.</p>
-          <div class="sig"><span class="hand">Ngozi Akah</span><small>For the family</small></div>
+          <div class="sig"><span class="hand">Nwachukwu Akah</span><small>For the family</small></div>
         </article>
       </div>
       <footer class="folio"><span class="lbl">Dr. L. C. Akah</span><span class="n">10</span><button class="turn" data-next>Turn the page <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></footer>
