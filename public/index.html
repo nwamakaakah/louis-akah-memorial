@@ -1355,7 +1355,9 @@ p,.tribute p,.msg p,.wc-line,.reg-names.cols b,.reg-foot,.rd-text,#thanks .lede,
 .ld-tag span{white-space:nowrap}
 .ld-tag .tr{transform:translateY(calc(var(--k) * -1.6em)); transition:transform 1.45s cubic-bezier(.6,0,.25,1) .08s}
 /* at the end both rewind, line by line, back to the start */
-.loader.rewind .ld-roll .tr,.loader.rewind .ld-tag .tr{transition-duration:.44s; transition-timing-function:cubic-bezier(.65,0,.35,1); transition-delay:0s}
+.loader.exit .ld-roll .tr,.loader.exit .ld-tag .tr{transition-duration:.42s; transition-timing-function:cubic-bezier(.55,0,.8,.25); transition-delay:0s}
+/* on the way out only the last farewell is in the window, so it leaves cleanly the way it came */
+.loader.exit .ld-roll p:not(.cur),.loader.exit .ld-tag span:not(.cur){visibility:hidden}
 .ld-tag span{display:block; height:1.6em}
 
 .ld-foot{position:absolute; left:0; right:0; bottom:calc(28px + env(safe-area-inset-bottom,0px)); font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:var(--ld-ink2);
@@ -1607,9 +1609,9 @@ body{background:#ece5d8}
   timers.push(setTimeout(function(){ if(!finished) L.classList.add('waiting'); },MIN+400));
   function finish(){ if(finished) return; if(Date.now()-t0<MIN){ setTimeout(finish,MIN-(Date.now()-t0)); return; } finished=true; timers.forEach(clearTimeout); L.classList.remove('waiting');
     // both lines rewind in order (German, French, Igbo) and slide away the way they came, then the page lifts
-    // the farewells rewind one at a time (Xhosa, French, Igbo) and slide away the way they came;
-    // the moment the last one has gone, the page lifts
-    var back=0, STEPR=480; if(!reduce){ L.classList.add('rewind'); for(var r=N-2;r>=-1;r--){ (function(r,d){ setTimeout(function(){ at(r); },d); })(r,back); back+=STEPR; } back+=440-STEPR+60; }
+    // the end is the entrance in reverse, and quick: the big line goes back up, its meaning goes back down,
+    // and the page lifts the moment they have gone
+    var back=0; if(!reduce){ var cur=N-1; L.classList.add('exit'); void L.offsetWidth; L.style.setProperty('--k',cur-1); back=420; }
     setTimeout(function(){ D.classList.add('ld-reveal'); L.classList.add('done'); }, reduce?0:back);
     setTimeout(function(){ if(L.parentNode) L.parentNode.removeChild(L); D.classList.remove('ld-reveal'); }, reduce?800:back+2200); }
   function whenReady(){ var wait=Math.max(0,MIN-(Date.now()-t0)); setTimeout(finish,wait); }
