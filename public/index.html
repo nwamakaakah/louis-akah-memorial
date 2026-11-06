@@ -1574,6 +1574,7 @@ body{background:#ece5d8}
 .gc-fam b{display:block}
 @media (min-width:1100px){ .reg-names.gc{grid-template-columns:repeat(4,max-content); column-gap:var(--s7)} }
 @media (max-width:700px){ .reg-names.gc{grid-template-columns:1fr; gap:var(--s4)} }
+.tribute h3{margin:0 0 var(--s4)}
 </style>
 </head>
 <body>
@@ -1899,12 +1900,14 @@ body{background:#ece5d8}
             </div>
             <article class="tribute">
               <span class="label">From his wife</span>
+              <h3>To my husband</h3>
               <p>When we married in 1976 you promised me a house of laughter. You kept that promise through lean years and full ones. You woke before the cock every morning, you prayed, and then you put the kettle on for me.</p>
               <p>You taught our children to read the newspaper aloud and to look a person in the eye. The compound is too quiet without your radio. Rest, my dear. I will see you again.</p>
               <div class="sig"><span class="hand">Ngozi</span><small>Lolo Ngozi Akah, his wife</small></div>
             </article>
             <article class="tribute">
               <span class="label">From his children</span>
+              <h3>To our father</h3>
               <p>You were the first person we called with good news and the last to hear the bad, because you always knew already. You checked our homework at the dining table with a red pen and a straight face, and you made every one of us show our working.</p>
               <p>When Emeka failed his first JAMB, you did not shout. You sat with him on the veranda until midnight, writing out a timetable on the back of a calendar, and the next year you woke him at five every morning with tea. When Ifeoma wanted to study medicine, you sold the Peugeot 504 without telling anyone and simply said the fees were paid.</p>
               <p>You were strict about the small things, because you said the big things are only small things added together. Shoes were polished on Saturday night. Letters were answered within the week. Visitors were never sent away without at least a cup of water and a seat in the shade.</p>
@@ -1914,16 +1917,19 @@ body{background:#ece5d8}
             </article>
             <article class="tribute">
               <span class="label">From his grandchildren</span>
+              <h3>To our grandfather</h3>
               <p>You always had groundnuts in your pocket and a riddle waiting. You let us win at draughts until we were old enough to know you were letting us. Under the ube tree you told us the stories of Amawbia, and we will keep telling them.</p>
               <div class="sig"><span class="hand">Your nine grandchildren</span><small>His grandchildren</small></div>
             </article>
             <article class="tribute">
               <span class="label">From his students</span>
+              <h3>To our principal</h3>
               <p>You ran Community Secondary School with a bell, a ledger and an open door. Many of us are engineers, nurses, teachers and traders today because you refused to let us give up on mathematics, or on ourselves.</p>
               <div class="sig"><span class="hand">Old Students' Association</span><small>Community Secondary School, Amawbia</small></div>
             </article>
             <article class="tribute">
               <span class="label">From his friend and colleague</span>
+              <h3>To my departed colleague and friend</h3>
               <p>I feel so sad writing this tribute to my late friend. How are the mighty fallen, and the weapons of war perished.</p>
               <p>I met you after I was forced to leave the Benue State civil service as a non-indigene, an Igbo man, and joined you as a contract doctor with the Awka South Local Government Service.</p>
               <p>Your friendly and jovial character made me quickly adjust to my new environment. We shared knowledge together in many tough medical cases, with good results, within the Awka South Local Government Area. Almost every staff member of the Local Government secretariat knew you, for your jokes, your humour and your generosity to all.</p>
@@ -2242,7 +2248,7 @@ body{background:#ece5d8}
       </div>
       <div class="garden-side">
         <h2 id="gardenTitle" class="count" tabindex="-1"><b id="roseCount">&nbsp;</b><span class="cl"><span id="roseWord">roses</span> for our Dede</span></h2>
-        <p class="people" id="rosePeople"></p>
+        <!-- people count hidden for now: <p class="people" id="rosePeople"></p> -->
         <p class="garden-note">Every rose on this wreath was left by someone who loved him: a child, a neighbour, a friend, a student who still remembers his voice in class. Leave one for Dede, and it joins the others around his photograph.</p>
         <form id="roseForm" class="rose-form" novalidate>
           <div class="ts" id="rsTs"></div>
@@ -2687,7 +2693,8 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     setCount(roses.count, countUp && !garden.hidden); if(!garden.hidden) countUp=false;
     document.getElementById('roseWord').textContent=roses.count===1?'rose':'roses';
     const ppl=roses.people||0;
-    document.getElementById('rosePeople').textContent= ppl ? 'from '+fmt(ppl)+(ppl===1?' person':' people') : '';
+    // people count hidden for now; to bring it back, restore the <p id="rosePeople"> line in the roses page and this line:
+    // document.getElementById('rosePeople').textContent= ppl ? 'from '+fmt(ppl)+(ppl===1?' person':' people') : '';
     document.querySelectorAll('[data-rose-count]').forEach(el=>el.textContent=fmt(roses.count)+(roses.count===1?' rose':' roses'));
     const dr=document.getElementById('drawerRoses'); if(dr) dr.textContent=fmt(roses.count);
     if(animateIdx!=='keep') drawWreath(-1);
