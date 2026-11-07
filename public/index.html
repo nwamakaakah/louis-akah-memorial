@@ -1592,22 +1592,9 @@ body{background:#ece5d8}
 .flow #thanks{min-height:100vh; min-height:100svh; display:flex; flex-direction:column}
 .flow #thanks > .inner{flex:1 1 auto; display:flex; flex-direction:column}
 .flow #thanks > .inner > .wrap{flex:1 1 auto; width:100%; display:flex; flex-direction:column; justify-content:center}
-/* album: rows of up to three, each photo whole and as large as the row allows; photos in a row share one height */
-#photos .album-wall{display:flex; flex-direction:column; gap:var(--s6); margin-top:var(--s6)}
-#photos .aw-row{display:flex; gap:var(--s4); align-items:flex-start}
-#photos .album-wall .aw{margin:0; flex:var(--ar) 1 0; min-width:0}
-#photos .album-wall img{display:block; width:100%; height:auto; box-sizing:border-box; padding:7px; background:#fbf8f1; box-shadow:var(--psh); transform:rotate(var(--tilt,0deg)); transition:transform .5s var(--ease-soft), box-shadow .5s var(--ease-soft)}
-#photos .aw-row .aw:nth-child(3n+1){--tilt:-.6deg} #photos .aw-row .aw:nth-child(3n+2){--tilt:.4deg} #photos .aw-row .aw:nth-child(3n){--tilt:-.25deg}
-#photos .aw-row:nth-child(even) .aw:nth-child(3n+1){--tilt:.5deg} #photos .aw-row:nth-child(even) .aw:nth-child(3n+2){--tilt:-.45deg} #photos .aw-row:nth-child(even) .aw:nth-child(3n){--tilt:.3deg}
-#photos .album-wall .aw:hover img{transform:rotate(0deg) translateY(-3px); box-shadow:var(--psh-up)}
-#photos .album-wall figcaption{text-align:center}
-@media (max-width:600px){ #photos .album-wall img{padding:6px} }
-#photos .album-wall figcaption{margin-top:var(--s2); font-family:var(--serif); font-size:var(--fs-small); line-height:1.45; color:var(--ink-2)}
-@media (max-width:600px){ #photos .aw-row{flex-direction:column; gap:var(--s6)} #photos .album-wall .aw{flex:none; width:100%} }
 /* desktop: centre each year dot on the timeline */
 @media (min-width:881px){ .my::after{right:-25px} }
 /* album: tap a photo to see it large; play them all as a slideshow */
-#photos .album-wall .aw img{cursor:zoom-in}
 .aw-play{display:inline-flex; align-items:center; gap:10px; margin-top:var(--s5)}
 .aw-play svg{width:14px; height:14px}
 .viewer{position:fixed; inset:0; z-index:200; background-color:#1f2f24; background-image:var(--noise), url("data:image/svg+xml;utf8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27380%27 height=%27380%27 viewBox=%270 0 380 380%27%3E%3Cg fill=%27none%27 stroke=%27%23e4ecdc%27 opacity=%27.32%27 stroke-width=%271%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cg transform=%27translate%2860 190%29 rotate%28-18%29 scale%281.05%29%27%3E%3Cpath d=%27M0 0 C 10 -20, 14 -42, 8 -66 S -2 -100, 6 -118%27/%3E%3Cg transform=%27translate%284.0 -16.0%29 rotate%28-145.0%29%27%3E%3Cpath d=%27M0 0 C4.5 -5.5 11.2 -5.5 15.0 0 C11.2 5.5 4.5 5.5 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L12.3 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2810.0 -30.0%29 rotate%28-50.0%29%27%3E%3Cpath d=%27M0 0 C4.3 -5.2 10.6 -5.2 14.2 0 C10.6 5.2 4.3 5.2 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L11.6 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2811.0 -46.0%29 rotate%28-150.0%29%27%3E%3Cpath d=%27M0 0 C4.0 -4.9 10.1 -4.9 13.4 0 C10.1 4.9 4.0 4.9 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L11.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%287.0 -62.0%29 rotate%28-55.0%29%27%3E%3Cpath d=%27M0 0 C3.8 -4.6 9.4 -4.6 12.6 0 C9.4 4.6 3.8 4.6 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L10.3 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%283.0 -80.0%29 rotate%28-155.0%29%27%3E%3Cpath d=%27M0 0 C3.5 -4.3 8.9 -4.3 11.8 0 C8.9 4.3 3.5 4.3 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.7 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%282.0 -96.0%29 rotate%28-60.0%29%27%3E%3Cpath d=%27M0 0 C3.3 -4.0 8.2 -4.0 11.0 0 C8.2 4.0 3.3 4.0 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cellipse cx=%276.0%27 cy=%27-128.6%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28-90 6.0 -128.6%29%27/%3E%3Cellipse cx=%2710.4%27 cy=%27-125.4%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28-18 10.4 -125.4%29%27/%3E%3Cellipse cx=%278.7%27 cy=%27-120.3%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%2854 8.7 -120.3%29%27/%3E%3Cellipse cx=%273.3%27 cy=%27-120.3%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28126 3.3 -120.3%29%27/%3E%3Cellipse cx=%271.6%27 cy=%27-125.4%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28198 1.6 -125.4%29%27/%3E%3Ccircle cx=%276%27 cy=%27-124%27 r=%271.4%27 fill=%27%23e4ecdc%27 stroke=%27none%27/%3E%3C/g%3E%3Cg transform=%27translate%28250 120%29 rotate%2824%29 scale%280.9%29%27%3E%3Cpath d=%27M0 0 C 10 -20, 14 -42, 8 -66 S -2 -100, 6 -118%27/%3E%3Cg transform=%27translate%284.0 -16.0%29 rotate%28-145.0%29%27%3E%3Cpath d=%27M0 0 C4.5 -5.5 11.2 -5.5 15.0 0 C11.2 5.5 4.5 5.5 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L12.3 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2810.0 -30.0%29 rotate%28-50.0%29%27%3E%3Cpath d=%27M0 0 C4.3 -5.2 10.6 -5.2 14.2 0 C10.6 5.2 4.3 5.2 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L11.6 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2811.0 -46.0%29 rotate%28-150.0%29%27%3E%3Cpath d=%27M0 0 C4.0 -4.9 10.1 -4.9 13.4 0 C10.1 4.9 4.0 4.9 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L11.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%287.0 -62.0%29 rotate%28-55.0%29%27%3E%3Cpath d=%27M0 0 C3.8 -4.6 9.4 -4.6 12.6 0 C9.4 4.6 3.8 4.6 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L10.3 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%283.0 -80.0%29 rotate%28-155.0%29%27%3E%3Cpath d=%27M0 0 C3.5 -4.3 8.9 -4.3 11.8 0 C8.9 4.3 3.5 4.3 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.7 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%282.0 -96.0%29 rotate%28-60.0%29%27%3E%3Cpath d=%27M0 0 C3.3 -4.0 8.2 -4.0 11.0 0 C8.2 4.0 3.3 4.0 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cellipse cx=%276.0%27 cy=%27-128.6%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28-90 6.0 -128.6%29%27/%3E%3Cellipse cx=%2710.4%27 cy=%27-125.4%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28-18 10.4 -125.4%29%27/%3E%3Cellipse cx=%278.7%27 cy=%27-120.3%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%2854 8.7 -120.3%29%27/%3E%3Cellipse cx=%273.3%27 cy=%27-120.3%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28126 3.3 -120.3%29%27/%3E%3Cellipse cx=%271.6%27 cy=%27-125.4%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28198 1.6 -125.4%29%27/%3E%3Ccircle cx=%276%27 cy=%27-124%27 r=%271.4%27 fill=%27%23e4ecdc%27 stroke=%27none%27/%3E%3C/g%3E%3Cg transform=%27translate%28170 370%29 rotate%28-40%29 scale%280.8%29%27%3E%3Cpath d=%27M0 0 C 10 -20, 14 -42, 8 -66 S -2 -100, 6 -118%27/%3E%3Cg transform=%27translate%284.0 -16.0%29 rotate%28-145.0%29%27%3E%3Cpath d=%27M0 0 C4.5 -5.5 11.2 -5.5 15.0 0 C11.2 5.5 4.5 5.5 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L12.3 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2810.0 -30.0%29 rotate%28-50.0%29%27%3E%3Cpath d=%27M0 0 C4.3 -5.2 10.6 -5.2 14.2 0 C10.6 5.2 4.3 5.2 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L11.6 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2811.0 -46.0%29 rotate%28-150.0%29%27%3E%3Cpath d=%27M0 0 C4.0 -4.9 10.1 -4.9 13.4 0 C10.1 4.9 4.0 4.9 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L11.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%287.0 -62.0%29 rotate%28-55.0%29%27%3E%3Cpath d=%27M0 0 C3.8 -4.6 9.4 -4.6 12.6 0 C9.4 4.6 3.8 4.6 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L10.3 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%283.0 -80.0%29 rotate%28-155.0%29%27%3E%3Cpath d=%27M0 0 C3.5 -4.3 8.9 -4.3 11.8 0 C8.9 4.3 3.5 4.3 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.7 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%282.0 -96.0%29 rotate%28-60.0%29%27%3E%3Cpath d=%27M0 0 C3.3 -4.0 8.2 -4.0 11.0 0 C8.2 4.0 3.3 4.0 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate%28330 330%29 rotate%2812%29 scale%280.95%29%27%3E%3Cpath d=%27M0 0 C 10 -20, 14 -42, 8 -66 S -2 -100, 6 -118%27/%3E%3Cg transform=%27translate%284.0 -16.0%29 rotate%28-145.0%29%27%3E%3Cpath d=%27M0 0 C4.5 -5.5 11.2 -5.5 15.0 0 C11.2 5.5 4.5 5.5 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L12.3 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2810.0 -30.0%29 rotate%28-50.0%29%27%3E%3Cpath d=%27M0 0 C4.3 -5.2 10.6 -5.2 14.2 0 C10.6 5.2 4.3 5.2 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L11.6 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2811.0 -46.0%29 rotate%28-150.0%29%27%3E%3Cpath d=%27M0 0 C4.0 -4.9 10.1 -4.9 13.4 0 C10.1 4.9 4.0 4.9 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L11.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%287.0 -62.0%29 rotate%28-55.0%29%27%3E%3Cpath d=%27M0 0 C3.8 -4.6 9.4 -4.6 12.6 0 C9.4 4.6 3.8 4.6 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L10.3 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%283.0 -80.0%29 rotate%28-155.0%29%27%3E%3Cpath d=%27M0 0 C3.5 -4.3 8.9 -4.3 11.8 0 C8.9 4.3 3.5 4.3 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.7 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%282.0 -96.0%29 rotate%28-60.0%29%27%3E%3Cpath d=%27M0 0 C3.3 -4.0 8.2 -4.0 11.0 0 C8.2 4.0 3.3 4.0 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cellipse cx=%276.0%27 cy=%27-128.6%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28-90 6.0 -128.6%29%27/%3E%3Cellipse cx=%2710.4%27 cy=%27-125.4%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28-18 10.4 -125.4%29%27/%3E%3Cellipse cx=%278.7%27 cy=%27-120.3%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%2854 8.7 -120.3%29%27/%3E%3Cellipse cx=%273.3%27 cy=%27-120.3%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28126 3.3 -120.3%29%27/%3E%3Cellipse cx=%271.6%27 cy=%27-125.4%27 rx=%273.4%27 ry=%272.2%27 transform=%27rotate%28198 1.6 -125.4%29%27/%3E%3Ccircle cx=%276%27 cy=%27-124%27 r=%271.4%27 fill=%27%23e4ecdc%27 stroke=%27none%27/%3E%3C/g%3E%3Cg transform=%27translate%28130.0 60.0%29 rotate%2820.0%29%27%3E%3Cpath d=%27M0 0 C3.9 -4.6 9.8 -4.6 13.0 0 C9.8 4.6 3.9 4.6 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L10.7 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%28300.0 230.0%29 rotate%28-130.0%29%27%3E%3Cpath d=%27M0 0 C3.6 -4.2 9.0 -4.2 12.0 0 C9.0 4.2 3.6 4.2 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.8 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%2840.0 300.0%29 rotate%2870.0%29%27%3E%3Cpath d=%27M0 0 C3.6 -4.2 9.0 -4.2 12.0 0 C9.0 4.2 3.6 4.2 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.8 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3Cg transform=%27translate%28210.0 250.0%29 rotate%28160.0%29%27%3E%3Cpath d=%27M0 0 C3.3 -4.0 8.2 -4.0 11.0 0 C8.2 4.0 3.3 4.0 0 0Z%27/%3E%3Cpath d=%27M1.5 0 L9.0 0%27 stroke-width=%27.6%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); background-size:auto, 420px 420px; display:grid; grid-template-rows:1fr auto; opacity:0; visibility:hidden; transition:opacity .45s var(--ease-soft), visibility 0s .45s; overflow:hidden}
@@ -1649,6 +1636,50 @@ body{background:#ece5d8}
 .letter.multi .letter-open::before{box-shadow:0 6px 16px -10px rgba(200,84,28,.16)}
 .letter-open:hover img,.letter-open:focus-visible img{box-shadow:var(--psh-up)}
 .tape{box-shadow:0 1px 2px rgba(200,84,28,.08), inset 0 0 8px rgba(255,255,255,.3)}
+/* ===== the album in three parts ===== */
+#photos .album-part{margin-top:var(--s8)}
+#photos .part-head{display:flex; flex-direction:column; gap:6px; margin:0 0 var(--s5)}
+#photos .part-head .label{color:var(--plum)}
+#photos .part-head h3{margin:0; font-family:var(--display); font-weight:500; font-size:clamp(28px,3.4vw,40px); line-height:1.1; letter-spacing:-.01em}
+#photos .part-head h3 em{color:#c8541c}
+/* collage: prints laid by hand, three across at most */
+#photos .collage{display:flex; flex-direction:column; gap:var(--s6)}
+#photos .collage .aw{margin:0; min-width:0}
+#photos .collage img{display:block; width:100%; height:auto; box-sizing:border-box; padding:7px; background:#fbf8f1; box-shadow:var(--psh); transform:rotate(var(--tilt,0deg)); transition:transform .5s var(--ease-soft), box-shadow .5s var(--ease-soft); cursor:zoom-in}
+#photos .collage .aw:hover img{transform:rotate(0deg) translateY(-3px); box-shadow:var(--psh-up)}
+#photos .collage figcaption{margin-top:var(--s2); font-family:var(--serif); font-size:var(--fs-small); line-height:1.45; color:var(--ink-2); text-align:center}
+#photos .c-row{display:flex; gap:var(--s4); align-items:flex-start}
+#photos .c-row .aw{flex:var(--ar) 1 0}
+#photos .c-feat{display:grid; grid-template-columns:2fr 1fr; gap:var(--s4)}
+#photos .c-feat.flip{grid-template-columns:1fr 2fr}
+#photos .c-feat.flip .c-big{order:2}
+#photos .c-side{display:grid; grid-template-rows:1fr 1fr; gap:var(--s4); contain:size; min-height:0}
+#photos .c-side .aw{display:grid; grid-template-rows:minmax(0,1fr) auto; min-height:0}
+#photos .c-side .aw img{height:100%; object-fit:cover}
+/* the washing line: his portraits pegged on a cord that moves sideways as the page scrolls */
+#photos .line-reel{position:relative; margin-top:var(--s9)}
+#photos .lr-pin{position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; color:#efe8dc; background-color:#24382a}
+#photos .lr-pin::after{content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at 50% 55%, rgba(31,47,36,0) 30%, rgba(14,24,17,.55) 100%)}
+#photos .lr-head{position:absolute; z-index:3; left:clamp(20px,6vw,88px); top:clamp(48px,9vh,96px); max-width:420px}
+#photos .lr-head .label{color:#e9b98f}
+#photos .lr-head h3{margin:6px 0 8px; font-family:var(--display); font-weight:500; font-size:clamp(34px,4.6vw,56px); line-height:1; color:#f4ecdf}
+#photos .lr-head h3 em{color:#f0a774}
+#photos .lr-head p{margin:0; font-family:var(--sans); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(239,232,220,.62)}
+#photos .lr-track{--cord:max(31vh, 230px); --ph:min(44vh, 430px); position:absolute; z-index:2; left:0; top:0; height:100%; display:flex; align-items:flex-start; gap:clamp(30px,4vw,64px); padding:calc(var(--cord) + 16px) 22vw 0 clamp(20px,6vw,88px); box-sizing:border-box; will-change:transform}
+#photos .lr-cord{position:absolute; left:-40px; right:-40px; top:var(--cord); height:3px; border-radius:2px; background:repeating-linear-gradient(115deg, #e2d2b1 0 5px, #b89c6e 5px 7px); box-shadow:0 3px 4px rgba(0,0,0,.35)}
+#photos .lr{position:relative; flex:none; margin:0; background:#fbf8f1; padding:10px 10px 0; transform-origin:50% -16px; box-shadow:0 2px 3px rgba(0,0,0,.25), 0 24px 40px -18px rgba(0,0,0,.6)}
+#photos .lr:nth-child(3n){margin-top:18px} #photos .lr:nth-child(4n+1){margin-top:6px}
+#photos .lr::before{content:""; position:absolute; z-index:2; left:50%; top:-26px; width:12px; height:34px; margin-left:-6px; border-radius:2px; background:linear-gradient(90deg,#b18a5c,#d6b688 45%,#a57d50); box-shadow:0 2px 3px rgba(0,0,0,.35)}
+#photos .lr:nth-child(3n)::before{top:-44px; height:52px}
+#photos .lr:nth-child(4n+1)::before{top:-32px; height:40px}
+#photos .lr::after{content:""; position:absolute; z-index:3; left:50%; top:-12px; width:16px; height:3px; margin-left:-8px; border-radius:2px; background:#8d8a83}
+#photos .lr img{display:block; height:var(--ph); width:auto; max-width:none; cursor:zoom-in}
+#photos .lr figcaption{font-family:var(--hand); color:#3b3029; font-size:21px; line-height:1.15; text-align:center; padding:9px 6px 12px; max-width:calc(var(--ph) * .9); margin-inline:auto}
+#photos .line-reel.static .lr-pin{position:relative; height:auto; overflow-x:auto; padding-bottom:40px}
+#photos .line-reel.static .lr-head{position:relative; left:auto; top:auto; padding:48px clamp(20px,6vw,88px) 0}
+#photos .line-reel.static .lr-track{position:relative; height:auto; padding-top:76px; width:max-content}
+#photos .line-reel.static .lr-cord{top:60px}
+@media (max-width:600px){ #photos .lr-track{--cord:max(28vh, 200px); --ph:min(40vh, 340px); gap:44px} #photos .lr figcaption{font-size:19px} #photos .collage .c-row{flex-direction:column} #photos .collage .c-row .aw{flex:none; width:100%} }
 </style>
 </head>
 <body>
@@ -2126,135 +2157,121 @@ body{background:#ece5d8}
               <h2>Seventy-nine <em>years</em> of a full life</h2>
             </div>
             <button class="btn-ink aw-play" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>Play as a slideshow</button>
-            <div class="album-wall">
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.3906" data-no="2"><img src="photos/album/album-2.jpg" width="1100" height="791" alt="With family" loading="lazy" decoding="async"><figcaption>With family</figcaption></figure>
-                <figure class="aw" style="--ar:1.4013" data-no="3"><img src="photos/album/album-3.jpg" width="1100" height="785" alt="At a wedding" loading="lazy" decoding="async"><figcaption>At a wedding</figcaption></figure>
-                <figure class="aw" style="--ar:1.4550" data-no="4"><img src="photos/album/album-4.jpg" width="1100" height="756" alt="Family in matching blue" loading="lazy" decoding="async"><figcaption>Family in matching blue</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.3906" data-no="8"><img src="photos/album/album-8.jpg" width="1100" height="791" alt="A celebration at home" loading="lazy" decoding="async"><figcaption>A celebration at home</figcaption></figure>
-                <figure class="aw" style="--ar:1.3924" data-no="9"><img src="photos/album/album-9.jpg" width="1100" height="790" alt="A wedding day" loading="lazy" decoding="async"><figcaption>A wedding day</figcaption></figure>
-                <figure class="aw" style="--ar:1.4013" data-no="10"><img src="photos/album/album-10.jpg" width="1100" height="785" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:0.6936" data-no="12"><img src="photos/album/album-12.jpg" width="763" height="1100" alt="A First Communion day" loading="lazy" decoding="async"><figcaption>A First Communion day</figcaption></figure>
-                <figure class="aw" style="--ar:0.5455" data-no="14"><img src="photos/album/album-14.jpg" width="600" height="1100" alt="In his white coat" loading="lazy" decoding="async"><figcaption>In his white coat</figcaption></figure>
-                <figure class="aw" style="--ar:0.6700" data-no="15"><img src="photos/album/album-15.jpg" width="737" height="1100" alt="In his regalia" loading="lazy" decoding="async"><figcaption>In his regalia</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.4417" data-no="16"><img src="photos/album/album-16.jpg" width="1100" height="763" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
-                <figure class="aw" style="--ar:0.7191" data-no="17"><img src="photos/album/album-17.jpg" width="791" height="1100" alt="Speaking at an event" loading="lazy" decoding="async"><figcaption>Speaking at an event</figcaption></figure>
-                <figure class="aw" style="--ar:0.7100" data-no="21"><img src="photos/album/album-21.jpg" width="781" height="1100" alt="Beside a foundation stone" loading="lazy" decoding="async"><figcaption>Beside a foundation stone</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:0.6964" data-no="23"><img src="photos/album/album-23.jpg" width="766" height="1100" alt="At his desk" loading="lazy" decoding="async"><figcaption>At his desk</figcaption></figure>
-                <figure class="aw" style="--ar:1.3767" data-no="24"><img src="photos/album/album-24.jpg" width="1100" height="799" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
-                <figure class="aw" style="--ar:1.4267" data-no="25"><img src="photos/album/album-25.jpg" width="1100" height="771" alt="At a graduation" loading="lazy" decoding="async"><figcaption>At a graduation</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.3836" data-no="26"><img src="photos/album/album-26.jpg" width="1100" height="795" alt="Dressed for an occasion" loading="lazy" decoding="async"><figcaption>Dressed for an occasion</figcaption></figure>
-                <figure class="aw" style="--ar:0.7045" data-no="27"><img src="photos/album/album-27.jpg" width="775" height="1100" alt="With a graduate" loading="lazy" decoding="async"><figcaption>With a graduate</figcaption></figure>
-                <figure class="aw" style="--ar:1.4474" data-no="28"><img src="photos/album/album-28.jpg" width="1100" height="760" alt="At a ceremony" loading="lazy" decoding="async"><figcaption>At a ceremony</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.2236" data-no="30"><img src="photos/album/album-30.jpg" width="1100" height="899" alt="With friends in matching attire" loading="lazy" decoding="async"><figcaption>With friends in matching attire</figcaption></figure>
-                <figure class="aw" style="--ar:1.3889" data-no="31"><img src="photos/album/album-31.jpg" width="1100" height="792" alt="A warm embrace" loading="lazy" decoding="async"><figcaption>A warm embrace</figcaption></figure>
-                <figure class="aw" style="--ar:0.7109" data-no="33"><img src="photos/album/album-33.jpg" width="782" height="1100" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.4212" data-no="34"><img src="photos/album/album-34.jpg" width="1100" height="774" alt="A gathering at the church" loading="lazy" decoding="async"><figcaption>A gathering at the church</figcaption></figure>
-                <figure class="aw" style="--ar:1.3977" data-no="37"><img src="photos/album/album-37.jpg" width="1100" height="787" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
-                <figure class="aw" style="--ar:1.5299" data-no="38"><img src="photos/album/album-38.jpg" width="1100" height="719" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.4379" data-no="39"><img src="photos/album/album-39.jpg" width="1100" height="765" alt="In matching attire with friends" loading="lazy" decoding="async"><figcaption>In matching attire with friends</figcaption></figure>
-                <figure class="aw" style="--ar:1.3995" data-no="40"><img src="photos/album/album-40.jpg" width="1100" height="786" alt="Sharing a laugh" loading="lazy" decoding="async"><figcaption>Sharing a laugh</figcaption></figure>
-                <figure class="aw" style="--ar:1.3447" data-no="42"><img src="photos/album/album-42.jpg" width="1100" height="818" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.3597" data-no="45"><img src="photos/album/album-45.jpg" width="1100" height="809" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
+            <div class="album-part">
+              <div class="part-head"><span class="label">Part one</span><h3>The early <em>years</em></h3></div>
+              <div class="collage" data-collage>
+                <figure class="aw" style="--ar:1.2353" data-no="102"><img src="photos/album/album-102.jpg" width="819" height="663" alt="In uniform" loading="lazy" decoding="async"><figcaption>In uniform</figcaption></figure>
                 <figure class="aw" style="--ar:1.6248" data-no="46"><img src="photos/album/album-46.jpg" width="1100" height="677" alt="A team photograph" loading="lazy" decoding="async"><figcaption>A team photograph</figcaption></figure>
-                <figure class="aw" style="--ar:1.1866" data-no="47"><img src="photos/album/album-47.jpg" width="1100" height="927" alt="With friends, by the cars" loading="lazy" decoding="async"><figcaption>With friends, by the cars</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:0.9845" data-no="48"><img src="photos/album/album-48.jpg" width="1083" height="1100" alt="Under the palm trees" loading="lazy" decoding="async"><figcaption>Under the palm trees</figcaption></figure>
-                <figure class="aw" style="--ar:0.7909" data-no="49"><img src="photos/album/album-49.jpg" width="870" height="1100" alt="On the balcony" loading="lazy" decoding="async"><figcaption>On the balcony</figcaption></figure>
                 <figure class="aw" style="--ar:1.5670" data-no="50"><img src="photos/album/album-50.jpg" width="1100" height="702" alt="A group with their flag" loading="lazy" decoding="async"><figcaption>A group with their flag</figcaption></figure>
-              </div>
-              <div class="aw-row">
                 <figure class="aw" style="--ar:1.6035" data-no="52"><img src="photos/album/album-52.jpg" width="1100" height="686" alt="A group photograph" loading="lazy" decoding="async"><figcaption>A group photograph</figcaption></figure>
-                <figure class="aw" style="--ar:1.4085" data-no="54"><img src="photos/album/album-54.jpg" width="1100" height="781" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
+                <figure class="aw" style="--ar:1.6566" data-no="53"><img src="photos/album/album-53.jpg" width="1100" height="664" alt="A group photograph" loading="lazy" decoding="async"><figcaption>A group photograph</figcaption></figure>
                 <figure class="aw" style="--ar:1.5647" data-no="55"><img src="photos/album/album-55.jpg" width="1100" height="703" alt="A group photograph" loading="lazy" decoding="async"><figcaption>A group photograph</figcaption></figure>
-              </div>
-              <div class="aw-row">
                 <figure class="aw" style="--ar:1.4085" data-no="56"><img src="photos/album/album-56.jpg" width="1100" height="781" alt="A group outside the hall" loading="lazy" decoding="async"><figcaption>A group outside the hall</figcaption></figure>
                 <figure class="aw" style="--ar:1.5988" data-no="57"><img src="photos/album/album-57.jpg" width="1100" height="688" alt="Beside the bus" loading="lazy" decoding="async"><figcaption>Beside the bus</figcaption></figure>
-                <figure class="aw" style="--ar:1.4121" data-no="58"><img src="photos/album/album-58.jpg" width="1100" height="779" alt="Out with friends" loading="lazy" decoding="async"><figcaption>Out with friends</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.4066" data-no="59"><img src="photos/album/album-59.jpg" width="1100" height="782" alt="Visitors at home" loading="lazy" decoding="async"><figcaption>Visitors at home</figcaption></figure>
-                <figure class="aw" style="--ar:1.4550" data-no="62"><img src="photos/album/album-62.jpg" width="1100" height="756" alt="Relaxing at home" loading="lazy" decoding="async"><figcaption>Relaxing at home</figcaption></figure>
-                <figure class="aw" style="--ar:1.3802" data-no="63"><img src="photos/album/album-63.jpg" width="1100" height="797" alt="Family gathered at home" loading="lazy" decoding="async"><figcaption>Family gathered at home</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.4608" data-no="65"><img src="photos/album/album-65.jpg" width="1100" height="753" alt="At rest at home" loading="lazy" decoding="async"><figcaption>At rest at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.1866" data-no="47"><img src="photos/album/album-47.jpg" width="1100" height="927" alt="With friends, by the cars" loading="lazy" decoding="async"><figcaption>With friends, by the cars</figcaption></figure>
                 <figure class="aw" style="--ar:0.6845" data-no="67"><img src="photos/album/album-67.jpg" width="753" height="1100" alt="In his suit and hat" loading="lazy" decoding="async"><figcaption>In his suit and hat</figcaption></figure>
+                <figure class="aw" style="--ar:0.6082" data-no="16"><img src="photos/album/album-16.jpg" width="590" height="970" alt="A portrait" loading="lazy" decoding="async"><figcaption>A portrait</figcaption></figure>
+                <figure class="aw" style="--ar:1.5385" data-no="61"><img src="photos/album/album-61.jpg" width="1100" height="715" alt="Dressed up, in his bow tie" loading="lazy" decoding="async"><figcaption>Dressed up, in his bow tie</figcaption></figure>
+                <figure class="aw" style="--ar:1.3836" data-no="26"><img src="photos/album/album-26.jpg" width="1100" height="795" alt="With a friend at a party" loading="lazy" decoding="async"><figcaption>With a friend at a party</figcaption></figure>
+                <figure class="aw" style="--ar:1.4066" data-no="59"><img src="photos/album/album-59.jpg" width="1100" height="782" alt="Visitors at home" loading="lazy" decoding="async"><figcaption>Visitors at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.3802" data-no="63"><img src="photos/album/album-63.jpg" width="1100" height="797" alt="Family gathered at home" loading="lazy" decoding="async"><figcaption>Family gathered at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.3514" data-no="64"><img src="photos/album/album-64.jpg" width="1100" height="814" alt="A family gathering" loading="lazy" decoding="async"><figcaption>A family gathering</figcaption></figure>
                 <figure class="aw" style="--ar:1.4765" data-no="68"><img src="photos/album/album-68.jpg" width="1100" height="745" alt="Out for a walk" loading="lazy" decoding="async"><figcaption>Out for a walk</figcaption></figure>
-              </div>
-              <div class="aw-row">
                 <figure class="aw" style="--ar:1.6129" data-no="69"><img src="photos/album/album-69.jpg" width="1100" height="682" alt="In church" loading="lazy" decoding="async"><figcaption>In church</figcaption></figure>
-                <figure class="aw" style="--ar:1.5428" data-no="70"><img src="photos/album/album-70.jpg" width="1100" height="713" alt="On graduation day" loading="lazy" decoding="async"><figcaption>On graduation day</figcaption></figure>
+                <figure class="aw" style="--ar:0.6182" data-no="72"><img src="photos/album/album-72.jpg" width="680" height="1100" alt="A family photograph" loading="lazy" decoding="async"><figcaption>A family photograph</figcaption></figure>
+                <figure class="aw" style="--ar:1.4608" data-no="73"><img src="photos/album/album-73.jpg" width="1100" height="753" alt="Family in the sitting room" loading="lazy" decoding="async"><figcaption>Family in the sitting room</figcaption></figure>
+                <figure class="aw" style="--ar:1.4550" data-no="62"><img src="photos/album/album-62.jpg" width="1100" height="756" alt="Relaxing at home" loading="lazy" decoding="async"><figcaption>Relaxing at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.4323" data-no="66"><img src="photos/album/album-66.jpg" width="1100" height="768" alt="By the window" loading="lazy" decoding="async"><figcaption>By the window</figcaption></figure>
                 <figure class="aw" style="--ar:1.4966" data-no="71"><img src="photos/album/album-71.jpg" width="1100" height="735" alt="With family on the sofa" loading="lazy" decoding="async"><figcaption>With family on the sofa</figcaption></figure>
-              </div>
-              <div class="aw-row">
                 <figure class="aw" style="--ar:0.6600" data-no="74"><img src="photos/album/album-74.jpg" width="726" height="1100" alt="A moment at home" loading="lazy" decoding="async"><figcaption>A moment at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.4474" data-no="28"><img src="photos/album/album-28.jpg" width="1100" height="760" alt="At a ceremony" loading="lazy" decoding="async"><figcaption>At a ceremony</figcaption></figure>
+                <figure class="aw" style="--ar:1.3889" data-no="31"><img src="photos/album/album-31.jpg" width="1100" height="792" alt="A warm embrace" loading="lazy" decoding="async"><figcaption>A warm embrace</figcaption></figure>
+                <figure class="aw" style="--ar:0.6964" data-no="23"><img src="photos/album/album-23.jpg" width="766" height="1100" alt="At his desk" loading="lazy" decoding="async"><figcaption>At his desk</figcaption></figure>
+                <figure class="aw" style="--ar:0.7100" data-no="21"><img src="photos/album/album-21.jpg" width="781" height="1100" alt="Beside a foundation stone" loading="lazy" decoding="async"><figcaption>Beside a foundation stone</figcaption></figure>
+                <figure class="aw" style="--ar:0.7191" data-no="17"><img src="photos/album/album-17.jpg" width="791" height="1100" alt="Speaking at an event" loading="lazy" decoding="async"><figcaption>Speaking at an event</figcaption></figure>
+                <figure class="aw" style="--ar:0.5455" data-no="14"><img src="photos/album/album-14.jpg" width="600" height="1100" alt="In his white coat" loading="lazy" decoding="async"><figcaption>In his white coat</figcaption></figure>
+                <figure class="aw" style="--ar:1.4267" data-no="25"><img src="photos/album/album-25.jpg" width="1100" height="771" alt="At a graduation" loading="lazy" decoding="async"><figcaption>At a graduation</figcaption></figure>
+                <figure class="aw" style="--ar:0.7045" data-no="27"><img src="photos/album/album-27.jpg" width="775" height="1100" alt="With a graduate" loading="lazy" decoding="async"><figcaption>With a graduate</figcaption></figure>
+                <figure class="aw" style="--ar:1.4085" data-no="54"><img src="photos/album/album-54.jpg" width="1100" height="781" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
+                <figure class="aw" style="--ar:1.4121" data-no="58"><img src="photos/album/album-58.jpg" width="1100" height="779" alt="Out with friends" loading="lazy" decoding="async"><figcaption>Out with friends</figcaption></figure>
+                <figure class="aw" style="--ar:1.0870" data-no="112"><img src="photos/album/album-112.jpg" width="1100" height="1012" alt="At a celebration" loading="lazy" decoding="async"><figcaption>At a celebration</figcaption></figure>
+                <figure class="aw" style="--ar:0.6955" data-no="1"><img src="photos/album/album-1.jpg" width="765" height="1100" alt="Beside the ambulance" loading="lazy" decoding="async"><figcaption>Beside the ambulance</figcaption></figure>
+                <figure class="aw" style="--ar:1.4013" data-no="3"><img src="photos/album/album-3.jpg" width="1100" height="785" alt="At a wedding" loading="lazy" decoding="async"><figcaption>At a wedding</figcaption></figure>
+                <figure class="aw" style="--ar:0.6936" data-no="12"><img src="photos/album/album-12.jpg" width="763" height="1100" alt="A First Communion day" loading="lazy" decoding="async"><figcaption>A First Communion day</figcaption></figure>
+              </div>
+            </div>
+            <div class="line-reel drift" data-reel>
+              <div class="lr-pin">
+                <div class="lr-head"><span class="label">Part two</span><h3>Just <em>Dede</em></h3><p>Scroll, and the line moves along.</p></div>
+                <div class="lr-track">
+                  <div class="lr-cord" aria-hidden="true"></div>
+                  <figure class="aw lr" style="--ar:0.6700" data-no="15"><img src="photos/album/album-15.jpg" width="737" height="1100" alt="In his regalia" loading="lazy" decoding="async"><figcaption>In his regalia</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.8127" data-no="82"><img src="photos/album/album-82.jpg" width="894" height="1100" alt="In full regalia" loading="lazy" decoding="async"><figcaption>In full regalia</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.7018" data-no="19"><img src="photos/album/album-19.jpg" width="772" height="1100" alt="In white" loading="lazy" decoding="async"><figcaption>In white</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.6845" data-no="18"><img src="photos/album/album-18.jpg" width="753" height="1100" alt="Walking in his blue print" loading="lazy" decoding="async"><figcaption>Walking in his blue print</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.7527" data-no="33"><img src="photos/album/album-33.jpg" width="828" height="1100" alt="Seated by the field" loading="lazy" decoding="async"><figcaption>Seated by the field</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.6182" data-no="24"><img src="photos/album/album-24.jpg" width="680" height="1100" alt="In his red cap" loading="lazy" decoding="async"><figcaption>In his red cap</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.6000" data-no="86"><img src="photos/album/album-86.jpg" width="576" height="960" alt="Dressed in blue" loading="lazy" decoding="async"><figcaption>Dressed in blue</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.5691" data-no="7"><img src="photos/album/album-7.jpg" width="626" height="1100" alt="Cutting the cake" loading="lazy" decoding="async"><figcaption>Cutting the cake</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.5709" data-no="35"><img src="photos/album/album-35.jpg" width="628" height="1100" alt="Sitting outside" loading="lazy" decoding="async"><figcaption>Sitting outside</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.4500" data-no="99"><img src="photos/album/album-99.jpg" width="495" height="1100" alt="At home" loading="lazy" decoding="async"><figcaption>At home</figcaption></figure>
+                  <figure class="aw lr" style="--ar:1.3317" data-no="100"><img src="photos/album/album-100.jpg" width="1100" height="826" alt="On an outing" loading="lazy" decoding="async"><figcaption>On an outing</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.7309" data-no="13"><img src="photos/album/album-13.jpg" width="804" height="1100" alt="Relaxing at home" loading="lazy" decoding="async"><figcaption>Relaxing at home</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.5627" data-no="114"><img src="photos/album/album-114.jpg" width="619" height="1100" alt="At home" loading="lazy" decoding="async"><figcaption>At home</figcaption></figure>
+                  <figure class="aw lr" style="--ar:0.6318" data-no="124"><img src="photos/album/album-124.jpg" width="695" height="1100" alt="Enjoying his meal" loading="lazy" decoding="async"><figcaption>Enjoying his meal</figcaption></figure>
+                  <figure class="aw lr" style="--ar:1.0000" data-no="94"><img src="photos/album/album-94.jpg" width="720" height="720" alt="Lunch with a grandchild" loading="lazy" decoding="async"><figcaption>Lunch with a grandchild</figcaption></figure>
+                  <figure class="aw lr" style="--ar:1.3995" data-no="40"><img src="photos/album/album-40.jpg" width="1100" height="786" alt="Sharing a laugh" loading="lazy" decoding="async"><figcaption>Sharing a laugh</figcaption></figure>
+                  <figure class="aw lr" style="--ar:1.3385" data-no="89"><img src="photos/album/album-89.jpg" width="522" height="390" alt="With a grandchild" loading="lazy" decoding="async"><figcaption>With a grandchild</figcaption></figure>
+                  <figure class="aw lr" style="--ar:1.3333" data-no="10"><img src="photos/album/album-10.jpg" width="1100" height="825" alt="With a grandchild" loading="lazy" decoding="async"><figcaption>With a grandchild</figcaption></figure>
+                </div>
+              </div>
+            </div>
+            <div class="album-part">
+              <div class="part-head"><span class="label">Part three</span><h3>Family and <em>friends</em></h3></div>
+              <div class="collage" data-collage>
+                <figure class="aw" style="--ar:0.7529" data-no="4"><img src="photos/album/album-4.jpg" width="768" height="1020" alt="With his grandchildren" loading="lazy" decoding="async"><figcaption>With his grandchildren</figcaption></figure>
+                <figure class="aw" style="--ar:1.4885" data-no="5"><img src="photos/album/album-5.jpg" width="1100" height="739" alt="A big family gathering" loading="lazy" decoding="async"><figcaption>A big family gathering</figcaption></figure>
+                <figure class="aw" style="--ar:1.3906" data-no="6"><img src="photos/album/album-6.jpg" width="1100" height="791" alt="With family" loading="lazy" decoding="async"><figcaption>With family</figcaption></figure>
+                <figure class="aw" style="--ar:1.3906" data-no="8"><img src="photos/album/album-8.jpg" width="1100" height="791" alt="A celebration at home" loading="lazy" decoding="async"><figcaption>A celebration at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.3924" data-no="9"><img src="photos/album/album-9.jpg" width="1100" height="790" alt="A wedding day" loading="lazy" decoding="async"><figcaption>A wedding day</figcaption></figure>
+                <figure class="aw" style="--ar:1.5110" data-no="11"><img src="photos/album/album-11.jpg" width="1100" height="728" alt="With family" loading="lazy" decoding="async"><figcaption>With family</figcaption></figure>
+                <figure class="aw" style="--ar:1.4360" data-no="29"><img src="photos/album/album-29.jpg" width="1100" height="766" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
+                <figure class="aw" style="--ar:1.4905" data-no="30"><img src="photos/album/album-30.jpg" width="1100" height="738" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
+                <figure class="aw" style="--ar:1.3995" data-no="32"><img src="photos/album/album-32.jpg" width="1100" height="786" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
+                <figure class="aw" style="--ar:1.4212" data-no="34"><img src="photos/album/album-34.jpg" width="1100" height="774" alt="A gathering at the church" loading="lazy" decoding="async"><figcaption>A gathering at the church</figcaption></figure>
+                <figure class="aw" style="--ar:1.3415" data-no="36"><img src="photos/album/album-36.jpg" width="1100" height="820" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
+                <figure class="aw" style="--ar:1.3977" data-no="37"><img src="photos/album/album-37.jpg" width="1100" height="787" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
+                <figure class="aw" style="--ar:1.5299" data-no="38"><img src="photos/album/album-38.jpg" width="1100" height="719" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
+                <figure class="aw" style="--ar:1.4379" data-no="39"><img src="photos/album/album-39.jpg" width="1100" height="765" alt="In matching attire with friends" loading="lazy" decoding="async"><figcaption>In matching attire with friends</figcaption></figure>
+                <figure class="aw" style="--ar:1.3447" data-no="42"><img src="photos/album/album-42.jpg" width="1100" height="818" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
+                <figure class="aw" style="--ar:0.6791" data-no="43"><img src="photos/album/album-43.jpg" width="747" height="1100" alt="Speaking in church" loading="lazy" decoding="async"><figcaption>Speaking in church</figcaption></figure>
+                <figure class="aw" style="--ar:1.3597" data-no="45"><img src="photos/album/album-45.jpg" width="1100" height="809" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
+                <figure class="aw" style="--ar:1.5428" data-no="70"><img src="photos/album/album-70.jpg" width="1100" height="713" alt="On graduation day" loading="lazy" decoding="async"><figcaption>On graduation day</figcaption></figure>
+                <figure class="aw" style="--ar:1.5131" data-no="75"><img src="photos/album/album-75.jpg" width="1100" height="727" alt="Dancing with the Nze" loading="lazy" decoding="async"><figcaption>Dancing with the Nze</figcaption></figure>
                 <figure class="aw" style="--ar:1.5007" data-no="77"><img src="photos/album/album-77.jpg" width="1100" height="733" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
-                <figure class="aw" style="--ar:0.8127" data-no="82"><img src="photos/album/album-82.jpg" width="894" height="1100" alt="In full regalia" loading="lazy" decoding="async"><figcaption>In full regalia</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.0476" data-no="83"><img src="photos/album/album-83.jpg" width="1100" height="1050" alt="Seated outdoors" loading="lazy" decoding="async"><figcaption>Seated outdoors</figcaption></figure>
-                <figure class="aw" style="--ar:1.3333" data-no="84"><img src="photos/album/album-84.jpg" width="1080" height="810" alt="In uniform" loading="lazy" decoding="async"><figcaption>In uniform</figcaption></figure>
                 <figure class="aw" style="--ar:0.6000" data-no="85"><img src="photos/album/album-85.jpg" width="576" height="960" alt="Holding the babies" loading="lazy" decoding="async"><figcaption>Holding the babies</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:0.6000" data-no="86"><img src="photos/album/album-86.jpg" width="576" height="960" alt="Dressed in blue" loading="lazy" decoding="async"><figcaption>Dressed in blue</figcaption></figure>
                 <figure class="aw" style="--ar:0.7134" data-no="87"><img src="photos/album/album-87.jpg" width="468" height="656" alt="In matching prints" loading="lazy" decoding="async"><figcaption>In matching prints</figcaption></figure>
                 <figure class="aw" style="--ar:1.3385" data-no="88"><img src="photos/album/album-88.jpg" width="522" height="390" alt="A grandchild’s birthday" loading="lazy" decoding="async"><figcaption>A grandchild’s birthday</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.3385" data-no="89"><img src="photos/album/album-89.jpg" width="522" height="390" alt="With a grandchild" loading="lazy" decoding="async"><figcaption>With a grandchild</figcaption></figure>
                 <figure class="aw" style="--ar:1.4986" data-no="90"><img src="photos/album/album-90.jpg" width="1100" height="734" alt="At Mass" loading="lazy" decoding="async"><figcaption>At Mass</figcaption></figure>
                 <figure class="aw" style="--ar:1.4986" data-no="91"><img src="photos/album/album-91.jpg" width="1100" height="734" alt="At a wedding" loading="lazy" decoding="async"><figcaption>At a wedding</figcaption></figure>
-              </div>
-              <div class="aw-row">
                 <figure class="aw" style="--ar:1.4986" data-no="92"><img src="photos/album/album-92.jpg" width="1100" height="734" alt="The wedding party" loading="lazy" decoding="async"><figcaption>The wedding party</figcaption></figure>
                 <figure class="aw" style="--ar:1.5089" data-no="93"><img src="photos/album/album-93.jpg" width="1100" height="729" alt="With the newlyweds" loading="lazy" decoding="async"><figcaption>With the newlyweds</figcaption></figure>
-                <figure class="aw" style="--ar:1.0000" data-no="94"><img src="photos/album/album-94.jpg" width="720" height="720" alt="Lunch with a grandchild" loading="lazy" decoding="async"><figcaption>Lunch with a grandchild</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.3333" data-no="95"><img src="photos/album/album-95.jpg" width="1100" height="825" alt="Reading at the table" loading="lazy" decoding="async"><figcaption>Reading at the table</figcaption></figure>
                 <figure class="aw" style="--ar:0.8127" data-no="96"><img src="photos/album/album-96.jpg" width="894" height="1100" alt="A family day" loading="lazy" decoding="async"><figcaption>A family day</figcaption></figure>
                 <figure class="aw" style="--ar:0.8782" data-no="98"><img src="photos/album/album-98.jpg" width="966" height="1100" alt="In church with the bride" loading="lazy" decoding="async"><figcaption>In church with the bride</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:0.4500" data-no="99"><img src="photos/album/album-99.jpg" width="495" height="1100" alt="At home" loading="lazy" decoding="async"><figcaption>At home</figcaption></figure>
-                <figure class="aw" style="--ar:1.3317" data-no="100"><img src="photos/album/album-100.jpg" width="1100" height="826" alt="On an outing" loading="lazy" decoding="async"><figcaption>On an outing</figcaption></figure>
                 <figure class="aw" style="--ar:1.7771" data-no="101"><img src="photos/album/album-101.jpg" width="1100" height="619" alt="Looking through old photographs" loading="lazy" decoding="async"><figcaption>Looking through old photographs</figcaption></figure>
-              </div>
-              <div class="aw-row">
-                <figure class="aw" style="--ar:1.2353" data-no="102"><img src="photos/album/album-102.jpg" width="819" height="663" alt="In uniform" loading="lazy" decoding="async"><figcaption>In uniform</figcaption></figure>
                 <figure class="aw" style="--ar:0.7500" data-no="103"><img src="photos/album/album-103.jpg" width="825" height="1100" alt="With family at home" loading="lazy" decoding="async"><figcaption>With family at home</figcaption></figure>
                 <figure class="aw" style="--ar:0.7500" data-no="104"><img src="photos/album/album-104.jpg" width="825" height="1100" alt="With a granddaughter" loading="lazy" decoding="async"><figcaption>With a granddaughter</figcaption></figure>
-              </div>
-              <div class="aw-row">
                 <figure class="aw" style="--ar:0.7500" data-no="106"><img src="photos/album/album-106.jpg" width="825" height="1100" alt="Christmas with the family" loading="lazy" decoding="async"><figcaption>Christmas with the family</figcaption></figure>
                 <figure class="aw" style="--ar:0.7500" data-no="107"><img src="photos/album/album-107.jpg" width="825" height="1100" alt="At the dining table" loading="lazy" decoding="async"><figcaption>At the dining table</figcaption></figure>
                 <figure class="aw" style="--ar:0.7500" data-no="108"><img src="photos/album/album-108.jpg" width="825" height="1100" alt="A birthday at home" loading="lazy" decoding="async"><figcaption>A birthday at home</figcaption></figure>
-              </div>
-              <div class="aw-row">
                 <figure class="aw" style="--ar:1.7771" data-no="109"><img src="photos/album/album-109.jpg" width="1100" height="619" alt="Talking with visitors" loading="lazy" decoding="async"><figcaption>Talking with visitors</figcaption></figure>
                 <figure class="aw" style="--ar:1.5007" data-no="110"><img src="photos/album/album-110.jpg" width="1100" height="733" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
+                <figure class="aw" style="--ar:0.5627" data-no="113"><img src="photos/album/album-113.jpg" width="619" height="1100" alt="Out at an event" loading="lazy" decoding="async"><figcaption>Out at an event</figcaption></figure>
+                <figure class="aw" style="--ar:1.3333" data-no="115"><img src="photos/album/album-115.jpg" width="1100" height="825" alt="At the table with his papers" loading="lazy" decoding="async"><figcaption>At the table with his papers</figcaption></figure>
+                <figure class="aw" style="--ar:0.7500" data-no="116"><img src="photos/album/album-116.jpg" width="825" height="1100" alt="Christmas with the grandchildren" loading="lazy" decoding="async"><figcaption>Christmas with the grandchildren</figcaption></figure>
+                <figure class="aw" style="--ar:1.3333" data-no="117"><img src="photos/album/album-117.jpg" width="1100" height="825" alt="Christmas dinner" loading="lazy" decoding="async"><figcaption>Christmas dinner</figcaption></figure>
+                <figure class="aw" style="--ar:0.5627" data-no="120"><img src="photos/album/album-120.jpg" width="619" height="1100" alt="A selfie by the sea" loading="lazy" decoding="async"><figcaption>A selfie by the sea</figcaption></figure>
+                <figure class="aw" style="--ar:0.5627" data-no="121"><img src="photos/album/album-121.jpg" width="619" height="1100" alt="At the beach with family" loading="lazy" decoding="async"><figcaption>At the beach with family</figcaption></figure>
               </div>
             </div>
           </div>
@@ -3289,21 +3306,58 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   </div>
 </div>
 <script>
-/* album rows: three per row on computers, two on tablets, one on phones */
+/* album collages: a large print with two beside it, then rows of up to three; two across on tablets, one on phones */
 (function(){
-  var wall=document.querySelector('#photos .album-wall'); if(!wall) return;
-  var figs=[].slice.call(wall.querySelectorAll('.aw')), cur=0;
-  function per(){ var w=window.innerWidth; return w<=600?1:(w<=1024?2:3); }
-  function layout(){ var n=per(); if(n===cur) return; cur=n; var frag=document.createDocumentFragment();
-    for(var k=0;k<figs.length;k+=n){ var r=document.createElement('div'); r.className='aw-row'; for(var j=k;j<Math.min(k+n,figs.length);j++) r.appendChild(figs[j]); frag.appendChild(r); }
-    wall.innerHTML=''; wall.appendChild(frag); }
+  var cols=[].slice.call(document.querySelectorAll('#photos [data-collage]')); if(!cols.length) return;
+  var data=cols.map(function(c){ var f=[].slice.call(c.querySelectorAll('.aw')); f.forEach(function(x,i){ var t=[-.7,.45,-.3,.6,-.5,.25][i%6]; x.style.setProperty('--tilt',t+'deg'); }); return {c:c,f:f}; });
+  var mode='';
+  function ar(x){ return parseFloat(x.style.getPropertyValue('--ar'))||1; }
+  function row(items){ var r=document.createElement('div'); r.className='c-row'; items.forEach(function(x){ r.appendChild(x); }); return r; }
+  function feat(big,a,b,flip){ var g=document.createElement('div'); g.className='c-feat'+(flip?' flip':''); var bw=document.createElement('div'); bw.className='c-big'; bw.appendChild(big);
+    var sd=document.createElement('div'); sd.className='c-side'; sd.appendChild(a); sd.appendChild(b); g.appendChild(bw); g.appendChild(sd); return g; }
+  function build(d,m){ var q=d.f.slice(), out=document.createDocumentFragment(), step=0, flip=false;
+    if(m==='1'){ q.forEach(function(x){ out.appendChild(row([x])); }); }
+    else if(m==='2'){ while(q.length) out.appendChild(row(q.splice(0,2))); }
+    else { while(q.length){
+      if(step%2===0){ var w=q.slice(0,8), L=[]; for(var k=0;k<w.length&&L.length<3;k++) if(ar(w[k])>=1.2) L.push(w[k]);
+        if(L.length===3){ L.forEach(function(x){ q.splice(q.indexOf(x),1); }); out.appendChild(feat(L[0],L[1],L[2],flip)); flip=!flip; }
+        else out.appendChild(row(q.splice(0,3))); }
+      else out.appendChild(row(q.splice(0,3)));
+      step++; } }
+    d.c.innerHTML=''; d.c.appendChild(out); }
+  function layout(){ var w=window.innerWidth, m=w<=600?'1':(w<=1024?'2':'3'); if(m===mode) return; mode=m; data.forEach(function(d){ build(d,m); }); }
   layout(); var t; window.addEventListener('resize',function(){ clearTimeout(t); t=setTimeout(layout,150); });
+})();
+/* the washing line: pinned while you scroll, it slides sideways and the prints swing on their pegs */
+(function(){
+  var reel=document.querySelector('#photos [data-reel]'); if(!reel) return;
+  var pin=reel.querySelector('.lr-pin'), track=reel.querySelector('.lr-track'), main=reel.parentElement;
+  var prints=[].slice.call(track.querySelectorAll('.lr')).map(function(el,i){ return {el:el, a:0, v:0, rest:[-1.6,1.1,-.6,1.8,-1.2,.7][i%6], k:.06+(i%4)*.012, ph:i*1.7}; });
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dist=0, lastX=0, on=false, raf=0;
+  function measure(){ var vw=document.documentElement.clientWidth, left=main.getBoundingClientRect().left;
+    reel.style.width=vw+'px'; reel.style.marginLeft=(-left)+'px';
+    if(reduce){ reel.classList.add('static'); reel.style.height=''; return; }
+    dist=Math.max(0,track.scrollWidth-vw); reel.style.height=(window.innerHeight+dist)+'px'; }
+  function frame(t){ raf=0;
+    var r=reel.getBoundingClientRect(), p=dist?Math.min(1,Math.max(0,-r.top/dist)):0, x=-p*dist, v=x-lastX; lastX=x;
+    track.style.transform='translate3d('+x.toFixed(1)+'px,0,0)';
+    var tgt=Math.max(-7,Math.min(7,v*.35)), still=true;
+    prints.forEach(function(o){ o.v+=(tgt-o.a)*o.k; o.v*=.86; o.a+=o.v; if(Math.abs(o.v)>.01||Math.abs(o.a-tgt)>.05) still=false;
+      var breeze=Math.sin(t*.0011+o.ph)*.55; o.el.style.transform='rotate('+(o.rest+o.a+breeze).toFixed(2)+'deg)'; });
+    if(on) raf=requestAnimationFrame(frame); }
+  measure();
+  if(!reduce && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ on=es[0].isIntersecting; if(on&&!raf) raf=requestAnimationFrame(frame); },{rootMargin:'200px 0px'}).observe(reel); }
+  var tm; window.addEventListener('resize',function(){ clearTimeout(tm); tm=setTimeout(measure,150); });
+  track.querySelectorAll('img').forEach(function(im){ if(!im.complete) im.addEventListener('load',measure,{once:true}); });
+  window.addEventListener('load',measure);
 })();
 </script>
 <script>
 (function(){
   var V=document.getElementById('viewer'); if(!V) return;
-  var figs=[].slice.call(document.querySelectorAll('#photos .album-wall .aw')); if(!figs.length) return;
+  var figs=[].slice.call(document.querySelectorAll('#photos .aw')); if(!figs.length) return;
   var pr=V.querySelector('.vw-print'), img=V.querySelector('.vw-print img'), cap=V.querySelector('.vw-cap'), num=V.querySelector('.vw-n'), play=V.querySelector('.vw-play'), bar=V.querySelector('.vw-prog i');
   var i=0, timer=null, last=null, busy=0;
   var PLAY='<svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>', PAUSE='<svg viewBox="0 0 24 24"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>';
