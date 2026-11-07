@@ -1592,14 +1592,34 @@ body{background:#ece5d8}
 .flow #thanks{min-height:100vh; min-height:100svh; display:flex; flex-direction:column}
 .flow #thanks > .inner{flex:1 1 auto; display:flex; flex-direction:column}
 .flow #thanks > .inner > .wrap{flex:1 1 auto; width:100%; display:flex; flex-direction:column; justify-content:center}
-/* album: neat rows of three, every photo whole, sitting on a common baseline, caption underneath */
-#photos .album-wall{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--s6) var(--s4); margin-top:var(--s6); align-items:start}
-#photos .album-wall .aw{margin:0; display:flex; flex-direction:column}
-#photos .album-wall img{display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:contain; object-position:50% 100%}
-#photos .album-wall figcaption{margin-top:var(--s2); font-family:var(--serif); font-size:var(--fs-small); line-height:1.45; color:var(--ink-2); text-align:center}
-@media (max-width:600px){ #photos .album-wall{grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 12px} }
+/* album: rows of up to three, each photo whole and as large as the row allows; photos in a row share one height */
+#photos .album-wall{display:flex; flex-direction:column; gap:var(--s6); margin-top:var(--s6)}
+#photos .aw-row{display:flex; gap:var(--s4); align-items:flex-start}
+#photos .album-wall .aw{margin:0; flex:var(--ar) 1 0; min-width:0}
+#photos .album-wall img{display:block; width:100%; height:auto}
+#photos .album-wall figcaption{margin-top:var(--s2); font-family:var(--serif); font-size:var(--fs-small); line-height:1.45; color:var(--ink-2)}
+@media (max-width:600px){ #photos .aw-row{flex-direction:column; gap:var(--s6)} #photos .album-wall .aw{flex:none; width:100%} }
 /* desktop: centre each year dot on the timeline */
 @media (min-width:881px){ .my::after{right:-25px} }
+/* album: tap a photo to see it large; play them all as a slideshow */
+#photos .album-wall .aw img{cursor:zoom-in}
+.aw-play{display:inline-flex; align-items:center; gap:8px; margin-top:var(--s4)}
+.aw-play svg{width:14px; height:14px}
+.viewer{position:fixed; inset:0; z-index:200; background:rgba(22,19,17,.96); display:grid; grid-template-rows:1fr auto; opacity:0; visibility:hidden; transition:opacity .35s var(--ease-soft), visibility 0s .35s}
+.viewer.open{opacity:1; visibility:visible; transition:opacity .35s var(--ease-soft)}
+.viewer .vw-stage{position:relative; display:flex; align-items:center; justify-content:center; padding:56px 72px 8px; min-height:0}
+.viewer img{max-width:100%; max-height:100%; object-fit:contain; display:block; box-shadow:0 20px 60px rgba(0,0,0,.5); transition:opacity .4s var(--ease-soft)}
+.viewer img.fade{opacity:0}
+.viewer .vw-bar{display:flex; align-items:center; justify-content:center; gap:18px; padding:14px 20px 22px; color:#efe8dc; font-family:var(--serif)}
+.viewer .vw-cap{font-size:18px; text-align:center; min-width:0; flex:0 1 auto}
+.viewer .vw-n{font-family:var(--sans); font-size:11px; letter-spacing:.14em; opacity:.6; white-space:nowrap}
+.viewer button{appearance:none; border:0; background:rgba(255,255,255,.08); color:#efe8dc; width:44px; height:44px; border-radius:50%; display:grid; place-items:center; cursor:pointer; flex:none}
+.viewer button:hover{background:rgba(255,255,255,.16)}
+.viewer button svg{width:20px; height:20px}
+.viewer .vw-prev,.viewer .vw-next{position:absolute; top:50%; transform:translateY(-50%)}
+.viewer .vw-prev{left:14px} .viewer .vw-next{right:14px}
+.viewer .vw-close{position:absolute; top:12px; right:14px}
+@media (max-width:600px){ .viewer .vw-stage{padding:56px 8px 4px} .viewer .vw-prev,.viewer .vw-next{top:auto; bottom:-62px; transform:none} .viewer .vw-prev{left:12px} .viewer .vw-next{right:12px} .viewer .vw-bar{padding:12px 64px 24px; flex-wrap:wrap; gap:6px 14px} .viewer .vw-cap{font-size:16px; flex-basis:100%} }
 </style>
 </head>
 <body>
@@ -2076,84 +2096,137 @@ body{background:#ece5d8}
               <span class="label">His life in photos</span>
               <h2>Seventy-nine <em>years</em> of a full life</h2>
             </div>
+            <button class="btn btn-ghost aw-play" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>Play as a slideshow</button>
             <div class="album-wall">
-              <figure class="aw" data-no="2"><img src="photos/album/album-2.jpg" width="1100" height="791" alt="With family" loading="lazy" decoding="async"><figcaption>With family</figcaption></figure>
-              <figure class="aw" data-no="3"><img src="photos/album/album-3.jpg" width="1100" height="785" alt="At a wedding" loading="lazy" decoding="async"><figcaption>At a wedding</figcaption></figure>
-              <figure class="aw" data-no="4"><img src="photos/album/album-4.jpg" width="1100" height="756" alt="Family in matching blue" loading="lazy" decoding="async"><figcaption>Family in matching blue</figcaption></figure>
-              <figure class="aw" data-no="8"><img src="photos/album/album-8.jpg" width="1100" height="791" alt="A celebration at home" loading="lazy" decoding="async"><figcaption>A celebration at home</figcaption></figure>
-              <figure class="aw" data-no="9"><img src="photos/album/album-9.jpg" width="1100" height="790" alt="A wedding day" loading="lazy" decoding="async"><figcaption>A wedding day</figcaption></figure>
-              <figure class="aw" data-no="10"><img src="photos/album/album-10.jpg" width="1100" height="785" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
-              <figure class="aw" data-no="12"><img src="photos/album/album-12.jpg" width="763" height="1100" alt="A First Communion day" loading="lazy" decoding="async"><figcaption>A First Communion day</figcaption></figure>
-              <figure class="aw" data-no="14"><img src="photos/album/album-14.jpg" width="600" height="1100" alt="In his white coat" loading="lazy" decoding="async"><figcaption>In his white coat</figcaption></figure>
-              <figure class="aw" data-no="15"><img src="photos/album/album-15.jpg" width="737" height="1100" alt="In his regalia" loading="lazy" decoding="async"><figcaption>In his regalia</figcaption></figure>
-              <figure class="aw" data-no="16"><img src="photos/album/album-16.jpg" width="1100" height="763" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
-              <figure class="aw" data-no="17"><img src="photos/album/album-17.jpg" width="791" height="1100" alt="Speaking at an event" loading="lazy" decoding="async"><figcaption>Speaking at an event</figcaption></figure>
-              <figure class="aw" data-no="21"><img src="photos/album/album-21.jpg" width="781" height="1100" alt="Beside a foundation stone" loading="lazy" decoding="async"><figcaption>Beside a foundation stone</figcaption></figure>
-              <figure class="aw" data-no="23"><img src="photos/album/album-23.jpg" width="766" height="1100" alt="At his desk" loading="lazy" decoding="async"><figcaption>At his desk</figcaption></figure>
-              <figure class="aw" data-no="24"><img src="photos/album/album-24.jpg" width="1100" height="799" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
-              <figure class="aw" data-no="25"><img src="photos/album/album-25.jpg" width="1100" height="771" alt="At a graduation" loading="lazy" decoding="async"><figcaption>At a graduation</figcaption></figure>
-              <figure class="aw" data-no="26"><img src="photos/album/album-26.jpg" width="1100" height="795" alt="Dressed for an occasion" loading="lazy" decoding="async"><figcaption>Dressed for an occasion</figcaption></figure>
-              <figure class="aw" data-no="27"><img src="photos/album/album-27.jpg" width="775" height="1100" alt="With a graduate" loading="lazy" decoding="async"><figcaption>With a graduate</figcaption></figure>
-              <figure class="aw" data-no="28"><img src="photos/album/album-28.jpg" width="1100" height="760" alt="At a ceremony" loading="lazy" decoding="async"><figcaption>At a ceremony</figcaption></figure>
-              <figure class="aw" data-no="30"><img src="photos/album/album-30.jpg" width="1100" height="899" alt="With friends in matching attire" loading="lazy" decoding="async"><figcaption>With friends in matching attire</figcaption></figure>
-              <figure class="aw" data-no="31"><img src="photos/album/album-31.jpg" width="1100" height="792" alt="A warm embrace" loading="lazy" decoding="async"><figcaption>A warm embrace</figcaption></figure>
-              <figure class="aw" data-no="33"><img src="photos/album/album-33.jpg" width="782" height="1100" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
-              <figure class="aw" data-no="34"><img src="photos/album/album-34.jpg" width="1100" height="774" alt="A gathering at the church" loading="lazy" decoding="async"><figcaption>A gathering at the church</figcaption></figure>
-              <figure class="aw" data-no="37"><img src="photos/album/album-37.jpg" width="1100" height="787" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
-              <figure class="aw" data-no="38"><img src="photos/album/album-38.jpg" width="1100" height="719" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
-              <figure class="aw" data-no="39"><img src="photos/album/album-39.jpg" width="1100" height="765" alt="In matching attire with friends" loading="lazy" decoding="async"><figcaption>In matching attire with friends</figcaption></figure>
-              <figure class="aw" data-no="40"><img src="photos/album/album-40.jpg" width="1100" height="786" alt="Sharing a laugh" loading="lazy" decoding="async"><figcaption>Sharing a laugh</figcaption></figure>
-              <figure class="aw" data-no="42"><img src="photos/album/album-42.jpg" width="1100" height="818" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
-              <figure class="aw" data-no="45"><img src="photos/album/album-45.jpg" width="1100" height="809" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
-              <figure class="aw" data-no="46"><img src="photos/album/album-46.jpg" width="1100" height="677" alt="A team photograph" loading="lazy" decoding="async"><figcaption>A team photograph</figcaption></figure>
-              <figure class="aw" data-no="47"><img src="photos/album/album-47.jpg" width="1100" height="927" alt="With friends, by the cars" loading="lazy" decoding="async"><figcaption>With friends, by the cars</figcaption></figure>
-              <figure class="aw" data-no="48"><img src="photos/album/album-48.jpg" width="1083" height="1100" alt="Under the palm trees" loading="lazy" decoding="async"><figcaption>Under the palm trees</figcaption></figure>
-              <figure class="aw" data-no="49"><img src="photos/album/album-49.jpg" width="870" height="1100" alt="On the balcony" loading="lazy" decoding="async"><figcaption>On the balcony</figcaption></figure>
-              <figure class="aw" data-no="50"><img src="photos/album/album-50.jpg" width="1100" height="702" alt="A group with their flag" loading="lazy" decoding="async"><figcaption>A group with their flag</figcaption></figure>
-              <figure class="aw" data-no="52"><img src="photos/album/album-52.jpg" width="1100" height="686" alt="A group photograph" loading="lazy" decoding="async"><figcaption>A group photograph</figcaption></figure>
-              <figure class="aw" data-no="54"><img src="photos/album/album-54.jpg" width="1100" height="781" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
-              <figure class="aw" data-no="55"><img src="photos/album/album-55.jpg" width="1100" height="703" alt="A group photograph" loading="lazy" decoding="async"><figcaption>A group photograph</figcaption></figure>
-              <figure class="aw" data-no="56"><img src="photos/album/album-56.jpg" width="1100" height="781" alt="A group outside the hall" loading="lazy" decoding="async"><figcaption>A group outside the hall</figcaption></figure>
-              <figure class="aw" data-no="57"><img src="photos/album/album-57.jpg" width="1100" height="688" alt="Beside the bus" loading="lazy" decoding="async"><figcaption>Beside the bus</figcaption></figure>
-              <figure class="aw" data-no="58"><img src="photos/album/album-58.jpg" width="1100" height="779" alt="Out with friends" loading="lazy" decoding="async"><figcaption>Out with friends</figcaption></figure>
-              <figure class="aw" data-no="59"><img src="photos/album/album-59.jpg" width="1100" height="782" alt="Visitors at home" loading="lazy" decoding="async"><figcaption>Visitors at home</figcaption></figure>
-              <figure class="aw" data-no="62"><img src="photos/album/album-62.jpg" width="1100" height="756" alt="Relaxing at home" loading="lazy" decoding="async"><figcaption>Relaxing at home</figcaption></figure>
-              <figure class="aw" data-no="63"><img src="photos/album/album-63.jpg" width="1100" height="797" alt="Family gathered at home" loading="lazy" decoding="async"><figcaption>Family gathered at home</figcaption></figure>
-              <figure class="aw" data-no="65"><img src="photos/album/album-65.jpg" width="1100" height="753" alt="At rest at home" loading="lazy" decoding="async"><figcaption>At rest at home</figcaption></figure>
-              <figure class="aw" data-no="67"><img src="photos/album/album-67.jpg" width="753" height="1100" alt="In his suit and hat" loading="lazy" decoding="async"><figcaption>In his suit and hat</figcaption></figure>
-              <figure class="aw" data-no="68"><img src="photos/album/album-68.jpg" width="1100" height="745" alt="Out for a walk" loading="lazy" decoding="async"><figcaption>Out for a walk</figcaption></figure>
-              <figure class="aw" data-no="69"><img src="photos/album/album-69.jpg" width="1100" height="682" alt="In church" loading="lazy" decoding="async"><figcaption>In church</figcaption></figure>
-              <figure class="aw" data-no="70"><img src="photos/album/album-70.jpg" width="1100" height="713" alt="On graduation day" loading="lazy" decoding="async"><figcaption>On graduation day</figcaption></figure>
-              <figure class="aw" data-no="71"><img src="photos/album/album-71.jpg" width="1100" height="735" alt="With family on the sofa" loading="lazy" decoding="async"><figcaption>With family on the sofa</figcaption></figure>
-              <figure class="aw" data-no="74"><img src="photos/album/album-74.jpg" width="726" height="1100" alt="A moment at home" loading="lazy" decoding="async"><figcaption>A moment at home</figcaption></figure>
-              <figure class="aw" data-no="77"><img src="photos/album/album-77.jpg" width="1100" height="733" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
-              <figure class="aw" data-no="82"><img src="photos/album/album-82.jpg" width="894" height="1100" alt="In full regalia" loading="lazy" decoding="async"><figcaption>In full regalia</figcaption></figure>
-              <figure class="aw" data-no="83"><img src="photos/album/album-83.jpg" width="1100" height="1050" alt="Seated outdoors" loading="lazy" decoding="async"><figcaption>Seated outdoors</figcaption></figure>
-              <figure class="aw" data-no="84"><img src="photos/album/album-84.jpg" width="1080" height="810" alt="In uniform" loading="lazy" decoding="async"><figcaption>In uniform</figcaption></figure>
-              <figure class="aw" data-no="85"><img src="photos/album/album-85.jpg" width="576" height="960" alt="Holding the babies" loading="lazy" decoding="async"><figcaption>Holding the babies</figcaption></figure>
-              <figure class="aw" data-no="86"><img src="photos/album/album-86.jpg" width="576" height="960" alt="Dressed in blue" loading="lazy" decoding="async"><figcaption>Dressed in blue</figcaption></figure>
-              <figure class="aw" data-no="87"><img src="photos/album/album-87.jpg" width="468" height="656" alt="In matching prints" loading="lazy" decoding="async"><figcaption>In matching prints</figcaption></figure>
-              <figure class="aw" data-no="88"><img src="photos/album/album-88.jpg" width="522" height="390" alt="A grandchild’s birthday" loading="lazy" decoding="async"><figcaption>A grandchild’s birthday</figcaption></figure>
-              <figure class="aw" data-no="89"><img src="photos/album/album-89.jpg" width="522" height="390" alt="With a grandchild" loading="lazy" decoding="async"><figcaption>With a grandchild</figcaption></figure>
-              <figure class="aw" data-no="90"><img src="photos/album/album-90.jpg" width="1100" height="734" alt="At Mass" loading="lazy" decoding="async"><figcaption>At Mass</figcaption></figure>
-              <figure class="aw" data-no="91"><img src="photos/album/album-91.jpg" width="1100" height="734" alt="At a wedding" loading="lazy" decoding="async"><figcaption>At a wedding</figcaption></figure>
-              <figure class="aw" data-no="92"><img src="photos/album/album-92.jpg" width="1100" height="734" alt="The wedding party" loading="lazy" decoding="async"><figcaption>The wedding party</figcaption></figure>
-              <figure class="aw" data-no="93"><img src="photos/album/album-93.jpg" width="1100" height="729" alt="With the newlyweds" loading="lazy" decoding="async"><figcaption>With the newlyweds</figcaption></figure>
-              <figure class="aw" data-no="94"><img src="photos/album/album-94.jpg" width="720" height="720" alt="Lunch with a grandchild" loading="lazy" decoding="async"><figcaption>Lunch with a grandchild</figcaption></figure>
-              <figure class="aw" data-no="95"><img src="photos/album/album-95.jpg" width="1100" height="825" alt="Reading at the table" loading="lazy" decoding="async"><figcaption>Reading at the table</figcaption></figure>
-              <figure class="aw" data-no="96"><img src="photos/album/album-96.jpg" width="894" height="1100" alt="A family day" loading="lazy" decoding="async"><figcaption>A family day</figcaption></figure>
-              <figure class="aw" data-no="98"><img src="photos/album/album-98.jpg" width="966" height="1100" alt="In church with the bride" loading="lazy" decoding="async"><figcaption>In church with the bride</figcaption></figure>
-              <figure class="aw" data-no="99"><img src="photos/album/album-99.jpg" width="495" height="1100" alt="At home" loading="lazy" decoding="async"><figcaption>At home</figcaption></figure>
-              <figure class="aw" data-no="100"><img src="photos/album/album-100.jpg" width="1100" height="826" alt="On an outing" loading="lazy" decoding="async"><figcaption>On an outing</figcaption></figure>
-              <figure class="aw" data-no="101"><img src="photos/album/album-101.jpg" width="1100" height="619" alt="Looking through old photographs" loading="lazy" decoding="async"><figcaption>Looking through old photographs</figcaption></figure>
-              <figure class="aw" data-no="102"><img src="photos/album/album-102.jpg" width="819" height="663" alt="In uniform" loading="lazy" decoding="async"><figcaption>In uniform</figcaption></figure>
-              <figure class="aw" data-no="103"><img src="photos/album/album-103.jpg" width="825" height="1100" alt="With family at home" loading="lazy" decoding="async"><figcaption>With family at home</figcaption></figure>
-              <figure class="aw" data-no="104"><img src="photos/album/album-104.jpg" width="825" height="1100" alt="With a granddaughter" loading="lazy" decoding="async"><figcaption>With a granddaughter</figcaption></figure>
-              <figure class="aw" data-no="106"><img src="photos/album/album-106.jpg" width="825" height="1100" alt="Christmas with the family" loading="lazy" decoding="async"><figcaption>Christmas with the family</figcaption></figure>
-              <figure class="aw" data-no="107"><img src="photos/album/album-107.jpg" width="825" height="1100" alt="At the dining table" loading="lazy" decoding="async"><figcaption>At the dining table</figcaption></figure>
-              <figure class="aw" data-no="108"><img src="photos/album/album-108.jpg" width="825" height="1100" alt="A birthday at home" loading="lazy" decoding="async"><figcaption>A birthday at home</figcaption></figure>
-              <figure class="aw" data-no="109"><img src="photos/album/album-109.jpg" width="1100" height="619" alt="Talking with visitors" loading="lazy" decoding="async"><figcaption>Talking with visitors</figcaption></figure>
-              <figure class="aw" data-no="110"><img src="photos/album/album-110.jpg" width="1100" height="733" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.3906" data-no="2"><img src="photos/album/album-2.jpg" width="1100" height="791" alt="With family" loading="lazy" decoding="async"><figcaption>With family</figcaption></figure>
+                <figure class="aw" style="--ar:1.4013" data-no="3"><img src="photos/album/album-3.jpg" width="1100" height="785" alt="At a wedding" loading="lazy" decoding="async"><figcaption>At a wedding</figcaption></figure>
+                <figure class="aw" style="--ar:1.4550" data-no="4"><img src="photos/album/album-4.jpg" width="1100" height="756" alt="Family in matching blue" loading="lazy" decoding="async"><figcaption>Family in matching blue</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.3906" data-no="8"><img src="photos/album/album-8.jpg" width="1100" height="791" alt="A celebration at home" loading="lazy" decoding="async"><figcaption>A celebration at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.3924" data-no="9"><img src="photos/album/album-9.jpg" width="1100" height="790" alt="A wedding day" loading="lazy" decoding="async"><figcaption>A wedding day</figcaption></figure>
+                <figure class="aw" style="--ar:1.4013" data-no="10"><img src="photos/album/album-10.jpg" width="1100" height="785" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:0.6936" data-no="12"><img src="photos/album/album-12.jpg" width="763" height="1100" alt="A First Communion day" loading="lazy" decoding="async"><figcaption>A First Communion day</figcaption></figure>
+                <figure class="aw" style="--ar:0.5455" data-no="14"><img src="photos/album/album-14.jpg" width="600" height="1100" alt="In his white coat" loading="lazy" decoding="async"><figcaption>In his white coat</figcaption></figure>
+                <figure class="aw" style="--ar:0.6700" data-no="15"><img src="photos/album/album-15.jpg" width="737" height="1100" alt="In his regalia" loading="lazy" decoding="async"><figcaption>In his regalia</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.4417" data-no="16"><img src="photos/album/album-16.jpg" width="1100" height="763" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
+                <figure class="aw" style="--ar:0.7191" data-no="17"><img src="photos/album/album-17.jpg" width="791" height="1100" alt="Speaking at an event" loading="lazy" decoding="async"><figcaption>Speaking at an event</figcaption></figure>
+                <figure class="aw" style="--ar:0.7100" data-no="21"><img src="photos/album/album-21.jpg" width="781" height="1100" alt="Beside a foundation stone" loading="lazy" decoding="async"><figcaption>Beside a foundation stone</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:0.6964" data-no="23"><img src="photos/album/album-23.jpg" width="766" height="1100" alt="At his desk" loading="lazy" decoding="async"><figcaption>At his desk</figcaption></figure>
+                <figure class="aw" style="--ar:1.3767" data-no="24"><img src="photos/album/album-24.jpg" width="1100" height="799" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
+                <figure class="aw" style="--ar:1.4267" data-no="25"><img src="photos/album/album-25.jpg" width="1100" height="771" alt="At a graduation" loading="lazy" decoding="async"><figcaption>At a graduation</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.3836" data-no="26"><img src="photos/album/album-26.jpg" width="1100" height="795" alt="Dressed for an occasion" loading="lazy" decoding="async"><figcaption>Dressed for an occasion</figcaption></figure>
+                <figure class="aw" style="--ar:0.7045" data-no="27"><img src="photos/album/album-27.jpg" width="775" height="1100" alt="With a graduate" loading="lazy" decoding="async"><figcaption>With a graduate</figcaption></figure>
+                <figure class="aw" style="--ar:1.4474" data-no="28"><img src="photos/album/album-28.jpg" width="1100" height="760" alt="At a ceremony" loading="lazy" decoding="async"><figcaption>At a ceremony</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.2236" data-no="30"><img src="photos/album/album-30.jpg" width="1100" height="899" alt="With friends in matching attire" loading="lazy" decoding="async"><figcaption>With friends in matching attire</figcaption></figure>
+                <figure class="aw" style="--ar:1.3889" data-no="31"><img src="photos/album/album-31.jpg" width="1100" height="792" alt="A warm embrace" loading="lazy" decoding="async"><figcaption>A warm embrace</figcaption></figure>
+                <figure class="aw" style="--ar:0.7109" data-no="33"><img src="photos/album/album-33.jpg" width="782" height="1100" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.4212" data-no="34"><img src="photos/album/album-34.jpg" width="1100" height="774" alt="A gathering at the church" loading="lazy" decoding="async"><figcaption>A gathering at the church</figcaption></figure>
+                <figure class="aw" style="--ar:1.3977" data-no="37"><img src="photos/album/album-37.jpg" width="1100" height="787" alt="With a friend" loading="lazy" decoding="async"><figcaption>With a friend</figcaption></figure>
+                <figure class="aw" style="--ar:1.5299" data-no="38"><img src="photos/album/album-38.jpg" width="1100" height="719" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.4379" data-no="39"><img src="photos/album/album-39.jpg" width="1100" height="765" alt="In matching attire with friends" loading="lazy" decoding="async"><figcaption>In matching attire with friends</figcaption></figure>
+                <figure class="aw" style="--ar:1.3995" data-no="40"><img src="photos/album/album-40.jpg" width="1100" height="786" alt="Sharing a laugh" loading="lazy" decoding="async"><figcaption>Sharing a laugh</figcaption></figure>
+                <figure class="aw" style="--ar:1.3447" data-no="42"><img src="photos/album/album-42.jpg" width="1100" height="818" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.3597" data-no="45"><img src="photos/album/album-45.jpg" width="1100" height="809" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
+                <figure class="aw" style="--ar:1.6248" data-no="46"><img src="photos/album/album-46.jpg" width="1100" height="677" alt="A team photograph" loading="lazy" decoding="async"><figcaption>A team photograph</figcaption></figure>
+                <figure class="aw" style="--ar:1.1866" data-no="47"><img src="photos/album/album-47.jpg" width="1100" height="927" alt="With friends, by the cars" loading="lazy" decoding="async"><figcaption>With friends, by the cars</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:0.9845" data-no="48"><img src="photos/album/album-48.jpg" width="1083" height="1100" alt="Under the palm trees" loading="lazy" decoding="async"><figcaption>Under the palm trees</figcaption></figure>
+                <figure class="aw" style="--ar:0.7909" data-no="49"><img src="photos/album/album-49.jpg" width="870" height="1100" alt="On the balcony" loading="lazy" decoding="async"><figcaption>On the balcony</figcaption></figure>
+                <figure class="aw" style="--ar:1.5670" data-no="50"><img src="photos/album/album-50.jpg" width="1100" height="702" alt="A group with their flag" loading="lazy" decoding="async"><figcaption>A group with their flag</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.6035" data-no="52"><img src="photos/album/album-52.jpg" width="1100" height="686" alt="A group photograph" loading="lazy" decoding="async"><figcaption>A group photograph</figcaption></figure>
+                <figure class="aw" style="--ar:1.4085" data-no="54"><img src="photos/album/album-54.jpg" width="1100" height="781" alt="With friends" loading="lazy" decoding="async"><figcaption>With friends</figcaption></figure>
+                <figure class="aw" style="--ar:1.5647" data-no="55"><img src="photos/album/album-55.jpg" width="1100" height="703" alt="A group photograph" loading="lazy" decoding="async"><figcaption>A group photograph</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.4085" data-no="56"><img src="photos/album/album-56.jpg" width="1100" height="781" alt="A group outside the hall" loading="lazy" decoding="async"><figcaption>A group outside the hall</figcaption></figure>
+                <figure class="aw" style="--ar:1.5988" data-no="57"><img src="photos/album/album-57.jpg" width="1100" height="688" alt="Beside the bus" loading="lazy" decoding="async"><figcaption>Beside the bus</figcaption></figure>
+                <figure class="aw" style="--ar:1.4121" data-no="58"><img src="photos/album/album-58.jpg" width="1100" height="779" alt="Out with friends" loading="lazy" decoding="async"><figcaption>Out with friends</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.4066" data-no="59"><img src="photos/album/album-59.jpg" width="1100" height="782" alt="Visitors at home" loading="lazy" decoding="async"><figcaption>Visitors at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.4550" data-no="62"><img src="photos/album/album-62.jpg" width="1100" height="756" alt="Relaxing at home" loading="lazy" decoding="async"><figcaption>Relaxing at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.3802" data-no="63"><img src="photos/album/album-63.jpg" width="1100" height="797" alt="Family gathered at home" loading="lazy" decoding="async"><figcaption>Family gathered at home</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.4608" data-no="65"><img src="photos/album/album-65.jpg" width="1100" height="753" alt="At rest at home" loading="lazy" decoding="async"><figcaption>At rest at home</figcaption></figure>
+                <figure class="aw" style="--ar:0.6845" data-no="67"><img src="photos/album/album-67.jpg" width="753" height="1100" alt="In his suit and hat" loading="lazy" decoding="async"><figcaption>In his suit and hat</figcaption></figure>
+                <figure class="aw" style="--ar:1.4765" data-no="68"><img src="photos/album/album-68.jpg" width="1100" height="745" alt="Out for a walk" loading="lazy" decoding="async"><figcaption>Out for a walk</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.6129" data-no="69"><img src="photos/album/album-69.jpg" width="1100" height="682" alt="In church" loading="lazy" decoding="async"><figcaption>In church</figcaption></figure>
+                <figure class="aw" style="--ar:1.5428" data-no="70"><img src="photos/album/album-70.jpg" width="1100" height="713" alt="On graduation day" loading="lazy" decoding="async"><figcaption>On graduation day</figcaption></figure>
+                <figure class="aw" style="--ar:1.4966" data-no="71"><img src="photos/album/album-71.jpg" width="1100" height="735" alt="With family on the sofa" loading="lazy" decoding="async"><figcaption>With family on the sofa</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:0.6600" data-no="74"><img src="photos/album/album-74.jpg" width="726" height="1100" alt="A moment at home" loading="lazy" decoding="async"><figcaption>A moment at home</figcaption></figure>
+                <figure class="aw" style="--ar:1.5007" data-no="77"><img src="photos/album/album-77.jpg" width="1100" height="733" alt="With fellow Nze" loading="lazy" decoding="async"><figcaption>With fellow Nze</figcaption></figure>
+                <figure class="aw" style="--ar:0.8127" data-no="82"><img src="photos/album/album-82.jpg" width="894" height="1100" alt="In full regalia" loading="lazy" decoding="async"><figcaption>In full regalia</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.0476" data-no="83"><img src="photos/album/album-83.jpg" width="1100" height="1050" alt="Seated outdoors" loading="lazy" decoding="async"><figcaption>Seated outdoors</figcaption></figure>
+                <figure class="aw" style="--ar:1.3333" data-no="84"><img src="photos/album/album-84.jpg" width="1080" height="810" alt="In uniform" loading="lazy" decoding="async"><figcaption>In uniform</figcaption></figure>
+                <figure class="aw" style="--ar:0.6000" data-no="85"><img src="photos/album/album-85.jpg" width="576" height="960" alt="Holding the babies" loading="lazy" decoding="async"><figcaption>Holding the babies</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:0.6000" data-no="86"><img src="photos/album/album-86.jpg" width="576" height="960" alt="Dressed in blue" loading="lazy" decoding="async"><figcaption>Dressed in blue</figcaption></figure>
+                <figure class="aw" style="--ar:0.7134" data-no="87"><img src="photos/album/album-87.jpg" width="468" height="656" alt="In matching prints" loading="lazy" decoding="async"><figcaption>In matching prints</figcaption></figure>
+                <figure class="aw" style="--ar:1.3385" data-no="88"><img src="photos/album/album-88.jpg" width="522" height="390" alt="A grandchild’s birthday" loading="lazy" decoding="async"><figcaption>A grandchild’s birthday</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.3385" data-no="89"><img src="photos/album/album-89.jpg" width="522" height="390" alt="With a grandchild" loading="lazy" decoding="async"><figcaption>With a grandchild</figcaption></figure>
+                <figure class="aw" style="--ar:1.4986" data-no="90"><img src="photos/album/album-90.jpg" width="1100" height="734" alt="At Mass" loading="lazy" decoding="async"><figcaption>At Mass</figcaption></figure>
+                <figure class="aw" style="--ar:1.4986" data-no="91"><img src="photos/album/album-91.jpg" width="1100" height="734" alt="At a wedding" loading="lazy" decoding="async"><figcaption>At a wedding</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.4986" data-no="92"><img src="photos/album/album-92.jpg" width="1100" height="734" alt="The wedding party" loading="lazy" decoding="async"><figcaption>The wedding party</figcaption></figure>
+                <figure class="aw" style="--ar:1.5089" data-no="93"><img src="photos/album/album-93.jpg" width="1100" height="729" alt="With the newlyweds" loading="lazy" decoding="async"><figcaption>With the newlyweds</figcaption></figure>
+                <figure class="aw" style="--ar:1.0000" data-no="94"><img src="photos/album/album-94.jpg" width="720" height="720" alt="Lunch with a grandchild" loading="lazy" decoding="async"><figcaption>Lunch with a grandchild</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.3333" data-no="95"><img src="photos/album/album-95.jpg" width="1100" height="825" alt="Reading at the table" loading="lazy" decoding="async"><figcaption>Reading at the table</figcaption></figure>
+                <figure class="aw" style="--ar:0.8127" data-no="96"><img src="photos/album/album-96.jpg" width="894" height="1100" alt="A family day" loading="lazy" decoding="async"><figcaption>A family day</figcaption></figure>
+                <figure class="aw" style="--ar:0.8782" data-no="98"><img src="photos/album/album-98.jpg" width="966" height="1100" alt="In church with the bride" loading="lazy" decoding="async"><figcaption>In church with the bride</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:0.4500" data-no="99"><img src="photos/album/album-99.jpg" width="495" height="1100" alt="At home" loading="lazy" decoding="async"><figcaption>At home</figcaption></figure>
+                <figure class="aw" style="--ar:1.3317" data-no="100"><img src="photos/album/album-100.jpg" width="1100" height="826" alt="On an outing" loading="lazy" decoding="async"><figcaption>On an outing</figcaption></figure>
+                <figure class="aw" style="--ar:1.7771" data-no="101"><img src="photos/album/album-101.jpg" width="1100" height="619" alt="Looking through old photographs" loading="lazy" decoding="async"><figcaption>Looking through old photographs</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.2353" data-no="102"><img src="photos/album/album-102.jpg" width="819" height="663" alt="In uniform" loading="lazy" decoding="async"><figcaption>In uniform</figcaption></figure>
+                <figure class="aw" style="--ar:0.7500" data-no="103"><img src="photos/album/album-103.jpg" width="825" height="1100" alt="With family at home" loading="lazy" decoding="async"><figcaption>With family at home</figcaption></figure>
+                <figure class="aw" style="--ar:0.7500" data-no="104"><img src="photos/album/album-104.jpg" width="825" height="1100" alt="With a granddaughter" loading="lazy" decoding="async"><figcaption>With a granddaughter</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:0.7500" data-no="106"><img src="photos/album/album-106.jpg" width="825" height="1100" alt="Christmas with the family" loading="lazy" decoding="async"><figcaption>Christmas with the family</figcaption></figure>
+                <figure class="aw" style="--ar:0.7500" data-no="107"><img src="photos/album/album-107.jpg" width="825" height="1100" alt="At the dining table" loading="lazy" decoding="async"><figcaption>At the dining table</figcaption></figure>
+                <figure class="aw" style="--ar:0.7500" data-no="108"><img src="photos/album/album-108.jpg" width="825" height="1100" alt="A birthday at home" loading="lazy" decoding="async"><figcaption>A birthday at home</figcaption></figure>
+              </div>
+              <div class="aw-row">
+                <figure class="aw" style="--ar:1.7771" data-no="109"><img src="photos/album/album-109.jpg" width="1100" height="619" alt="Talking with visitors" loading="lazy" decoding="async"><figcaption>Talking with visitors</figcaption></figure>
+                <figure class="aw" style="--ar:1.5007" data-no="110"><img src="photos/album/album-110.jpg" width="1100" height="733" alt="At a gathering" loading="lazy" decoding="async"><figcaption>At a gathering</figcaption></figure>
+              </div>
             </div>
           </div>
         </div>
@@ -3165,11 +3238,51 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
       (function raf(t){ if(!pane.hidden) pl.raf(t); requestAnimationFrame(raf); })(0);
     });
     // while one of those pages is open, the book underneath stays still
-    var mo=new MutationObserver(function(){ var b=document.body.classList; if(b.contains('garden-open')||b.contains('writer-open')||b.contains('reader-open')) lenis.stop(); else lenis.start(); });
+    var mo=new MutationObserver(function(){ var b=document.body.classList; if(b.contains('garden-open')||b.contains('writer-open')||b.contains('reader-open')||b.contains('viewer-open')) lenis.stop(); else lenis.start(); });
     mo.observe(document.body,{attributes:true,attributeFilter:['class']});
     function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
   }catch(e){}
+})();
+</script>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <div class="vw-stage">
+    <img alt="">
+    <button class="vw-prev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="vw-next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button class="vw-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="vw-bar">
+    <button class="vw-play" type="button" aria-label="Play slideshow"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button>
+    <span class="vw-cap"></span><span class="vw-n"></span>
+  </div>
+</div>
+<script>
+(function(){
+  var V=document.getElementById('viewer'); if(!V) return;
+  var figs=[].slice.call(document.querySelectorAll('#photos .album-wall .aw')); if(!figs.length) return;
+  var img=V.querySelector('img'), cap=V.querySelector('.vw-cap'), num=V.querySelector('.vw-n'), play=V.querySelector('.vw-play');
+  var i=0, timer=null, last=null;
+  var PLAY='<svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>', PAUSE='<svg viewBox="0 0 24 24"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>';
+  function src(k){ return figs[k].querySelector('img').getAttribute('src'); }
+  function show(k){ i=(k+figs.length)%figs.length; img.classList.add('fade');
+    var n=new Image(); n.onload=n.onerror=function(){ img.src=n.src; img.alt=figs[i].querySelector('img').alt; img.classList.remove('fade'); }; n.src=src(i);
+    cap.textContent=figs[i].querySelector('figcaption').textContent; num.textContent=(i+1)+' / '+figs.length;
+    var p=new Image(); p.src=src((i+1)%figs.length); }
+  function open(k,auto){ last=document.activeElement; V.hidden=false; void V.offsetWidth; V.classList.add('open'); document.body.classList.add('viewer-open'); show(k); setPlay(!!auto); V.querySelector('.vw-close').focus({preventScroll:true}); }
+  function close(){ setPlay(false); V.classList.remove('open'); document.body.classList.remove('viewer-open'); setTimeout(function(){ V.hidden=true; },350); if(last&&last.focus) last.focus({preventScroll:true}); }
+  function setPlay(on){ clearInterval(timer); timer=null; if(on){ timer=setInterval(function(){ show(i+1); },4500); } play.innerHTML=on?PAUSE:PLAY; play.setAttribute('aria-label',on?'Pause slideshow':'Play slideshow'); }
+  figs.forEach(function(f,k){ f.querySelector('img').addEventListener('click',function(){ open(k,false); }); });
+  var pb=document.querySelector('.aw-play'); if(pb) pb.addEventListener('click',function(){ open(0,true); });
+  V.querySelector('.vw-prev').addEventListener('click',function(){ setPlay(false); show(i-1); });
+  V.querySelector('.vw-next').addEventListener('click',function(){ setPlay(false); show(i+1); });
+  V.querySelector('.vw-close').addEventListener('click',close);
+  play.addEventListener('click',function(){ setPlay(!timer); });
+  V.addEventListener('click',function(e){ if(e.target===V||e.target.classList.contains('vw-stage')) close(); });
+  document.addEventListener('keydown',function(e){ if(!V.classList.contains('open')) return;
+    if(e.key==='Escape') close(); else if(e.key==='ArrowRight'){ setPlay(false); show(i+1); } else if(e.key==='ArrowLeft'){ setPlay(false); show(i-1); } else if(e.key===' '){ e.preventDefault(); setPlay(!timer); } });
+  var x0=null; V.addEventListener('touchstart',function(e){ x0=e.touches[0].clientX; },{passive:true});
+  V.addEventListener('touchend',function(e){ if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; x0=null; if(Math.abs(dx)>40){ setPlay(false); show(i+(dx<0?1:-1)); } },{passive:true});
 })();
 </script>
 </body>
