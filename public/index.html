@@ -1596,10 +1596,10 @@ body{background:#ece5d8}
 #photos .album-wall{display:flex; flex-direction:column; gap:var(--s6); margin-top:var(--s6)}
 #photos .aw-row{display:flex; gap:var(--s4); align-items:flex-start}
 #photos .album-wall .aw{margin:0; flex:var(--ar) 1 0; min-width:0}
-#photos .album-wall img{display:block; width:100%; height:auto; box-sizing:border-box; padding:7px; background:#fbf8f1; box-shadow:0 1px 2px rgba(60,40,20,.18), 0 10px 24px -12px rgba(60,40,20,.35); transform:rotate(var(--tilt,0deg)); transition:transform .5s var(--ease-soft), box-shadow .5s var(--ease-soft)}
+#photos .album-wall img{display:block; width:100%; height:auto; box-sizing:border-box; padding:7px; background:#fbf8f1; box-shadow:0 1px 2px rgba(var(--tint),.14), 0 12px 26px -12px rgba(var(--tint),.38); transform:rotate(var(--tilt,0deg)); transition:transform .5s var(--ease-soft), box-shadow .5s var(--ease-soft)}
 #photos .aw-row .aw:nth-child(3n+1){--tilt:-.6deg} #photos .aw-row .aw:nth-child(3n+2){--tilt:.4deg} #photos .aw-row .aw:nth-child(3n){--tilt:-.25deg}
 #photos .aw-row:nth-child(even) .aw:nth-child(3n+1){--tilt:.5deg} #photos .aw-row:nth-child(even) .aw:nth-child(3n+2){--tilt:-.45deg} #photos .aw-row:nth-child(even) .aw:nth-child(3n){--tilt:.3deg}
-#photos .album-wall .aw:hover img{transform:rotate(0deg) translateY(-3px); box-shadow:0 2px 3px rgba(60,40,20,.18), 0 18px 34px -14px rgba(60,40,20,.45)}
+#photos .album-wall .aw:hover img{transform:rotate(0deg) translateY(-3px); box-shadow:0 2px 3px rgba(var(--tint),.16), 0 20px 36px -14px rgba(var(--tint),.46)}
 #photos .album-wall figcaption{text-align:center}
 @media (max-width:600px){ #photos .album-wall img{padding:6px} }
 #photos .album-wall figcaption{margin-top:var(--s2); font-family:var(--serif); font-size:var(--fs-small); line-height:1.45; color:var(--ink-2)}
@@ -1641,6 +1641,12 @@ body{background:#ece5d8}
 .viewer .vw-title{position:absolute; top:22px; left:24px; z-index:2; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(239,232,220,.7)}
 @media (max-width:600px){ .viewer .vw-stage{padding:64px 14px 4px} .viewer img{max-width:calc(100vw - 52px); max-height:calc(100svh - 260px)} .vw-print{padding:9px 9px 0} .vw-print .vw-cap{font-size:20px; padding:10px 8px 12px} .viewer .vw-prev,.viewer .vw-next{position:static; transform:none} .viewer .vw-prev:hover,.viewer .vw-next:hover{transform:none} .viewer .vw-bar{padding:10px 16px 26px; gap:14px} .viewer .vw-title{left:16px} .viewer .vw-close{right:12px; top:12px} }
 @media (prefers-reduced-motion:reduce){ .viewer.playing img.kb{animation:none} .vw-print{transition:opacity .3s} }
+/* every photo and paper on the pages casts the same green-tinted shadow */
+.pic{filter:drop-shadow(0 1px 1px rgba(var(--tint),.2)) drop-shadow(0 10px 12px rgba(var(--tint),.18))}
+.letter-open img{box-shadow:0 1px 2px rgba(var(--tint),.1), 0 10px 24px -14px rgba(var(--tint),.38)}
+.letter.multi .letter-open::before{box-shadow:0 8px 18px -12px rgba(var(--tint),.38)}
+.letter-open:hover img,.letter-open:focus-visible img{box-shadow:0 1px 2px rgba(var(--tint),.1), 0 18px 30px -16px rgba(var(--tint),.48)}
+.tape{box-shadow:0 1px 2px rgba(var(--tint),.12), inset 0 0 8px rgba(255,255,255,.3)}
 </style>
 </head>
 <body>
@@ -1918,7 +1924,7 @@ body{background:#ece5d8}
                 <b>Linus Nwankwo (Akụchukwu)</b><b>Engr. Bernard Akah (Nnabụenyi) <span>and his wife, Elizabeth Akah</span></b>
               </div></div>
               <div class="reg-row"><span class="label">His children</span><div class="reg-names">
-                <b>Nwachukwu Akah (Ogbunede) <span>and his wife, Naomi Akah (Nne Dlaku)</span></b>
+                <b>Nwachukwu Akah (Ogbunede) <span>and his wife, Naomi Akah</span></b>
                 <b>Barr. Ifunanya Duru <span>and her husband, Revd. Kenneth Duru</span></b>
                 <b>Ekenedilichukwu Onyiuke <span>and her husband, Edwin Akpofe</span></b>
                 <b>Oluchukwu Egwuatu <span>and her husband, Samuel Egwuatu</span></b>
