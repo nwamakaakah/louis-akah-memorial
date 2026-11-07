@@ -1592,12 +1592,12 @@ body{background:#ece5d8}
 .flow #thanks{min-height:100vh; min-height:100svh; display:flex; flex-direction:column}
 .flow #thanks > .inner{flex:1 1 auto; display:flex; flex-direction:column}
 .flow #thanks > .inner > .wrap{flex:1 1 auto; width:100%; display:flex; flex-direction:column; justify-content:center}
-/* album wall: every photo whole, at its own shape, caption underneath */
-#photos .album-wall{columns:4 200px; column-gap:var(--s4); margin-top:var(--s6)}
-#photos .album-wall .aw{break-inside:avoid; margin:0 0 var(--s4); display:block}
-#photos .album-wall img{display:block; width:100%; height:auto; background:#e7e0d2; box-shadow:0 1px 2px rgba(40,20,5,.12), 0 8px 18px -10px rgba(40,20,5,.25)}
-#photos .album-wall figcaption{margin-top:var(--s2); font-family:var(--serif); font-size:var(--fs-small); line-height:1.5; color:var(--ink-2)}
-@media (max-width:600px){ #photos .album-wall{columns:2; column-gap:12px} #photos .album-wall .aw{margin-bottom:16px} }
+/* album: neat rows of three, every photo whole, sitting on a common baseline, caption underneath */
+#photos .album-wall{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--s6) var(--s4); margin-top:var(--s6); align-items:start}
+#photos .album-wall .aw{margin:0; display:flex; flex-direction:column}
+#photos .album-wall img{display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:contain; object-position:50% 100%}
+#photos .album-wall figcaption{margin-top:var(--s2); font-family:var(--serif); font-size:var(--fs-small); line-height:1.45; color:var(--ink-2); text-align:center}
+@media (max-width:600px){ #photos .album-wall{grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 12px} }
 /* desktop: centre each year dot on the timeline */
 @media (min-width:881px){ .my::after{right:-25px} }
 </style>
