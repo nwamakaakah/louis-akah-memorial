@@ -3398,7 +3398,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   function feat(big,a,b,flip){ var g=document.createElement('div'); g.className='c-feat'+(flip?' flip':''); var bw=document.createElement('div'); bw.className='c-big'; bw.appendChild(big);
     var sd=document.createElement('div'); sd.className='c-side'; sd.appendChild(a); sd.appendChild(b); g.appendChild(bw); g.appendChild(sd); return g; }
   function build(d,m){ var q=d.f.slice(), out=document.createDocumentFragment(), step=0, flip=false;
-    function take3(){ var r=[]; while(q.length && r.length<3 && !q[0].big) r.push(q.shift()); return r; }
+    function take3(){ var r=[], n=(q.length===4 && !q.some(function(x){ return x.big; }))?2:3; while(q.length && r.length<n && !q[0].big) r.push(q.shift()); return r; }   // never leave one print alone on the last row
     if(m==='3'){ d.f.forEach(function(B){ if(!B.hasAttribute('data-big')) return;   // a print marked to stand large, with the two named beside it
       var side=(B.getAttribute('data-with')||'').split(',').map(function(n){ return d.f.filter(function(x){ return x.getAttribute('data-no')===n.trim(); })[0]; }).filter(Boolean);
       if(side.length!==2) return; var at=q.indexOf(B); [B].concat(side).forEach(function(x){ var k=q.indexOf(x); if(k>-1){ q.splice(k,1); if(k<at) at--; } });
