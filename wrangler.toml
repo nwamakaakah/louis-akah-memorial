@@ -11,7 +11,7 @@ database_id = "c42735a8-d328-4b2b-b8b6-5bcdd423ed1d"
 
 [vars]
 # Where condolence messages are emailed (separate several addresses with commas)
-FAMILY_EMAIL = ""
+FAMILY_EMAIL = "akah.nwamaka.d@gmail.com"
 # Sender address once your domain is verified in Resend, e.g. "Memorial <messages@your-domain>"
 # Leave it out to use Resend's test sender, which can only email the Resend account owner.
 # MAIL_FROM = ""
