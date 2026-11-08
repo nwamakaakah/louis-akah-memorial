@@ -1702,6 +1702,26 @@ figcaption .hand,.bleed-fig figcaption .hand,.vs-note .hand,.margin figcaption .
 .cap-date{display:block; margin-top:6px; font-family:var(--sans) !important; font-style:normal !important; font-size:11px !important; font-weight:500; letter-spacing:.18em; text-transform:uppercase; line-height:1.3 !important; color:#8a7766}
 .viewer .vw-cap .cap-date{font-size:12px !important; margin-top:8px}
 #photos .collage figcaption,#photos .lr figcaption{display:block}
+/* Part two as a roll of film: a dark strip with sprocket holes, frame numbers on the edge, captions written beneath */
+#photos .line-reel.filmroll{--band:40px}
+#photos .filmroll .lr-track{--cord:max(27vh, 205px); gap:0; padding-top:calc(var(--cord) + var(--band)); counter-reset:fr}
+#photos .filmroll .lr-cord{left:0; right:0; top:var(--cord); height:calc(var(--ph) + var(--band) * 2); border-radius:0;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 18%, rgba(255,255,255,0) 82%, rgba(255,255,255,.04)), #16120f;
+  box-shadow:0 2px 0 rgba(255,255,255,.04) inset, 0 34px 60px -24px rgba(0,0,0,.7)}
+#photos .filmroll .lr-cord::before,#photos .filmroll .lr-cord::after{content:""; position:absolute; left:0; right:0; height:12px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='12'%3E%3Crect x='6' y='0' width='14' height='12' rx='2.5' fill='%2321312a'/%3E%3C/svg%3E") repeat-x 0 0}
+#photos .filmroll .lr-cord::before{top:7px}
+#photos .filmroll .lr-cord::after{bottom:7px}
+#photos .filmroll .lr{background:none; box-shadow:none; padding:0 9px; margin:0 !important; transform:none !important; counter-increment:fr}
+#photos .filmroll .lr::before{content:counter(fr) "A"; position:absolute; z-index:2; left:12px; top:calc(var(--ph) + 6px); width:auto; height:auto; margin:0; border-radius:0; background:none; box-shadow:none;
+  font:600 10px/1 var(--sans); letter-spacing:.14em; color:#d49a52}
+#photos .filmroll .lr::after{content:"\25B8  LOUIS AKAH \00B7  1947\2013 2026"; position:absolute; z-index:2; left:12px; top:calc(var(--band) * -1 + 25px); width:auto; height:auto; margin:0; border-radius:0; background:none;
+  font:600 9px/1 var(--sans); letter-spacing:.2em; color:rgba(212,154,82,.75); white-space:nowrap; overflow:hidden; max-width:calc(100% - 24px)}
+#photos .filmroll .lr img{outline:1px solid rgba(0,0,0,.7); box-shadow:0 0 0 1px rgba(255,255,255,.04)}
+#photos .filmroll .lr figcaption{width:0; min-width:100%; box-sizing:border-box; margin-top:calc(var(--band) + 14px); padding:0 2px !important; color:#efe6d6 !important}
+#photos .filmroll .lr figcaption .cap-date{color:rgba(239,230,214,.6)}
+#photos .line-reel.static.filmroll .lr-cord{top:60px}
+#photos .line-reel.static.filmroll .lr-track{padding-top:calc(60px + var(--band))}
+@media (max-width:600px){ #photos .line-reel.filmroll{--band:32px} #photos .filmroll .lr-track{--cord:max(25vh, 180px)} #photos .filmroll .lr-cord::before{top:5px} #photos .filmroll .lr-cord::after{bottom:5px} #photos .filmroll .lr::after{top:calc(var(--band) * -1 + 20px)} }
 </style>
 </head>
 <body>
@@ -2240,7 +2260,7 @@ figcaption .hand,.bleed-fig figcaption .hand,.vs-note .hand,.margin figcaption .
                 <figure class="aw" style="--ar:1.1866" data-no="47"><img src="photos/album/album-47.jpg?v=ea78b1f8" width="1100" height="927" alt="Young Louis with his friends" loading="lazy" decoding="async"><figcaption>Young Louis with his friends</figcaption></figure>
                 <figure class="aw" style="--ar:0.6955" data-no="1"><img src="photos/album/album-1.jpg?v=11aaacbe" width="765" height="1100" alt="Louis with Dr. Akpati, while in active service at General Hospital, Enugwu-Ukwu" loading="lazy" decoding="async"><figcaption>Louis with Dr. Akpati, while in active service at General Hospital, Enugwu-Ukwu</figcaption></figure>
                 <figure class="aw" style="--ar:1.4121" data-no="58"><img src="photos/album/album-58.jpg?v=c48a2f27" width="1100" height="779" alt="From the left: Chief Stephen Azikiwe (Louis’s father-in-law), Louis, Vicky Azikiwe and Chief Dr. Nnamdi Azikiwe" loading="lazy" decoding="async"><figcaption>From the left: Chief Stephen Azikiwe (Louis’s father-in-law), Louis, Vicky Azikiwe and Chief Dr. Nnamdi Azikiwe</figcaption></figure>
-                <figure class="aw" style="--ar:1.4085" data-no="54"><img src="photos/album/album-54.jpg?v=a26cd3b6" width="1100" height="781" alt="From the left: Chief Emmanuel Akah (Ezeigwe, Louis’s brother), Chief Dr. Nnamdi Azikiwe, Chief Stephen Azikiwe and Louis" loading="lazy" decoding="async"><figcaption>From the left: Chief Emmanuel Akah (Ezeigwe, Louis’s brother), Chief Dr. Nnamdi Azikiwe, Chief Stephen Azikiwe and Louis</figcaption></figure>
+                <figure class="aw" style="--ar:1.4085" data-no="54"><img src="photos/album/album-54.jpg?v=a26cd3b6" width="1100" height="781" alt="From the left: Chief Emmanuel Akah (Ezeigwe, Louis’s brother), Chief Dr. Nnamdi Azikiwe, Chief Stephen Azikiwe, Louis and Ibegbunam Azikiwe" loading="lazy" decoding="async"><figcaption>From the left: Chief Emmanuel Akah (Ezeigwe, Louis’s brother), Chief Dr. Nnamdi Azikiwe, Chief Stephen Azikiwe, Louis and Ibegbunam Azikiwe</figcaption></figure>
                 <figure class="aw" style="--ar:1.4066" data-no="59"><img src="photos/album/album-59.jpg?v=ccb33af9" width="1100" height="782" alt="Louis and Jennifer Akah receive blessings from Chief Dr. Nnamdi Azikiwe" loading="lazy" decoding="async"><figcaption>Louis and Jennifer Akah receive blessings from Chief Dr. Nnamdi Azikiwe</figcaption></figure>
                 <figure class="aw" style="--ar:1.4765" data-no="68"><img src="photos/album/album-68.jpg?v=0ccefc5c" width="1100" height="745" alt="Louis (middle) with Jennifer (right) and her classmate, Charity Chukwunenye, at their graduation ceremony" loading="lazy" decoding="async"><figcaption>Louis (middle) with Jennifer (right) and her classmate, Charity Chukwunenye, at their graduation ceremony</figcaption></figure>
                 <figure class="aw" style="--ar:1.5385" data-no="61"><img src="photos/album/album-61.jpg?v=c51f3c80" width="1100" height="715" alt="Louis, dressed up in his bow tie, with Jennifer" loading="lazy" decoding="async"><figcaption>Louis, dressed up in his bow tie, with Jennifer</figcaption></figure>
@@ -2274,9 +2294,9 @@ figcaption .hand,.bleed-fig figcaption .hand,.vs-note .hand,.margin figcaption .
                 <figure class="aw" style="--ar:1.5007" data-no="110" data-big data-with="40,90"><img src="photos/album/album-110.jpg?v=2f4d6152" width="1100" height="733" alt="Louis sits as the eldest in the Akah family during the funeral rites of his sister-in-law, Ngozi Akah (Wetuobi), in 2024. To his left are his half-brother, Charles Akah, and his brother, Innocent Akah. To his right is Ifemulumma Nwana" loading="lazy" decoding="async"><figcaption>Louis sits as the eldest in the Akah family during the funeral rites of his sister-in-law, Ngozi Akah (Wetuobi). To his left are his half-brother, Charles Akah, and his brother, Innocent Akah. To his right is Ifemulumma Nwana<span class="cap-date">2024</span></figcaption></figure>
               </div>
             </div>
-            <div class="line-reel drift" data-reel>
+            <div class="line-reel filmroll drift" data-reel>
               <div class="lr-pin">
-                <div class="lr-head"><span class="label">Part two</span><h3>Just <em>Dede</em></h3><p>Scroll, and the line moves along.</p></div>
+                <div class="lr-head"><span class="label">Part two</span><h3>Just <em>him</em></h3><p>Scroll, and the film rolls along.</p></div>
                 <div class="lr-track">
                   <div class="lr-cord" aria-hidden="true"></div>
                   <figure class="aw lr" style="--ar:0.6700" data-no="15"><img src="photos/album/album-15.jpg?v=304db4e6" width="737" height="1100" alt="In his ceremonial regalia as Nze" loading="lazy" decoding="async"><figcaption>In his ceremonial regalia as Nze</figcaption></figure>
