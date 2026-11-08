@@ -1682,6 +1682,13 @@ body{background:#ece5d8}
 @media (max-width:600px){ #photos .lr-track{--cord:max(28vh, 200px); --ph:min(40vh, 340px); gap:44px} #photos .lr figcaption{font-size:19px} #photos .collage .c-row{flex-direction:column} #photos .collage .c-row .aw{flex:none; width:100%} }
 .tribute .t-sub{font-family:var(--sans); font-size:12px; letter-spacing:.08em; text-transform:uppercase; line-height:1.8; color:var(--ink-2); margin:0 0 var(--s4)}
 .tribute .t-sub.it{font-family:var(--display); font-style:italic; font-size:21px; letter-spacing:0; text-transform:none; line-height:1.3}
+/* a hand-drawn arrow pointing him out in a group photo */
+#photos .pin-wrap{position:relative; display:block}
+#photos .pin-arrow{position:absolute; inset:7px; width:calc(100% - 14px); height:calc(100% - 14px); pointer-events:none; overflow:visible; transform:rotate(var(--tilt,0deg))}
+#photos .pin-arrow path{fill:none; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke}
+#photos .pin-arrow .halo{stroke:rgba(255,248,236,.85); stroke-width:6}
+#photos .pin-arrow .ink{stroke:#c8541c; stroke-width:3}
+#photos .collage .aw:hover .pin-arrow{transform:translateY(-3px)}
 </style>
 </head>
 <body>
@@ -2209,7 +2216,7 @@ body{background:#ece5d8}
             <div class="album-part">
               <div class="part-head"><span class="label">Part one</span><h3>The early <em>years</em></h3></div>
               <div class="collage" data-collage>
-                <figure class="aw" style="--ar:1.2353" data-no="102"><img src="photos/album/album-102.jpg" width="819" height="663" alt="In uniform" loading="lazy" decoding="async"><figcaption>In uniform</figcaption></figure>
+                <figure class="aw" style="--ar:1.2353" data-no="102"><span class="pin-wrap"><img src="photos/album/album-102.jpg" width="819" height="663" alt="Dede, on the right, as a Nigerian Army Cadet in 1965" loading="lazy" decoding="async"><svg class="pin-arrow" viewBox="0 0 100 81" preserveAspectRatio="none" aria-hidden="true"><path class="halo" d="M97.6 40 C 99.6 30, 97.4 20.5, 89.8 15"/><path class="halo" d="M89.8 15 L 91.1 19.6 M89.8 15 L 94.4 15.4"/><path class="ink" d="M97.6 40 C 99.6 30, 97.4 20.5, 89.8 15"/><path class="ink" d="M89.8 15 L 91.1 19.6 M89.8 15 L 94.4 15.4"/></svg></span><figcaption>Dede (right) as a Nigerian Army Cadet, 1965</figcaption></figure>
                 <figure class="aw" style="--ar:1.6248" data-no="46"><img src="photos/album/album-46.jpg" width="1100" height="677" alt="A team photograph" loading="lazy" decoding="async"><figcaption>A team photograph</figcaption></figure>
                 <figure class="aw" style="--ar:1.5670" data-no="50"><img src="photos/album/album-50.jpg" width="1100" height="702" alt="A group with their flag" loading="lazy" decoding="async"><figcaption>A group with their flag</figcaption></figure>
                 <figure class="aw" style="--ar:1.6035" data-no="52"><img src="photos/album/album-52.jpg" width="1100" height="686" alt="A group photograph" loading="lazy" decoding="async"><figcaption>A group photograph</figcaption></figure>
