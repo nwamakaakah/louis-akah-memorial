@@ -3145,6 +3145,12 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
   document.getElementById('wrRose').addEventListener('click',e=>{ e.preventDefault(); closeWriter(); openGarden(); },true);
   writer.addEventListener('keydown',e=>{ if(e.key==='Escape'){ e.stopPropagation(); closeWriter(); } else if(e.key==='ArrowLeft'||e.key==='ArrowRight') e.stopPropagation(); },true);
   bkMsg.addEventListener('input',()=>{ const n=bkMsg.value.length; document.getElementById('bkCount').textContent=n; document.querySelector('.wr-count').classList.toggle('near',n>900); });
+  // A copy of each message is emailed to the family through FormSubmit (formsubmit.co), straight from the visitor's browser.
+  const FAMILY_INBOX='https://formsubmit.co/ajax/akah.nwamaka.d@gmail.com';
+  function forwardNote(name,place,message){
+    try{ fetch(FAMILY_INBOX,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({_subject:'Condolence message from '+name,_template:'box',_captcha:'false',Name:name,From:place||'',Message:message})}).catch(()=>{}); }catch(e){}
+  }
   function markSent(name,place){ myNote={at:new Date().toISOString(),name,place}; store.set('memorial-note',JSON.stringify(myNote)); paintCta(); }
   bookForm.addEventListener('submit',async e=>{
     e.preventDefault(); if(myNote){ showThanks(false,true); return; }
@@ -3154,7 +3160,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     if(name.length<2){ bkStatus.classList.add('err'); bkStatus.textContent=ERR.name_required; document.getElementById('bkName').focus(); return; }
     bkBtn.disabled=true; bkStatus.textContent='Sending…';
     try{
-      if(!demo){ const token=await tsToken(document.getElementById('bkTs')); await api('/condolences',{method:'POST',body:JSON.stringify({deviceId:deviceId(),name,place,message,token})}); }
+      if(!demo){ const token=await tsToken(document.getElementById('bkTs')); await api('/condolences',{method:'POST',body:JSON.stringify({deviceId:deviceId(),name,place,message,token})}); forwardNote(name,place,message); }
       else await new Promise(r=>setTimeout(r,600));
       markSent(name,place); bookForm.reset(); bkStatus.textContent=''; writer.scrollTop=0; showThanks(true,false);
     }catch(err){

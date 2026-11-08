@@ -40,11 +40,8 @@ export async function onRequestPost({ request, env }) {
   if (env.RESEND_API_KEY && env.FAMILY_EMAIL) {
     const sent = await emailFamily(env, m);
     if (!sent) return json({ error: 'send_failed' }, 502);
-  } else if (env.FAMILY_EMAIL) {
-    // No Resend key: forward through FormSubmit instead. The message is already saved,
-    // so a hiccup here never stops the visitor; the family can still read it on /admin.
-    await formSubmit(env, m, new URL(request.url).origin);
   }
+  // Without a Resend key, the visitor's browser forwards a copy through FormSubmit (see forwardNote in index.html).
   return json({ ok: true }, 201);
 }
 
