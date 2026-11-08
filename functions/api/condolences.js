@@ -36,8 +36,15 @@ export async function onRequestPost({ request, env }) {
     "INSERT INTO condolences (name, place, message, device_id, ip_hash, status) VALUES (?, ?, ?, ?, ?, 'pending') RETURNING id, created_at"
   ).bind(name, place, message, body.deviceId, ip).first();
 
-  const sent = await emailFamily(env, { name, place, message, id: item.id });
-  if (!sent) return json({ error: 'send_failed' }, 502);
+  const m = { name, place, message, id: item.id };
+  if (env.RESEND_API_KEY && env.FAMILY_EMAIL) {
+    const sent = await emailFamily(env, m);
+    if (!sent) return json({ error: 'send_failed' }, 502);
+  } else if (env.FAMILY_EMAIL) {
+    // No Resend key: forward through FormSubmit instead. The message is already saved,
+    // so a hiccup here never stops the visitor; the family can still read it on /admin.
+    await formSubmit(env, m, new URL(request.url).origin);
+  }
   return json({ ok: true }, 201);
 }
 
@@ -64,4 +71,26 @@ async function emailFamily(env, m) {
   });
   } catch { return false; }
   return res.ok;
+}
+
+// Forwards the message to the family through FormSubmit (formsubmit.co): no account or key.
+// The very first message triggers a one-time email asking the family to confirm the address.
+async function formSubmit(env, m, origin) {
+  const to = env.FAMILY_EMAIL.split(',')[0].trim();
+  try {
+    const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', accept: 'application/json', origin, referer: origin + '/' },
+      body: JSON.stringify({
+        _subject: `Condolence message from ${m.name}`,
+        _template: 'box',
+        _captcha: 'false',
+        Name: m.name,
+        From: m.place || '',
+        Message: m.message,
+        Note: `Message #${m.id} from the memorial site. Nothing has been published.`,
+      }),
+    });
+    return res.ok;
+  } catch { return false; }
 }

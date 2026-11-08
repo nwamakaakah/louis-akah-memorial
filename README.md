@@ -66,7 +66,11 @@ Paste the password when asked, then publish again (step 5). Open `https://louis-
 
 ---
 
-## Optional: receive messages by email
+## Receive messages by email
+
+Messages go to `FAMILY_EMAIL` in `wrangler.toml` (currently set). With no Resend key, they are forwarded through FormSubmit (formsubmit.co), which needs no account: the first message sends a one-time confirmation email to that address. Click the link in it and every message after that arrives in the inbox. Every message is also saved on the admin page.
+
+### Alternative: Resend
 
 1. Create a free account at https://resend.com and create an **API key**.
 2. Save it to Cloudflare:
