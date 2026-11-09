@@ -3152,7 +3152,7 @@ window.MEMORIAL_CONFIG = { turnstileSiteKey: "" };
     const n=myNote&&myNote.name?firstName(myNote.name):'';
     document.getElementById('wrThanksTitle').innerHTML='Thank <em>you</em>'+(n?', '+n.replace(/[&<>]/g,''):'');
     document.getElementById('wrThanksLine').textContent= already
-      ? 'You have already sent the family a message from this device. They read every one, and will add yours to this page.'
+      ? 'Your message is with us. Thank you for remembering Dede with us. We will read it and add it to this page.'
       : 'Your words are on their way to us. Thank you for remembering Dede with us. We will read your message and add it to this page.';
     document.getElementById('wrRose').hidden=!!(myRose&&myRose.n>=10);
     wrThanks.classList.remove('play','done'); void wrThanks.offsetWidth;
